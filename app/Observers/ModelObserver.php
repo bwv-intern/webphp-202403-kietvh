@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Observers;
+
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +16,8 @@ class ModelObserver
         $model->created_at = Carbon::now();
         $model->updated_by = auth()->id();
         $model->updated_at = Carbon::now();
+        $model->deleted_by = null;
+        $model->deleted_at = null;
     }
 
     /**
@@ -28,6 +31,6 @@ class ModelObserver
         } else {
             $model->updated_by = auth()->id();
             $model->updated_at = Carbon::now();
-        } 
+        }
     }
 }
