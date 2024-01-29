@@ -2,20 +2,20 @@
 
 namespace App\Repositories;
 
-use App\Enums\DelFlg;
-use App\Repositories\RepositoryInterface;
+use App\Libs\ValueUtil;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
-use DB;
-use Exception;
-use Log;
 
-abstract class BaseRepository implements RepositoryInterface
+abstract class BaseRepository
 {
     protected $model;
+    protected $validDelFlg;
 
     public function __construct()
     {
         $this->setModel();
+        $this->validDelFlg = ValueUtil::constToValue('common.del_flg.VALID');
     }
 
     abstract public function getModel();
@@ -28,40 +28,47 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Find model by id return true if find and false if not
-     * 
-     * @param int $id
-     * 
-     * @return mixed
+     * Find by id
+     *
+     * @param string|int $id
+     * @param bool $isFindAll
+     * @param string|null $loggingChannel
+     * @return object|bool
      */
-    public function getById($id)
-    {
+    public function findById($id, $isFindAll = false) {
         try {
-            $result = $this->model->find($id);
-            return $result;
-        } catch (\Throwable $th) {
-            Log::error($th);
+            $query = $this->model->where($this->model->getKeyName(), $id);
+            if (!$isFindAll) {
+                $query->where('del_flg', ValueUtil::constToValue('common.del_flg.VALID'));
+            }
+            return $query->first();
+        } catch (\Exception $e) {
+            Log::error($e);
             return false;
         }
     }
 
     /**
      * Insert or update record if id exist, return true if success and false if not
-     * 
+     *
      * @param null|int $id
-     * @param array $attributes
-     * 
+     * @param array $params
+     *
      * @return mixed
      */
-    public function save($id = null, $attributes)
+    public function save($id = null, $params, $isFindAll = false)
     {
         try {
             DB::beginTransaction();
             if ($id) {
-                $result = $this->model->find($id);
-                $result = $result->update($attributes);
+                $result = $this->findById($id, $isFindAll);
+                $result->fill($params);
+                $result = $result->save($result);
             } else {
-                $result = $this->model->create($attributes);
+                $result = $this->model->create($params);
+            }
+            if (!$result){
+                DB::rollBack();
             }
             DB::commit();
             return $result;
@@ -75,10 +82,10 @@ abstract class BaseRepository implements RepositoryInterface
 
     /**
      * Insert or update multiple record if id exist, return true if success and false if not
-     * 
+     *
      * @param null|array $ids
      * @param array $attributes
-     * 
+     *
      * @return mixed
      */
     public function saveMany($ids = null, $attributes)
@@ -95,10 +102,10 @@ abstract class BaseRepository implements RepositoryInterface
                     $model = $model->update($attribute);
                 }
                 else {
-                    $model = $model->save($attribute);
+                    $model = $this->model->save($attribute);
                 }
                 if (!$model){
-                    throw new Exception('Update failed');
+                    DB::rollBack();
                 }
                 $models[] = $model;
             }
@@ -107,25 +114,6 @@ abstract class BaseRepository implements RepositoryInterface
         } catch (\Throwable $th) {
             Log::error($th);
             DB::rollBack();
-            return false;
-        }
-    }
-
-    /**
-     * Delete record by id, return true if success and false if not
-     * 
-     * @param int $id
-     * 
-     * @return mixed
-     */
-    public function deleteById($id)
-    {
-        try {
-            $result = $this->model->find($id);
-            $result->del_flg = 1;
-            return $result->save();
-        } catch (\Throwable $th) {
-            Log::error($th);
             return false;
         }
     }

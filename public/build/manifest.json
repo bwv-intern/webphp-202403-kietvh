@@ -1,0 +1,22 @@
+{
+  "resources/css/common.css": {
+    "file": "assets/common-5JSl7Gmn.css",
+    "isEntry": true,
+    "src": "resources/css/common.css"
+  },
+  "resources/js/common.js": {
+    "file": "assets/common-WtfgOreL.js",
+    "isEntry": true,
+    "src": "resources/js/common.js"
+  },
+  "resources/js/lib/jquery-validation/additional-setting.js": {
+    "file": "assets/additional-setting-Qpmu4YCO.js",
+    "isEntry": true,
+    "src": "resources/js/lib/jquery-validation/additional-setting.js"
+  },
+  "resources/js/screens/auth/login.js": {
+    "file": "assets/login-OJhvnlpR.js",
+    "isEntry": true,
+    "src": "resources/js/screens/auth/login.js"
+  }
+}
