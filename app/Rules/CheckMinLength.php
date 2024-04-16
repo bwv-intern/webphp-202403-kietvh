@@ -41,6 +41,6 @@ class CheckMinLength implements Rule
      * @return string
      */
     public function message() {
-        return ConfigUtil::getMessage('ECL003', [$this->label, $this->min, $this->currentLength]);
+        return ConfigUtil::getMessage('EBT003', $this->label, $this->min, $this->currentLength);
     }
 }

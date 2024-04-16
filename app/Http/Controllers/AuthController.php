@@ -33,13 +33,7 @@ class AuthController extends Controller
      */
     public function handleLogin(LoginRequest $request)
     {
-        $credentials = $request->only('email', 'password');
-        if ($this->authService->handleLogin($credentials)) {
-            session()->regenerate();
-            return redirect()->intended(route('top.index'));
-        } else {
-            return redirect()->back()->withInput()->withErrors(ConfigUtil::getMessage('ECL019'));
-        }
+        
     }
 
     /**

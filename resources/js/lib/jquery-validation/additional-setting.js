@@ -42,7 +42,7 @@ if ($.fn.timepicker) {
 $.extend(jQuery.validator, {
     messages: {
         required: function (p, e) {
-            return $.validator.format('{0}は必須項目です。', [
+            return $.validator.format('{0}は必須です。', [
                 $(e).data('label'),
             ]);
         },

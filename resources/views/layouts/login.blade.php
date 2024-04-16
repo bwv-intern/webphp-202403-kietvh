@@ -19,7 +19,10 @@
     @stack('styles')
 </head>
 
-<body class="hold-transition login-page">
+<body class="container-fluid m-0 p-0">
+    <div class="bg-white border" style="height: 100px;">
+
+    </div>
     {{ $slot }}
     <x-loading />
     <!-- JS Files -->
