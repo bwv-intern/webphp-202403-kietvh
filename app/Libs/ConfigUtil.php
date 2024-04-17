@@ -26,22 +26,17 @@ class ConfigUtil
      * @param array $paramArray
      * @return mixed|null
      */
-    public static function getMessage($key, ...$params) {
+    public static function getMessage($key, $paramArray = array()) {
         $message = self::getConfig(self::MESSAGE_DIR, $key);
-        $message = vsprintf($message, $params);
-        
+        // message = "<0>は必須です。"
+        if ($message && is_string($message)) {
+            foreach ($paramArray as $param => $value) {
+                $message = str_replace(sprintf('<%d>', $param), $value, $message);
+            }
+        }
+
         return $message;
     }
-    // public static function getMessage($key, $paramArray = array()) {
-    //     $message = self::getConfig(self::MESSAGE_DIR, $key);
-    //     if ($message && is_string($message)) {
-    //         foreach ($paramArray as $param => $value) {
-    //             $message = str_replace(sprintf('<%d>', $param), $value, $message);
-    //         }
-    //     }
-
-    //     return $message;
-    // }
 
     /**
      * Get $key value from common config file

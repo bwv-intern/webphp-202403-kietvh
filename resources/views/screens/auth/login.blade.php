@@ -1,19 +1,24 @@
 <x-login-layout title="Login">
     <div class="row m-5 px-sm-5">
+        
         <div class="col-sm-3">
-            @if ($errors->any())
-                <x-alert :messages="$errors->all()" type="danger" />
-            @endif
-            <form method="post" action="{{ route('auth.handleLogin') }}" id="login-form">
+            @if (session('error'))
+            <div class="custom-alert bg-danger text-white p-1">
+                <span>{{ session('error') }}</span>
+            </div>
+        @endif
+            <form method="post" action="{{ route('handleLogin') }}" id="login-form">
                 @csrf
                 <div class="form-group">
-                    <x-forms.label for="email" label="Email" :isRequired="true" />
+                    <x-forms.label for="email" label="Email:" :isRequired="true" />
                     <x-forms.text name="email" label="Email" idSelector="email" placeholder="" :value="old('email')" />
+                    <x-error-message field="email" />
                 </div>
                 <div class="form-group">
-                    <x-forms.label for="password" label="Password" :isRequired="true" />
+                    <x-forms.label for="password" label="Password:" :isRequired="true" />
                     <x-forms.text type="password" name="password" label="Password" idSelector="password" placeholder=""
                         :value="old('password')" />
+                    <x-error-message field="password" />
                 </div>
                 <div class="row">
                     <div class="col-12">

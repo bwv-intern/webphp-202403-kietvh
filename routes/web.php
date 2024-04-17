@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     AuthController,
-    TopController,
+    GroupController,
     UserController
 };
+use Illuminate\Support\Facades\{Auth, Route};
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +23,27 @@ Route::get('/', function () {
 });
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/login/handleLogin', [AuthController::class, 'handleLogin'])->name('auth.handleLogin');
+Route::post('/handleLogin', [AuthController::class, 'handleLogin'])->name('handleLogin');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/', [TopController::class, 'index'])->name('top.index');
+Route::get('/error', function () {
+    if (Auth::check()) {
+        Auth::logout();
+        session()->flush();
+        session()->invalidate();
+        session()->regenerateToken();
+    }
+
+    return view('common.error');
+})->middleware('no-cache')->name('error');
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth','checkLogin', 'no-cache']], function () {
+
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('/', [UserController::class, 'userList'])->name('userList');
+    });
+
+    Route::group(['prefix' => 'group'], function () {
+        Route::get('/', [GroupController::class, 'groupList'])->name('groupList');
+    });
 });

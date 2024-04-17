@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title }} | Intern PHP Source</title>
+    <title>{{ $title }}</title>
 
     <!-- Fonts -->
     <link rel="stylesheet"
@@ -20,7 +20,7 @@
 </head>
 
 <body class="container-fluid m-0 p-0">
-    <div class="bg-white border" style="height: 100px;">
+    <div class="bg-white border  py-5">
 
     </div>
     {{ $slot }}
@@ -34,6 +34,7 @@
     @vite([
         'resources/js/common.js',
         'resources/js/lib/jquery-validation/additional-setting.js',
+        'resources/js/nocache.js',
     ], 'build')
     @stack('scripts')
 </body>

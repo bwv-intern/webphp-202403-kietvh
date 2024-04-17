@@ -3,7 +3,7 @@ $(function() {
         rules: {
             email: {
                 required: true,
-                email: true,
+                checkValidEmailRFC: true,
                 maxlength: 255,
 
             },
@@ -12,10 +12,5 @@ $(function() {
                 maxlength: 20,
             },
         },
-        messages :{
-            email: {
-                email: "メールアドレスを正しく入力してください。"
-            },
-        }
     });
 });

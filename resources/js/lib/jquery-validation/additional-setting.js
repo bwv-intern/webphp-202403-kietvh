@@ -119,6 +119,16 @@ $.validator.setDefaults({
     onfocusout: function (element) {
         this.element(element);
     },
+    invalidHandler: function (event, validator) {
+        var errors = validator.numberOfInvalids();
+        if (errors) {
+            var firstError = $(validator.errorList[0].element);
+            firstError.focus();
+            $('html, body').animate({
+                scrollTop: firstError.offset().top
+            }, 50);
+        }
+    },
     submitHandler: function (form) {
         _common.showLoading();
         form.submit();

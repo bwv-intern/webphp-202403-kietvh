@@ -19,11 +19,18 @@ class UserRepository extends BaseRepository
      * @param array $params
      * @return mixed
      */
+   /**
+     * Get user login
+     *
+     * @param array $params
+     * @return mixed
+     */
     public function getUserLogin(array $params)
     {
         $query = User::query()
             ->where('email', $params['email'] ?? null)
-            ->where('del_flg', $this->validDelFlg);
+            ->where('deleted_date', NULL);
+
         $user = $query->get()->first();
         if ($user && Hash::check($params['password'], $user->password)) {
             return $user;
@@ -31,30 +38,18 @@ class UserRepository extends BaseRepository
         return null;
     }
 
-    /**
-     * Search user
-     *
-     * @param array $params
-     * @return mixed
-     */
-    public function search(array $params)
+    public function checkDuplicateEmailForLogin(string $email)
     {
-        $query = User::whereRaw('1=1');
-        $query->where('del_flg', $this->validDelFlg);
-        if (!empty($params['user_id'])) {
-            $query->where('id', $params['user_id']);
+        try {
+            $result = $this->model->where('email', $email)
+                ->whereNull('deleted_date')
+                ->get();
+        } catch (Exception $exption) {
+            Log::error($exption->getMessage());
         }
-        if (!empty($params['user_flag'])) {
-            $query->whereIn('user_flag', $params['user_flag']);
+        if ($result) {
+            return count($result) > 1 ;
         }
-        if (!empty($params['name'])) {
-            $query->where('name', 'like', '%' . $params['name'] . '%');
-        }
-        if (!empty($params['email'])) {
-            $query->where('email', 'like', '%' . $params['email'] . '%');
-        }
-        $query->orderBy('id', 'desc');
-
-        return $query;
+        return false;
     }
 }

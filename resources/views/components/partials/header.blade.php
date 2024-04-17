@@ -1,22 +1,28 @@
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<nav class="main-header navbar navbar-expand navbar-white navbar-light m-0 border py-4">
     <!-- Left navbar links -->
+    <ul class="navbar-nav d-sm-none">
+        <li class="nav-item" id="mobile-toggle">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+    </ul>
     <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fa fa-bars"></i></a>
+        <li>
+            <div class="info d-flex gap-5">
+                <a href="" id="internTrainingLink" class="text-decoration-none ms-4 fs-5 text-dark">
+
+                </a>
+            </div>
         </li>
     </ul>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-            <li class="nav-item" style="padding: 10px;">
-                <p>{{ auth()->user()->name ?? null }}</p>
-            </li>
-            <li class="nav-item" style="padding: 10px;">
-                <x-nav-link :to="route('logout')">
-                    <p>Logout</p>
-                </x-nav-link>
-            </li>
+        <li>
+            <div class="info d-flex gap-5 ">
+                {{ Str::limit(\Illuminate\Support\Facades\Auth::user()->name , 50);}}
+
+                <a href="{{ route('logout') }}" class="px-2">Logout</a>
+            </div>
         </li>
     </ul>
 </nav>

@@ -31,9 +31,9 @@ class CheckMailRFC implements Rule
     /**
      * Get the validation error message.
      *
-     * @return string
+     * @return stringEBT005
      */
     public function message() {
-        return ConfigUtil::getMessage('ECL007');
+        return ConfigUtil::getMessage('EBT005');
     }
 }

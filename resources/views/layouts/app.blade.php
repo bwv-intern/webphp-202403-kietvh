@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title }} | Intern PHP Source</title>
+    <title>{{ $title }}</title>
 
     <!-- Fonts -->
     <link rel="stylesheet"
@@ -20,50 +20,51 @@
     @stack('styles')
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini m-0 p-0">
     <x-partials.header />
-    <x-partials.menu />
-    <div class="content-wrapper">
-        <x-partials.breadcrumb />
-        <section class="content">
-            <div class="container-fluid">
-                @if (Session::has('error'))
-                    @php
-                        $errorType = 'danger';
-                        $errorMessages = Session::get('error');
-                    @endphp
-                    <x-alert :messages="$errorMessages" :type="$errorType" />
-                @endif
-                @if (Session::has('success'))
-                    @php
-                        $successType = 'success';
-                        $successMessages = Session::get('success');
-                    @endphp
-                    <x-alert :messages="$successMessages" :type="$successType" />
-                @endif
-                @if (isset($errors) && $errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="m-0">
-                            @php
-                                $errorsUnique = array_unique($errors->all());
-                            @endphp
-                            @if (count($errorsUnique) === 1)
-                                @foreach ($errorsUnique as $error)
-                                    {!! $error !!}
-                                @endforeach
-                            @else
-                                @foreach ($errorsUnique as $error)
-                                    <li>{!! $error !!}</li>
-                                @endforeach
-                            @endif
-                        </ul>
-                    </div>
-                @endif
-                {{ $slot }}
-            </div>
-        </section>
+    <div class="wrapper">
+        <x-partials.menu />
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="container-fluid">
+                    @if (Session::has('error'))
+                        @php
+                            $errorType = 'danger';
+                            $errorMessages = Session::get('error');
+                        @endphp
+                        <x-alert :messages="$errorMessages" :type="$errorType" />
+                    @endif
+                    @if (Session::has('success'))
+                        @php
+                            $successType = 'success';
+                            $successMessages = Session::get('success');
+                        @endphp
+                        <x-alert :messages="$successMessages" :type="$successType" />
+                    @endif
+                    @if (isset($errors) && $errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="m-0">
+                                @php
+                                    $errorsUnique = array_unique($errors->all());
+                                @endphp
+                                @if (count($errorsUnique) === 1)
+                                    @foreach ($errorsUnique as $error)
+                                        {!! $error !!}
+                                    @endforeach
+                                @else
+                                    @foreach ($errorsUnique as $error)
+                                        <li>{!! $error !!}</li>
+                                    @endforeach
+                                @endif
+                            </ul>
+                        </div>
+                    @endif
+                    {{ $slot }}
+                </div>
+            </section>
+        </div>
     </div>
-    <x-partials.footer />
+    {{--<x-partials.footer />--}}
     <x-loading />
     <!-- JS Files -->
     <script src="{{ asset('js/lib/jquery-3.7.1.min.js') }}"></script>
