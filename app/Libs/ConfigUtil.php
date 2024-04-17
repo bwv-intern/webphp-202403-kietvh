@@ -28,6 +28,7 @@ class ConfigUtil
      */
     public static function getMessage($key, $paramArray = array()) {
         $message = self::getConfig(self::MESSAGE_DIR, $key);
+        // message = "<0>は必須です。"
         if ($message && is_string($message)) {
             foreach ($paramArray as $param => $value) {
                 $message = str_replace(sprintf('<%d>', $param), $value, $message);

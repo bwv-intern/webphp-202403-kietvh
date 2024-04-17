@@ -42,7 +42,7 @@ if ($.fn.timepicker) {
 $.extend(jQuery.validator, {
     messages: {
         required: function (p, e) {
-            return $.validator.format('{0}は必須項目です。', [
+            return $.validator.format('{0}は必須です。', [
                 $(e).data('label'),
             ]);
         },
@@ -118,6 +118,16 @@ $.validator.setDefaults({
     // add default behaviour for on focus out
     onfocusout: function (element) {
         this.element(element);
+    },
+    invalidHandler: function (event, validator) {
+        var errors = validator.numberOfInvalids();
+        if (errors) {
+            var firstError = $(validator.errorList[0].element);
+            firstError.focus();
+            $('html, body').animate({
+                scrollTop: firstError.offset().top
+            }, 50);
+        }
     },
     submitHandler: function (form) {
         _common.showLoading();

@@ -1,20 +1,16 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <x-nav-link :to="route('top.index')" class="brand-link text-center">
-        <span class="brand-text font-weight-light">Intern PHP Source</span>
-    </x-nav-link>
-
-    <!-- Sidebar -->
+<!-- Sidebar -->
+<aside class="main-sidebar border bg-gradient-white">
     <div class="sidebar">
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                data-accordion="false">
+            <ul class="nav nav-sidebar flex-column pt-5">
                 <li class="nav-item">
-                    <x-nav-link :to="route('user.usr01')" class="nav-link">
-                        <i class="nav-icon fas fa-file"></i>
-                        <p>User</p>
-                    </x-nav-link>
+                    <a class="nav-link text-decoration-underline" href="{{ route('admin.userList') }}">User List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-decoration-underline" href="{{ route('admin.groupList') }}">Group List</a>
                 </li>
             </ul>
         </nav>
     </div>
 </aside>
+<!-- /Sidebar -->

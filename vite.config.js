@@ -7,6 +7,7 @@ const cssFiles = [
 
 const jsFiles = [
     'resources/js/common.js',
+    'resources/js/nocache.js',
     'resources/js/lib/jquery-validation/additional-setting.js',
     'resources/js/screens/auth/login.js',
 ];

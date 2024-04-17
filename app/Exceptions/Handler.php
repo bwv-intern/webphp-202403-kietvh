@@ -2,8 +2,13 @@
 
 namespace App\Exceptions;
 
-use Throwable;
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Support\Facades\{App};
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -13,7 +18,6 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
     ];
 
     /**
@@ -30,24 +34,34 @@ class Handler extends ExceptionHandler
      * Report or log an exception.
      *
      * @param Throwable $exception
+     * @throws Exception
      * @return void
-     * @throws \Exception
      */
-    public function report(Throwable $exception)
-    {
+    public function report(Throwable $exception) {
         parent::report($exception);
     }
 
     /**
      * Render an exception into an HTTP response.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param HttpRequest $request
      * @param Throwable $exception
-     * @return \Illuminate\Http\Response
      * @throws Throwable
+     * @return \Illuminate\Http\Response
      */
-    public function render($request, Throwable $exception)
-    {
+    public function render($request, Throwable $exception) {
+        if ($exception instanceof AccessDeniedException || $exception instanceof NotFoundHttpException) {
+
+            if ($exception instanceof AccessDeniedException) {
+
+                return redirect()->route('error');
+            }
+
+            if ($exception instanceof NotFoundHttpException) {
+                return redirect()->route('error');
+            }
+        }
+
         return parent::render($request, $exception);
     }
 }

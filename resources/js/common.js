@@ -37,6 +37,7 @@ $(function () {
      * @param {*} isShow
      */
     function showLoading(isShow = true) {
+        $("button[type='submit']").prop("disabled", isShow);
         if (isShow) {
             $('#loading').show();
         } else {

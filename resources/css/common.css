@@ -82,3 +82,18 @@
         max-width: 100% !important;
     }
 }
+
+
+.custom-alert {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.bg-danger {
+    background-color: #dc3545;
+}
+
+.text-white {
+    color: #fff;
+}

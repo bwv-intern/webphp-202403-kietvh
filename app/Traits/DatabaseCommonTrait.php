@@ -6,13 +6,10 @@ use Illuminate\Database\Schema\Blueprint;
 
 trait DatabaseCommonTrait {
     public function commonColumns(Blueprint $table) {
-        $table->tinyInteger('del_flg')->default(0);
-        $table->datetime('created_at');
-        $table->unsignedBigInteger('created_by');
-        $table->datetime('updated_at')->nullable();
-        $table->unsignedBigInteger('updated_by')->nullable();
-        $table->datetime('deleted_at')->nullable();
-        $table->unsignedBigInteger('deleted_by')->nullable();
+
+        $table->date('created_date');
+        $table->date('updated_date');
+        $table->date('deleted_date')->nullable();
     }
 
     public function commonCharset(Blueprint $table) {
