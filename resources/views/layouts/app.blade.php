@@ -16,6 +16,9 @@
     <link href="{{ asset('css/lib/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/lib/font-awesome/css/all.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/adminlte.min.css') }}" rel="stylesheet" />
+    <link href=
+    'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
+        rel='stylesheet'>
     @vite(['resources/css/common.css'], 'build')
     @stack('styles')
 </head>
@@ -24,7 +27,7 @@
     <x-partials.header />
     <div class="wrapper">
         <x-partials.menu />
-        <div class="content-wrapper">
+        <div class="content-wrapper bg-white">
             <section class="content">
                 <div class="container-fluid">
                     @if (Session::has('error'))
@@ -64,7 +67,7 @@
             </section>
         </div>
     </div>
-    {{--<x-partials.footer />--}}
+    {{-- <x-partials.footer /> --}}
     <x-loading />
     <!-- JS Files -->
     <script src="{{ asset('js/lib/jquery-3.7.1.min.js') }}"></script>
@@ -72,6 +75,7 @@
     <script src="{{ asset('js/lib/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('js/lib/jquery-validation/additional-methods.min.js') }}"></script>
     <script src="{{ asset('js/adminlte.min.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     @vite(['resources/js/common.js', 'resources/js/lib/jquery-validation/additional-setting.js'], 'build')
     @stack('scripts')
 </body>

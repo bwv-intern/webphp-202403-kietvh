@@ -18,11 +18,11 @@
 @endphp
 @props($allProps)
 
-<div class="input-group" style="{{ $attributes['style'] }}">
+<div class="input-group align-items-center" style="{{ $attributes['style'] }}">
     @if (isset($label))
-        <x-forms.label :label="$label" :isRequired="$isRequired" class="{{ 'col-2'. $attributes['classLabel'] }}" />
+        <x-forms.label :label="$label" :isRequired="$isRequired" class="{{ 'col-6 m-md-0 p-md-0 '. $attributes['classLabel'] }}" />
     @endif
-    <div class="col-10">
+    <div class="col-sm-6">
         <x-forms.text
             :type="$type"
             :label="$label"
@@ -44,4 +44,3 @@
     </div>
 
 </div>
-

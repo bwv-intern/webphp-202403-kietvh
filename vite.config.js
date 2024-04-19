@@ -10,6 +10,7 @@ const jsFiles = [
     'resources/js/nocache.js',
     'resources/js/lib/jquery-validation/additional-setting.js',
     'resources/js/screens/auth/login.js',
+    'resources/js/screens/user/userList.js',
 ];
 
 export default defineConfig({

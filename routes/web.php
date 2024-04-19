@@ -27,20 +27,21 @@ Route::post('/handleLogin', [AuthController::class, 'handleLogin'])->name('handl
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/error', function () {
-    if (Auth::check()) {
-        Auth::logout();
-        session()->flush();
-        session()->invalidate();
-        session()->regenerateToken();
-    }
+    // if (Auth::check()) {
+    //     Auth::logout();
+    //     session()->flush();
+    //     session()->invalidate();
+    //     session()->regenerateToken();
+    // }
 
-    return view('common.error');
+    // return view('common.error');
 })->middleware('no-cache')->name('error');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth','checkLogin', 'no-cache']], function () {
 
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', [UserController::class, 'userList'])->name('userList');
+        Route::post('/', [UserController::class, 'searchUserList'])->name('searchUserList');
     });
 
     Route::group(['prefix' => 'group'], function () {
