@@ -1,7 +1,7 @@
 <x-app-layout title="User List">
 
     <div class="p-sm-5 col-sm-8">
-        <form action="{{ route('admin.searchUserList') }}" method="post">
+        <form action="{{ route('admin.searchUserList') }}" method="post" name="formSearch" id="formSearch">
             @csrf
             <div class="row">
                 <div class="col-sm-6 ">

@@ -14,6 +14,11 @@
     "isEntry": true,
     "src": "resources/js/lib/jquery-validation/additional-setting.js"
   },
+  "resources/js/lib/jquery-validation/my-validation.js": {
+    "file": "assets/my-validation-cmTHikkP.js",
+    "isEntry": true,
+    "src": "resources/js/lib/jquery-validation/my-validation.js"
+  },
   "resources/js/nocache.js": {
     "file": "assets/nocache-Mb9JdeAP.js",
     "isEntry": true,
@@ -25,7 +30,7 @@
     "src": "resources/js/screens/auth/login.js"
   },
   "resources/js/screens/user/userList.js": {
-    "file": "assets/userList-_RSlahtx.js",
+    "file": "assets/userList-ZZxYb9IS.js",
     "isEntry": true,
     "src": "resources/js/screens/user/userList.js"
   }

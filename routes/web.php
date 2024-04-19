@@ -34,7 +34,7 @@ Route::get('/error', function () {
     //     session()->regenerateToken();
     // }
 
-    // return view('common.error');
+     return view('common.error');
 })->middleware('no-cache')->name('error');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth','checkLogin', 'no-cache']], function () {
