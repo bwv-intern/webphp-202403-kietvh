@@ -19,25 +19,27 @@ use Illuminate\Support\Facades\{Auth, Route};
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return redirect()->route('login');
+}) -> middleware(['auth','checkLogin']);
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/handleLogin', [AuthController::class, 'handleLogin'])->name('handleLogin');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/error', function () {
-    if (Auth::check()) {
-        Auth::logout();
-        session()->flush();
-        session()->invalidate();
-        session()->regenerateToken();
-    }
 
-    return view('common.error');
-})->middleware('no-cache')->name('error');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth','checkLogin', 'no-cache']], function () {
+    
+    Route::get('/error', function () {
+        // if (Auth::check()) {
+        //     Auth::logout();
+        //     session()->flush();
+        //     session()->invalidate();
+        //     session()->regenerateToken();
+        // }
+            
+        return view('common.error');
+    })->middleware('no-cache')->name('error');
 
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', [UserController::class, 'userList'])->name('userList');
