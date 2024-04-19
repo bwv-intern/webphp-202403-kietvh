@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SearchUsersRequest;
+use App\Http\Requests\User\SearchUsersRequest;
 use App\Repositories\UserRepository;
 
 use Illuminate\Http\Request;

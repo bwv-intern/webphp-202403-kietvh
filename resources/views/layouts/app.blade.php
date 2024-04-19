@@ -30,38 +30,7 @@
         <div class="content-wrapper bg-white">
             <section class="content">
                 <div class="container-fluid">
-                    @if (Session::has('error'))
-                        @php
-                            $errorType = 'danger';
-                            $errorMessages = Session::get('error');
-                        @endphp
-                        <x-alert :messages="$errorMessages" :type="$errorType" />
-                    @endif
-                    @if (Session::has('success'))
-                        @php
-                            $successType = 'success';
-                            $successMessages = Session::get('success');
-                        @endphp
-                        <x-alert :messages="$successMessages" :type="$successType" />
-                    @endif
-                    @if (isset($errors) && $errors->any())
-                        <div class="alert alert-danger">
-                            <ul class="m-0">
-                                @php
-                                    $errorsUnique = array_unique($errors->all());
-                                @endphp
-                                @if (count($errorsUnique) === 1)
-                                    @foreach ($errorsUnique as $error)
-                                        {!! $error !!}
-                                    @endforeach
-                                @else
-                                    @foreach ($errorsUnique as $error)
-                                        <li>{!! $error !!}</li>
-                                    @endforeach
-                                @endif
-                            </ul>
-                        </div>
-                    @endif
+                    
                     {{ $slot }}
                 </div>
             </section>
@@ -76,9 +45,10 @@
     <script src="{{ asset('js/lib/jquery-validation/additional-methods.min.js') }}"></script>
     <script src="{{ asset('js/adminlte.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     @vite(['resources/js/common.js', 
+    'resources/js/lib/jquery-validation/my-validation.js',
            'resources/js/lib/jquery-validation/additional-setting.js',
-           'resources/js/lib/jquery-validation/my-validation.js'
            ], 'build')
     @stack('scripts')
 </body>

@@ -7,7 +7,7 @@
                     <a class="nav-link {{ request()->is('admin/user*') ? 'text-decoration-underline active' : '' }}"
                         href="{{ route('admin.userList') }}">User List</a>
                 </li>
-                @if (Auth::check() && Auth::user()->position == 0)
+                @if (Auth::check() && Auth::user()->position_id == 0)
                     <li class="nav-item">
                         <a class="nav-link  {{ request()->is('admin/group*') ? ' text-decoration-underline active' : '' }}"
                             href="{{ route('admin.groupList') }}">Group List</a>

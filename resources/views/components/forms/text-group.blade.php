@@ -34,6 +34,7 @@
             :isHidden="$isHidden"
             class="{{ $attributes['classInput'] }}"
         />
+        <x-error-message field="{{$name}}" />
         @if ($isHidden)
             <input
                 type="hidden"
