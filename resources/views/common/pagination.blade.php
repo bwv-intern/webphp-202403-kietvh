@@ -1,9 +1,9 @@
 @if ($paginator->total() >= 1)
-    <div class="card-footer pagination-border-box" id="pagination-box">
-        <div class="float-left">
+    <div class="pagination-border-box" id="pagination-box">
+        {{-- <div class="float-left">
             {{ $paginator->total() }} 件中 {{ $paginator->firstItem() }} から {{ $paginator->lastItem() }} まで表示
-        </div>
-        <ul class="pagination pagination-sm m-0 float-right ">
+        </div> --}}
+        <ul class="pagination pagination-sm m-0 float-left ">
             <li class="page-item {{ ($paginator->currentPage() == 1) ? ' disabled' : '' }}">
                 <a class="page-link" href="{{ $paginator->url(1) }}">先頭</a>
             </li>

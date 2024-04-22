@@ -63,7 +63,19 @@ class User extends Authenticatable
         'deleted_date' => 'date',
     ];
 
-    public function group(){
+    public function group() {
         return $this->belongsTo(Group::class, 'group_id');
+    }
+
+    public function getPosition()
+    {
+        $positions = [
+            0 => 'General Director',
+            1 => 'Department Leader',
+            2 => 'Team Leader',
+            3 => 'Team Member',
+        ];
+    
+        return $positions[$this->position_id] ?? '';
     }
 }
