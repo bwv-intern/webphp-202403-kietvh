@@ -44,6 +44,7 @@
     <script src="{{ asset('js/lib/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('js/lib/jquery-validation/additional-methods.min.js') }}"></script>
     <script src="{{ asset('js/adminlte.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     @vite(['resources/js/common.js', 

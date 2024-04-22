@@ -7,6 +7,7 @@ use App\Repositories\UserRepository;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
 {
@@ -19,9 +20,16 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
-    public function userList() {
+    public function showUserListPage(SearchUsersRequest $request) {
         if (! Auth::check()) {
             return redirect()->route('login');
+        }
+       
+        if ($request->query->has('page')) {
+            return $this->handlesearch($request);
+        }
+        if(count($request->all()) > 0){
+            return $this->searchUserList($request);
         }
 
         return view('screens.user.list');
@@ -40,21 +48,54 @@ class UserController extends Controller
 
         session()->forget('user.search');
         session()->put('user.search', $params);
-
-        return $this->search($request);
+        return $this->handlesearch($request);
     }
 
-    public function search(SearchUsersRequest $request) {
-        $paramSession = session()->get('user.search');
-        // main search
-        if (! isset($paramSession['btnExport'])) {
-            $users = $this->userService->search($paramSession);
+    public function handlesearch(SearchUsersRequest $request)
+    {
+        $searchParams = session()->get('user.search');
+        
+        // Main search
+        if (!$request->has('btnExport')) {
+            if($searchParams == null){
+                return redirect()->route('admin.userList');
+            }
+            $users = $this->userService->search($searchParams);
             $users = $this->pagination($users);
-
-            return view('screens.user.list', compact('users', 'paramSession'));
+            return view('screens.user.list', compact('users', 'searchParams'));
         }
+    
+        $exportParams = $request->only([
+            'name',
+            'started_date_from',
+            'started_date_to',
+        ]);
+    
+        return $this->exportCSV($exportParams);
+    }
 
-        return $this->exportCSV($request);
+
+    public function exportCSV($exportParams) {
+        $users = $this->userService->exportCSV($exportParams);
+        $filePath = storage_path('app/users.csv');
+        $file = fopen($filePath, 'w');
+
+        // encoding CSV UTF-8
+        fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
+
+        fputcsv($file, ['ID', 'User Name', 'Email', 'Group ID', 'Group Name', 'Started Date', 'Position', 'Created Date', 'Updated Date']);
+        foreach ($users as $row) {
+            fputcsv($file, $row);
+        }
+        fclose($file);
+
+        session()->forget('user.search.btnExport');
+
+        $response = response()->download($filePath, 'users.csv')->deleteFileAfterSend(true);
+        $cookie = Cookie::make('exported', 'Ok', 1, null, null, false, false);
+        $response->headers->setCookie($cookie);
+
+        return $response;
     }
 
 
@@ -66,8 +107,8 @@ class UserController extends Controller
     
     }
 
-    public function edit(){
-        return view('screens.user.add-edit-delete');
+    public function edit($id){
+        return "Đây là màn hình edit của user ID :".$id;
     }
 
     public function handleEdit(Request $request){

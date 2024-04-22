@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\{
     AuthController,
+    CommonController,
     GroupController,
     UserController
 };
@@ -30,19 +31,23 @@ Route::get('/error', function () {
     return view('common.error');
 })->middleware(['checkLogin', 'no-cache'])->name('error');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'checkLogin', 'no-cache']], function () {
+Route::prefix('common')->as('common.')->group(function () {
+    Route::get('resetSearch', [CommonController::class, 'resetSearch'])->name('resetSearch');
+});
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'checkLogin']], function () {
 
     Route::group(['prefix' => 'user'], function () {
         // user list search
-        Route::get('/', [UserController::class, 'userList'])->name('userList');
-        Route::post('/', [UserController::class, 'searchUserList'])->name('searchUserList');
+        Route::get('/', [UserController::class, 'showUserListPage'])->name('userList');
+        //Route::post('/', [UserController::class, 'searchUserList'])->name('searchUserList');
 
         // add
         Route::get('/add-edit-delete', [UserController::class, 'add'])->name('add');
         Route::post('/add-edit-delete/{id}', [UserController::class, 'handleAdd'])->name('handleAdd');
 
         // edit delele
-        Route::get('/add-edit-delete/{id}', [UserController::class, 'add'])->name('edit');
+        Route::get('/add-edit-delete/{id}', [UserController::class, 'edit'])->name('edit');
         Route::put('/add-edit-delete/{id}', [UserController::class, 'handleEdit'])->name('handleEdit');
         Route::delete('/add-edit-delete/{id}', [UserController::class, 'handleDelete'])->name('handleDelete');
 

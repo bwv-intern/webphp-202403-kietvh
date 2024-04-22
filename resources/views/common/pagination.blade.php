@@ -3,7 +3,7 @@
         {{-- <div class="float-left">
             {{ $paginator->total() }} 件中 {{ $paginator->firstItem() }} から {{ $paginator->lastItem() }} まで表示
         </div> --}}
-        <ul class="pagination pagination-sm m-0 float-left ">
+        <ul class="pagination pagination-sm m-0 float-right ">
             <li class="page-item {{ ($paginator->currentPage() == 1) ? ' disabled' : '' }}">
                 <a class="page-link" href="{{ $paginator->url(1) }}">先頭</a>
             </li>

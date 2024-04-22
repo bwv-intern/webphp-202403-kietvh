@@ -25,7 +25,7 @@ class SearchUsersRequest extends FormRequest
         $startedDateTo = $this->input('started_date_to');
         return [
             'name' => [
-                new CheckMaxLength('User Name', 20),
+                new CheckMaxLength('User Name', 100),
             ],
             'started_date_from' => ['nullable',
                 'date_format:d/m/Y',

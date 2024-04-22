@@ -52,25 +52,65 @@ class UserRepository extends BaseRepository
         return false;
     }
 
-
-    public function search(array $params)
-    {
+    public function search(array $params) {
         $query = User::whereRaw('1=1');
         $query->whereNull('deleted_date');
-    
+
         if (isset($params['name'])) {
             $query->where('name', 'LIKE', '%' . $params['name'] . '%');
         }
-    
+
         if (isset($params['started_date_from']) && isset($params['started_date_to'])) {
             $query->whereBetween('started_date', [$params['started_date_from'], $params['started_date_to']]);
         }
-    
+
         $query->orderBy('name', 'asc')
-        ->orderBy('started_date', 'asc')
-        ->orderBy('id', 'asc');
-       
+            ->orderBy('started_date', 'asc')
+            ->orderBy('id', 'asc');
+
         return $query;
     }
 
+    public function exportCSV(array $params) {
+        $query = $this->search($params);
+        $results = [];
+        $query->chunk(100, function ($users) use (&$results) {
+            foreach ($users as $user) {
+                $results[] = $this->mapUserToCsvRow($user);
+            }
+        });
+        return $results;
+    }
+
+    private function mapUserToCsvRow($user) {
+        $started_date = $user->started_date ? $user->started_date->format('d/m/Y') : '';
+        $created_date = $user->created_date ? $user->created_date->format('d/m/Y') : '';
+        $updated_date = $user->updated_date ? $user->updated_date->format('d/m/Y') : '';
+
+        // return array_map(function ($value) {
+        //     return '"' . $value . '"';
+        // }, [
+        //     $user->id,
+        //     $user->name,
+        //     $user->email,
+        //     $user->group_id,
+        //     $user->group->name ?? '',
+        //     $started_date,
+        //     $user->position_id,
+        //     $created_date,
+        //     $updated_date,
+        // ]);
+
+        return [
+            '"' . $user->id . '"',
+            '"' . $user->name . '"',
+            '"' . $user->email . '"',
+            '"' . $user->group_id . '"',
+            ($user->group && $user->group->name) ? '"' . $user->group->name . '"' : '',
+            '"' . $started_date . '"',
+            '"' . $user->position_id . '"',
+            '"' . $created_date . '"',
+            '"' . $updated_date . '"',
+        ];
+    }
 }

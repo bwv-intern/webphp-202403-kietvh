@@ -1,21 +1,20 @@
 <x-app-layout title="User List">
     <div class="p-sm-5 col-sm-8">
-        <form action="{{ route('admin.searchUserList') }}" method="post" name="formSearch" id="formSearch">
-            @csrf
+        <form action="{{ route('admin.userList') }}" method="get" name="formSearch" id="formSearch">
             <div class="row">
                 <div class="col-sm-6 ">
-                    <x-forms.text-group label="User Name" name="name" :value="$paramSession['name'] ?? old('name')" />
+                    <x-forms.text-group label="User Name" name="name" :value="isset($_GET['name']) ? $_GET['name'] : old('name')" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-6 ">
                     <x-forms.text-group label="Started Date From" id="started_date_from" name="started_date_from"
-                        :value="$paramSession['started_date_from'] ?? old('started_date_from')" />
+                        :value="isset($_GET['started_date_from']) ? $_GET['started_date_from'] : old('started_date_from')" />
 
                 </div>
                 <div class="col-sm-6">
                     <x-forms.text-group label="Started Date To" id="started_date_to" name="started_date_to"
-                        :value="$paramSession['started_date_to'] ?? old('started_date_to')" />
+                        :value="isset($_GET['started_date_to']) ? $_GET['started_date_to'] : old('started_date_to')" />
                 </div>
             </div>
             <div class="row d-flex">
@@ -30,10 +29,9 @@
             </div>
             @if (isset($users))
                 @if(count($users) > 0)
-                <div class="row d-flex mt-2">
-                    <div class="col-sm-5 gap-5 mr-md-4 d-sm-none d-md-block">
-                    </div>
-                    <div class="col-sm-6 gap-5 ml-md-2 ml-sm-0">
+                <div class="row d-flex mt-2 justify-content-center">
+                    
+                    <div class="col-sm-12 gap-5 ml-md-2 ml-sm-0">
                         {{ $users->links('common.pagination') }}
                     </div>
                 </div>
@@ -53,7 +51,7 @@
                                 @foreach ($users as $user)
                                     <tr>
                                         <td>
-                                            <a href="" class="text-decoration-underline"> {{ $user->name }}
+                                            <a href="{{ route('admin.edit', ['id'=>$user->id]) }}" class="text-decoration-underline"> {{ $user->name }}
                                             </a>
                                         </td>
                                         <td>

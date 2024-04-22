@@ -101,8 +101,8 @@
 }
 
 thead th {
-    max-width: 75px;
-    width: 75px;
+    max-width: 200px;
+    width: 200px;
     height: 50px;
     padding: 1px;
     text-align: center;
@@ -113,8 +113,8 @@ thead th {
 
 
 tbody td {
-    max-width: 75px;
-    width: 75px;
+    max-width: 200px;
+    width: 200px;
     height: 50px;
     white-space: nowrap;
     overflow: hidden;
@@ -123,8 +123,8 @@ tbody td {
 
 @media (max-width: 576px) {
     thead th {
-        max-width: 100px;
-        width: 100px;
+        max-width:  200px;
+        width:  200px;
         height: 50px;
         padding: 1px;
         text-align: center;
@@ -134,8 +134,8 @@ tbody td {
     }
 
     tbody td {
-        max-width: 100px;
-        width: 100px;
+        max-width:  200px;
+        width:  200px;
         height: 50px;
         white-space: nowrap;
         overflow: hidden;

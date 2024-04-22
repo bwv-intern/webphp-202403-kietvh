@@ -15,13 +15,19 @@ class UserService
 
     public function search(array $params) {
         if (isset($params['started_date_from'])) {
-            $params['started_date_from'] = DateUtil::formatDate($params['started_date_from'], 'Y-m-d');
+            $params['started_date_from'] = DateUtil::formatDate2($params['started_date_from'], 'Y/m/d');
         }
 
         if (isset($params['started_date_to'])) {
-            $params['started_date_to'] = DateUtil::formatDate($params['started_date_to'], 'Y-m-d');
+            $params['started_date_to'] = DateUtil::formatDate2($params['started_date_to'], 'Y/m/d');
         }
         $users = $this->userRepository->search($params);
+
+        return $users;
+    }
+
+    public function exportCSV(array $params) {
+        $users = $this->userRepository->exportCSV($params);
 
         return $users;
     }
