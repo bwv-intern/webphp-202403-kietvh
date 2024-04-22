@@ -77,6 +77,12 @@ class UserController extends Controller
 
     public function exportCSV($exportParams) {
         $users = $this->userService->exportCSV($exportParams);
+
+        if($users == null || count($users) == 0){
+
+            return back();
+        }
+
         $filePath = storage_path('app/users.csv');
         $file = fopen($filePath, 'w');
 
