@@ -40,7 +40,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
     Route::group(['prefix' => 'user'], function () {
         // user list search
         Route::get('/', [UserController::class, 'showUserListPage'])->name('userList');
-        //Route::post('/', [UserController::class, 'searchUserList'])->name('searchUserList');
+        Route::post('/', [UserController::class, 'searchUserList'])->name('searchUserList');
 
         // add
         Route::get('/add-edit-delete', [UserController::class, 'add'])->name('add');

@@ -144,18 +144,30 @@ tbody td {
     }
 } */
 
-table {
-    table-layout:fixed;
-    width: inherit !important;
-  }
-  td, th {
-    width:200px !important;
-    height:75px !important;
-    max-width:200px !important;
-    max-height:75px !important;
-    min-width:200px !important;
-    min-height:75px !important;
+.custom-table {
+    table-layout: fixed;
+    width: auto !important;
+}
+
+.custom-table td,
+.custom-table th {
+    width: 200px !important;
+    height: 75px !important;
+    max-width: 200px !important;
+    max-height: 75px !important;
+    min-width: 200px !important;
+    min-height: 75px !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
+    vertical-align: middle;
+}
+
+.table thead th {
+     vertical-align: middle;
+     border-bottom: 2px solid #dee2e6;
+}
+.pagination li.active {
+    z-index: 1;
+}
+

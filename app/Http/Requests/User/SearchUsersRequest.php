@@ -5,6 +5,7 @@ namespace App\Http\Requests\User;
 use App\Libs\ConfigUtil;
 use App\Rules\{CheckGreatherThanDate, CheckLessThanDate, CheckMaxLength};
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class SearchUsersRequest extends FormRequest
 {
@@ -12,7 +13,7 @@ class SearchUsersRequest extends FormRequest
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -23,25 +24,27 @@ class SearchUsersRequest extends FormRequest
     public function rules(): array {
         $startedDateFrom = $this->input('started_date_from');
         $startedDateTo = $this->input('started_date_to');
+
         return [
             'name' => [
                 new CheckMaxLength('User Name', 100),
             ],
             'started_date_from' => ['nullable',
                 'date_format:d/m/Y',
-                new CheckGreatherThanDate('Started Date From', 'Started Date To', $startedDateTo ?? "", 'd/m/Y'),
-                new CheckLessThanDate('Started Date From', 'Started Date To', $startedDateFrom ?? "", 'd/m/Y'),
+                'before_or_equal:started_date_to',
             ],
             'started_date_to' => ['nullable',
-                                  'date_format:d/m/Y',
-                                 ],
+                'date_format:d/m/Y',
+                
+            ],
         ];
     }
 
     public function messages() {
         return [
-            'started_date_from.date_format' => ConfigUtil::getMessage('EBT008',['Started Date From']),
-            'started_date_to.date_format' => ConfigUtil::getMessage('EBT008',['Started Date To']),
+            'started_date_from.date_format' => ConfigUtil::getMessage('EBT008', ['Started Date From']),
+            'started_date_to.date_format' => ConfigUtil::getMessage('EBT008', ['Started Date To']),
+            'started_date_from.before_or_equal' =>  ConfigUtil::getMessage('EBT044'),
         ];
     }
 }

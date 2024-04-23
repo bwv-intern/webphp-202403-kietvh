@@ -54,8 +54,7 @@ $(function () {
                     $("#formSearch input[type='date']").val('');
                     $("#formSearch input[type='email']").val('');
                     $("#formSearch input[type='number']").val('');
-                    const newUrl = '/admin/user';
-                    window.history.pushState(null, '', newUrl);
+                    window.history.replaceState( null, null, window.location.href );
                 }
             }
         });

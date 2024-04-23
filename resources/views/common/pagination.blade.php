@@ -31,13 +31,20 @@
                 }
             @endphp
             @for ($i = $firstPage; $i <= $lastPage; $i++)
-                <li class="page-item {{ ($paginator->currentPage() == $i) ? ' active not-click' : '' }}">
-                    <a class="page-link" href="{{ $paginator->url($i) }}">{{ $i }}</a>
-                </li>
+                @if($paginator->currentPage() == $i)
+                    <li class="page-item active">
+                        <a class="page-link" >{{ $i }}</a>
+                    </li>
+                @else
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $paginator->url($i) }}">{{ $i }}</a>
+                    </li>
+                @endif
+               
             @endfor
 
             <li class="page-item {{ ($paginator->currentPage() == $paginator->lastPage()) ? ' disabled' : '' }}">
-                <a class="page-link" href="{{ $paginator->url($paginator->currentPage()+1) }}">次</a>
+                <a class="page-link" href="{{ $paginator->url($paginator->currentPage() + 1) }}">次</a>
             </li>
 
             <li class="page-item {{ ($paginator->currentPage() == $paginator->lastPage()) ? ' disabled' : '' }}">

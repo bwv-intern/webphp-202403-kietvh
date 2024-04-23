@@ -24,7 +24,6 @@ class UserController extends Controller
         if (! Auth::check()) {
             return redirect()->route('login');
         }
-       
         if ($request->query->has('page')) {
             return $this->handlesearch($request);
         }
@@ -86,10 +85,8 @@ class UserController extends Controller
         $filePath = storage_path('app/users.csv');
         $file = fopen($filePath, 'w');
 
-        // encoding CSV UTF-8
-        fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-        fputcsv($file, ['ID', 'User Name', 'Email', 'Group ID', 'Group Name', 'Started Date', 'Position', 'Created Date', 'Updated Date']);
+        fputcsv($file, ['User Name', 'User Name', 'Email', 'Group ID', 'Group Name', 'Started Date', 'Position', 'Created Date', 'Updated Date']);
         foreach ($users as $row) {
             fputcsv($file, $row);
         }

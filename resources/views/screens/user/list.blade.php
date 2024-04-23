@@ -1,20 +1,21 @@
 <x-app-layout title="User List">
     <div class="p-sm-5 col-sm-8">
-        <form action="{{ route('admin.userList') }}" method="get" name="formSearch" id="formSearch">
+        <form action="{{ route('admin.searchUserList') }}" method="post" name="formSearch" id="formSearch">
+            @csrf
             <div class="row">
                 <div class="col-sm-6 ">
-                    <x-forms.text-group label="User Name" name="name" :value="isset($_GET['name']) ? $_GET['name'] : old('name')" />
+                    <x-forms.text-group label="User Name" name="name" :value="$searchParams['name'] ?? old('name')" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-6 ">
                     <x-forms.text-group label="Started Date From" id="started_date_from" name="started_date_from"
-                        :value="isset($_GET['started_date_from']) ? $_GET['started_date_from'] : old('started_date_from')" />
+                        :value="$searchParams['started_date_from'] ?? old('started_date_from')" />
 
                 </div>
                 <div class="col-sm-6">
                     <x-forms.text-group label="Started Date To" id="started_date_to" name="started_date_to"
-                        :value="isset($_GET['started_date_to']) ? $_GET['started_date_to'] : old('started_date_to')" />
+                        :value="$searchParams['started_date_to'] ?? old('started_date_to')" />
                 </div>
             </div>
             <div class="row d-flex">
@@ -28,64 +29,67 @@
                 </div>
             </div>
             @if (isset($users))
-                @if(count($users) > 0)
-                <div class="row d-flex mt-2 justify-content-center">
-                    
-                    <div class="col-sm-12 gap-5 ml-md-2 ml-sm-0">
-                        {{ $users->links('common.pagination') }}
+                @if (count($users) > 0)
+                    <div class="row d-flex mt-2 justify-content-center">
+
+                        <div class="col-sm-12 gap-5 ml-md-2 ml-sm-0">
+                            {{ $users->links('common.pagination') }}
+                        </div>
                     </div>
-                </div>
-                <div class="row mt-5">
-                    <div class="col-sm-10">
-                        <table class="table table-bordered table-responsive-md">
-                            <thead>
-                                <tr>
-                                    <th class="fw-normal">User Name</th>
-                                    <th class="fw-normal">Email</th>
-                                    <th class="fw-normal">Group Name</th>
-                                    <th class="fw-normal">Started Date</th>
-                                    <th class="fw-normal">Position</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($users as $user)
+                    <div class="row mt-5">
+                        <div class="col-sm-10">
+                            <table class="table table-bordered table-responsive-md custom-table">
+                                <thead>
                                     <tr>
-                                        <td>
-                                            <a href="{{ route('admin.edit', ['id'=>$user->id]) }}" class="text-decoration-underline"> {{ $user->name }}
-                                            </a>
-                                        </td>
-                                        <td>
-                                            @if (Auth::user()->position_id == 0)
-                                                <a href="" class="text-decoration-underline"> {{ $user->email }}
-                                                </a>
-                                            @else
-                                                {{ $user->email }}
-                                            @endif
-                                        </td>
-                                        <td>{{ $user->group->name ?? '' }}</td>
-                                        <td>{{ $user->started_date != null ? $user->started_date->format('d/m/Y') : '' }}
-                                        </td>
-                                        <td>{{ $user->getPosition() }}</td>
+                                        <th class="fw-normal">User Name</th>
+                                        <th class="fw-normal">Email</th>
+                                        <th class="fw-normal">Group Name</th>
+                                        <th class="fw-normal">Started Date</th>
+                                        <th class="fw-normal">Position</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach ($users as $user)
+                                        <tr>
+                                            <td>
+                                                <a href="{{ route('admin.edit', ['id' => $user->id]) }}"
+                                                    class="text-decoration-underline "> {{ $user->name }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                @if (Auth::user()->position_id == 0)
+                                                    <a href="" class="text-decoration-underline ">
+                                                        {{ $user->email }}
+                                                    </a>
+                                                @else
+                                                    {{ $user->email }}
+                                                @endif
+                                            </td>
+                                            <td class="">{{ $user->group->name ?? '' }}</td>
+                                            <td class="">
+                                                {{ $user->started_date != null ? $user->started_date->format('d/m/Y') : '' }}
+                                            </td>
+                                            <td class="">{{ $user->getPosition() }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
 
 
+                        </div>
                     </div>
-                </div>
                 @else
-                <div class="row mt-5">
-                    <div class="col-sm-10">
-                        <span class="mx-1">
-                            No User Found
-                        </span>
+                    <div class="row mt-5">
+                        <div class="col-sm-10">
+                            <span class="mx-1">
+                                No User Found
+                            </span>
+                        </div>
                     </div>
-                </div>
                 @endif
-            
+
             @endif
-            
+
             @if (Auth::user()->position_id == 0)
                 <x-button.userlist label="New" class="btn btn-secondary m-1 text-truncate" type="button"
                     style="width: 100px;" id="btnNew" name="btnNew"></x-button.userlist>

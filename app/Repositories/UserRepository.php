@@ -42,11 +42,11 @@ class UserRepository extends BaseRepository
             $result = $this->model->where('email', $email)
                 ->whereNull('deleted_date')
                 ->get();
+            if ($result) {
+                return count($result) > 1;
+            }
         } catch (Exception $exption) {
             Log::error($exption->getMessage());
-        }
-        if ($result) {
-            return count($result) > 1;
         }
 
         return false;
@@ -60,8 +60,13 @@ class UserRepository extends BaseRepository
             $query->where('name', 'LIKE', '%' . $params['name'] . '%');
         }
 
-        if (isset($params['started_date_from']) && isset($params['started_date_to'])) {
-            $query->whereBetween('started_date', [$params['started_date_from'], $params['started_date_to']]);
+        if (isset($params['started_date_from'])) {
+            $dateFrom = $params['started_date_from'];
+            $query->where('started_date', '>=', $dateFrom);
+        }
+        if (isset($params['started_date_to'])) {
+            $dateTo = $params['started_date_to'];
+            $query->where('started_date', '<=', $dateTo);
         }
 
         $query->orderBy('name', 'asc')
@@ -79,6 +84,7 @@ class UserRepository extends BaseRepository
                 $results[] = $this->mapUserToCsvRow($user);
             }
         });
+
         return $results;
     }
 
