@@ -37,6 +37,7 @@ $(function () {
     });
 
     $("#btnClear").click(function () {
+       
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -50,18 +51,16 @@ $(function () {
             success: function (response) {
                 console.log(response);
                 if (response.hasError == false) {
-                    $("#formSearch input[type='text']").val('');
-                    $("#formSearch input[type='date']").val('');
-                    $("#formSearch input[type='email']").val('');
-                    $("#formSearch input[type='number']").val('');
-                    window.history.replaceState( null, null, window.location.href );
+                    $("#formSearch").trigger('reset');
+                    $("#formSearch").find('input:text, input:password, input:file, textarea').val('').removeClass("error-message");
+                    $(".error-message").remove();
                 }
             }
         });
     });
 
     $("#btnNew").click(function (e) {
-        alert("Nút New");
+        window.location.href = '/admin/user/add-edit-delete';
     });
     $("#btnExport").click(function (e) {
     });

@@ -6,8 +6,7 @@ use App\Http\Requests\User\SearchUsersRequest;
 use App\Repositories\UserRepository;
 use App\Services\UserService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\{Auth, Cookie};
 
 class UserController extends Controller
 {
@@ -20,72 +19,59 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
-
-    public function userList(SearchUsersRequest $request){
-        if(!Auth::check() || Auth::user()->deleted_date != null){
+    public function userList(SearchUsersRequest $request) {
+        if (! Auth::check() || Auth::user()->deleted_date != null) {
             return redirect()->route('login');
         }
         if ($request->query->has('page')) {
             return $this->handlesearch($request);
         }
-        if(count($request->all()) > 0){
+        if (count($request->all()) > 0) {
             return $this->searchUserList($request);
         }
-
+       
         return view('screens.user.list');
     }
 
     public function searchUserList(SearchUsersRequest $request) {
         $params = $request->only(
-            [   'name',
+            ['name',
                 'started_date_from',
                 'started_date_to',
             ],
         );
-        if ($request->has('btnExport')) {
-            $params['btnExport'] = 'btnExport';
-        }
 
         session()->forget('user.search');
         session()->put('user.search', $params);
+
         return $this->handlesearch($request);
     }
 
-    public function handlesearch(SearchUsersRequest $request)
-    {
+    public function handlesearch(SearchUsersRequest $request) {
         $searchParams = session()->get('user.search');
-        
+
         // Main search
-        if (!$request->has('btnExport')) {
-            if($searchParams == null){
-                return redirect()->route('admin.userList');
-            }
-            $users = $this->userService->search($searchParams);
-            $users = $this->pagination($users);
-            return view('screens.user.list', compact('users', 'searchParams'));
+
+        if ($searchParams == null) {
+            return redirect()->route('admin.userList');
         }
-    
-        $exportParams = $request->only([
-            'name',
-            'started_date_from',
-            'started_date_to',
-        ]);
-    
-        return $this->exportCSV($exportParams);
+        $users = $this->userService->search($searchParams);
+        $users = $this->pagination($users);
+
+        return view('screens.user.list', compact('users', 'searchParams'));
     }
 
-
-    public function exportCSV($exportParams) {
+    public function exportCSV() {
+        $exportParams = session()->get('user.search');
+        
         $users = $this->userService->exportCSV($exportParams);
 
-        if($users == null || count($users) == 0){
-
+        if ($users == null || count($users) == 0) {
             return back();
         }
 
         $filePath = storage_path('app/users.csv');
         $file = fopen($filePath, 'w');
-
 
         fputcsv($file, ['User Name', 'User Name', 'Email', 'Group ID', 'Group Name', 'Started Date', 'Position', 'Created Date', 'Updated Date']);
         foreach ($users as $row) {
@@ -102,25 +88,20 @@ class UserController extends Controller
         return $response;
     }
 
-
-    public function add(){
+    public function add() {
         return view('screens.user.add-edit-delete');
     }
 
-    public function handleAdd(Request $request){
-    
+    public function handleAdd(Request $request) {
     }
 
-    public function edit($id){
-        return "Đây là màn hình edit của user ID :".$id;
+    public function edit($id) {
+        return 'Đây là màn hình edit của user ID :' . $id;
     }
 
-    public function handleEdit(Request $request){
-    
+    public function handleEdit(Request $request) {
     }
 
-    public function handleDelete(Request $request){
-    
+    public function handleDelete(Request $request) {
     }
-
 }

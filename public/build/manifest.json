@@ -1,11 +1,11 @@
 {
   "resources/css/common.css": {
-    "file": "assets/common-hGqCbRgK.css",
+    "file": "assets/common-Ye5qcvbb.css",
     "isEntry": true,
     "src": "resources/css/common.css"
   },
   "resources/js/common.js": {
-    "file": "assets/common-VGAmYZeU.js",
+    "file": "assets/common-FYbatBXM.js",
     "isEntry": true,
     "src": "resources/js/common.js"
   },
@@ -30,7 +30,7 @@
     "src": "resources/js/screens/auth/login.js"
   },
   "resources/js/screens/user/userList.js": {
-    "file": "assets/userList-zmaMkXgU.js",
+    "file": "assets/userList-uLHJUhRj.js",
     "isEntry": true,
     "src": "resources/js/screens/user/userList.js"
   }
