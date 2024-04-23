@@ -19,7 +19,7 @@ class UserController extends Controller
 
 
     public function userList(){
-        if(!Auth::check() && Auth::user()->deleted_date == null){
+        if(!Auth::check() || Auth::user()->deleted_date != null){
             return redirect()->route('login');
         }
         return view('screens.user.list');
