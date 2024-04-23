@@ -23,7 +23,7 @@ class AuthController extends Controller
      * Render login page
      */
     public function login() {
-        if (Auth::check() && Auth::user()->deleted_date != null) {
+        if (Auth::check() && Auth::user()->deleted_date == null) {
             return redirect()->route('admin.userList');
         }
         return view('screens.auth.login');
