@@ -20,8 +20,9 @@
 </head>
 
 <body class="container-fluid m-0 p-0">
-    <div class="bg-white border  py-5">
-
+    <div class="bg-white border" style="height: 100px">
+        <div class="h-50 p-3"></div>
+        <div class="d-flex align-items-center justify-content-center"> <h3>Login</h3></div>
     </div>
     {{ $slot }}
     <x-loading />

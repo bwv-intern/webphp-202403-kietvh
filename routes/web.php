@@ -39,7 +39,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
 
     Route::group(['prefix' => 'user'], function () {
         // user list search
-        Route::get('/', [UserController::class, 'showUserListPage'])->name('userList');
+        Route::get('/', [UserController::class, 'userList'])->name('userList');
         Route::post('/', [UserController::class, 'searchUserList'])->name('searchUserList');
 
         // add

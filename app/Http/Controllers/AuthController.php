@@ -23,7 +23,7 @@ class AuthController extends Controller
      * Render login page
      */
     public function login() {
-        if (Auth::check()) {
+        if (Auth::check() && Auth::user()->deleted_date == null) {
             return redirect()->route('admin.userList');
         }
         return view('screens.auth.login');
@@ -34,24 +34,16 @@ class AuthController extends Controller
      * @param LoginRequest $request
      */
     public function handleLogin(LoginRequest $request) {
-        $credentials = $request->only('email', 'password');
-        $checkDuplicate = $this->userRepository->checkDuplicateEmailForLogin($request->email);
+        $checkDuplicate = $this->userRepository->checkDuplicateEmailForLogin($request->email,$request->password);
         if ($checkDuplicate) {
-            return back()->withErrors(ConfigUtil::getMessage('EBT016'))->withInput();
-        }
-        // Get User Login
-        $user = $this->userRepository->getUserLogin($credentials);
-        if ($user == null) {
             return back()->withError(ConfigUtil::getMessage('EBT016'))->withInput();
         }
-
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt([...$request->only(['email', 'password']), 'deleted_date' => null])) {
             $ridirecTo = 'admin/user';
             if ($request->session()->get('previous_url')) {
                 $ridirecTo = $request->session()->get('previous_url');
                 $request->session()->forget('previous_url');
             }
-
             return redirect()->intended($ridirecTo);
         }
 

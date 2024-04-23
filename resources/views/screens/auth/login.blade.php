@@ -1,6 +1,5 @@
 <x-login-layout title="Login">
-    <div class="row m-5 px-sm-5">
-        
+    <div class="row m-5 px-sm-5 d-flex justify-content-center align-item-center">
         <div class="col-sm-3">
             @if (session('error'))
             <div class="custom-alert bg-danger text-white p-1">
@@ -27,6 +26,7 @@
                 </div>
             </form>
         </div>
+       
     </div>
 
     @push('scripts')

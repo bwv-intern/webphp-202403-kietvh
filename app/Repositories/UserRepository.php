@@ -37,18 +37,24 @@ class UserRepository extends BaseRepository
         return null;
     }
 
-    public function checkDuplicateEmailForLogin(string $email) {
+    public function checkDuplicateEmailForLogin(string $email,string $password)
+    {
         try {
             $result = $this->model->where('email', $email)
                 ->whereNull('deleted_date')
                 ->get();
-            if ($result) {
-                return count($result) > 1;
-            }
-        } catch (Exception $exption) {
-            Log::error($exption->getMessage());
+        } catch (\Exception $exption) {
+            
         }
-
+        if ($result) {
+            $duplicate = [];
+            foreach($result as $user){
+                if(Hash::check($password, $user->password)){
+                    $duplicate[] = $user;
+                }
+            }
+            return count($duplicate) > 1;
+        }
         return false;
     }
 

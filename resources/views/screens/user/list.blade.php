@@ -58,7 +58,7 @@
                                             </td>
                                             <td>
                                                 @if (Auth::user()->position_id == 0)
-                                                    <a href="" class="text-decoration-underline ">
+                                                    <a class="text-decoration-underline ">
                                                         {{ $user->email }}
                                                     </a>
                                                 @else

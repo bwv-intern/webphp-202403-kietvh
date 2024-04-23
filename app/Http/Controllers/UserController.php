@@ -20,8 +20,9 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
-    public function showUserListPage(SearchUsersRequest $request) {
-        if (! Auth::check()) {
+
+    public function userList(SearchUsersRequest $request){
+        if(!Auth::check() || Auth::user()->deleted_date != null){
             return redirect()->route('login');
         }
         if ($request->query->has('page')) {
