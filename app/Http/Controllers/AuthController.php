@@ -37,7 +37,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         $checkDuplicate = $this->userRepository->checkDuplicateEmailForLogin($request->email);
         if ($checkDuplicate) {
-            return back()->withErrors(ConfigUtil::getMessage('EBT016'))->withInput();
+            return back()->withError(ConfigUtil::getMessage('EBT016'))->withInput();
         }
         // Get User Login
         $user = $this->userRepository->getUserLogin($credentials);
