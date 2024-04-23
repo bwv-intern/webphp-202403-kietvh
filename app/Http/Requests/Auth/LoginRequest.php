@@ -27,11 +27,9 @@ class LoginRequest extends FormRequest
             'email' => [
                 'required',
                 new CheckMailRFC(),
-                new CheckMaxLength('Email', 255),
             ],
             'password' => [
                 'required',
-                new CheckMaxLength('Password', 20),
             ],
         ];
     }

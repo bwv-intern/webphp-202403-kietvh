@@ -4,12 +4,9 @@ $(function() {
             email: {
                 required: true,
                 checkValidEmailRFC: true,
-                maxlength: 255,
-
             },
             password: {
                 required: true,
-                maxlength: 20,
             },
         },
     });
