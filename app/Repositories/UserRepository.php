@@ -99,30 +99,30 @@ class UserRepository extends BaseRepository
         $created_date = $user->created_date ? $user->created_date->format('d/m/Y') : '';
         $updated_date = $user->updated_date ? $user->updated_date->format('d/m/Y') : '';
 
-        // return array_map(function ($value) {
-        //     return '"' . $value . '"';
-        // }, [
-        //     $user->id,
-        //     $user->name,
-        //     $user->email,
-        //     $user->group_id,
-        //     $user->group->name ?? '',
-        //     $started_date,
-        //     $user->position_id,
-        //     $created_date,
-        //     $updated_date,
-        // ]);
+        return array_map(function ($value) {
+            return '"' . $value . '"';
+        }, [
+            $user->id,
+            $user->name,
+            $user->email,
+            $user->group_id,
+            $user->group->name ?? '',
+            $started_date,
+            $user->position_id,
+            $created_date,
+            $updated_date,
+        ]);
 
-        return [
-            '"' . $user->id . '"',
-            '"' . $user->name . '"',
-            '"' . $user->email . '"',
-            '"' . $user->group_id . '"',
-            ($user->group && $user->group->name) ? '"' . $user->group->name . '"' : '',
-            '"' . $started_date . '"',
-            '"' . $user->position_id . '"',
-            '"' . $created_date . '"',
-            '"' . $updated_date . '"',
-        ];
+        // return [
+        //     '"' . $user->id . '"',
+        //     '"' . $user->name . '"',
+        //     '"' . $user->email . '"',
+        //     '"' . $user->group_id . '"',
+        //     ($user->group && $user->group->name) ? '"' . $user->group->name . '"' : '',
+        //     '"' . $started_date . '"',
+        //     '"' . $user->position_id . '"',
+        //     '"' . $created_date . '"',
+        //     '"' . $updated_date . '"',
+        // ];
     }
 }
