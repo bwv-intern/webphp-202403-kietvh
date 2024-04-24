@@ -32,8 +32,8 @@
         @if (isset($users))
             @if (count($users) > 0)
                 <div class="row d-flex mt-2 justify-content-center">
-
-                    <div class="col-sm-12 gap-5 ml-md-2 ml-sm-0">
+                    <div class="col-sm-4 d-md-none"></div>
+                    <div class="col-sm-8 col-md-11 gap-5 ml-md-2 ml-sm-0">
                         {{ $users->links('common.pagination') }}
                     </div>
                 </div>
@@ -42,11 +42,11 @@
                         <table class="table table-bordered table-responsive-sm custom-table">
                             <thead>
                                 <tr>
-                                    <th class="fw-normal">User Name</th>
-                                    <th class="fw-normal">Email</th>
-                                    <th class="fw-normal">Group Name</th>
-                                    <th class="fw-normal">Started Date</th>
-                                    <th class="fw-normal">Position</th>
+                                    <th class="fw-normal text-center">User Name</th>
+                                    <th class="fw-normal text-center">Email</th>
+                                    <th class="fw-normal text-center">Group Name</th>
+                                    <th class="fw-normal text-center">Started Date</th>
+                                    <th class="fw-normal text-center">Position</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,23 +54,23 @@
                                     <tr>
                                         <td>
                                             <a href="{{ route('admin.edit', ['id' => $user->id]) }}"
-                                                class="text-decoration-underline "> {{ $user->name }}
+                                                class="text-decoration-underline "> {{nl2br($user->name) }}
                                             </a>
                                         </td>
                                         <td>
                                             @if (Auth::user()->position_id == 0)
                                                 <a class="text-decoration-underline ">
-                                                    {{ $user->email }}
+                                                    {{ nl2br($user->email) }}
                                                 </a>
                                             @else
-                                                {{ $user->email }}
+                                                {{ nl2br($user->email) }}
                                             @endif
                                         </td>
-                                        <td class="">{{ $user->group->name ?? '' }}</td>
+                                        <td class="">{{ nl2br($user->group->name ?? '') }}</td>
                                         <td class="">
-                                            {{ $user->started_date != null ? $user->started_date->format('d/m/Y') : '' }}
+                                            {{ nl2br($user->started_date != null ? $user->started_date->format('d/m/Y') : '') }}
                                         </td>
-                                        <td class="">{{ $user->getPosition() }}</td>
+                                        <td class="">{{ nl2br($user->getPosition()) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

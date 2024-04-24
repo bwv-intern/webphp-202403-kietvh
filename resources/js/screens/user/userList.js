@@ -51,6 +51,8 @@ $(function () {
                     $("#formSearch").trigger('reset');
                     $("#formSearch").find('input:text, input:password, input:file, textarea').val('').removeClass("error-message");
                     $(".error-message").remove();
+                    const newUrl = '/admin/user';
+                    window.history.pushState(null, '', newUrl);
                 }
             }
         });

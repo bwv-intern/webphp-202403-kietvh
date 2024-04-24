@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\User\SearchUsersRequest;
+use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Services\UserService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{Auth, Cookie};
+use Illuminate\Support\Facades\{App, Auth, Cookie};
 use Carbon\Carbon;
 use Illuminate\Support\Facades\{Session};
 
@@ -122,6 +123,12 @@ class UserController extends Controller
     }
 
     public function add() {
+        if (! Auth::check() || Auth::user()->deleted_date != null) {
+            return redirect()->route('login');
+        }
+        if(Auth::user()->position_id != 0){
+            return redirect()->route('error');
+        }
         return view('screens.user.add-edit-delete');
     }
 
@@ -129,6 +136,10 @@ class UserController extends Controller
     }
 
     public function edit($id) {
+        $user = User::find($id);
+        if($user == null){
+            return redirect()->route('error');
+        }
         return 'Đây là màn hình edit của user ID :' . $id;
     }
 

@@ -171,3 +171,11 @@ tbody td {
     z-index: 1;
 }
 
+.equal-height {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.equal-height-item {
+    flex: 1 0 auto;
+}
