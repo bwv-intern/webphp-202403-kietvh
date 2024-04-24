@@ -4,7 +4,7 @@
         <nav class="mt-2">
             <ul class="nav nav-sidebar flex-column pt-5">
                 <li class="nav-item">
-                    <a class="nav-link  text-decoration-underline active" id= "menu-userList">User List</a>
+                    <a class="nav-link text-decoration-underline active" href="{{ route('admin.userList') }}" id= "menu-userList">User List</a>
                 </li>
                 @if (Auth::check() && Auth::user()->position_id == 0)
                     <li class="nav-item">
