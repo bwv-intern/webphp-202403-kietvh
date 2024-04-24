@@ -127,4 +127,20 @@ $(function () {
             success: function (response) {}
         });
     });
+
+    $('#menu-userList').click(function(event) {
+        event.preventDefault();
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            url: '/admin/user/clear',
+            type: 'post',
+            dataType: 'json',
+            success: function (response) {
+                window.location.href = $('#menu-userList').attr('href');
+            }
+        });
+       
+    });
 });

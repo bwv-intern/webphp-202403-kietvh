@@ -56,13 +56,14 @@
     border: 6px solid rgb(151, 148, 148);
     border-color: rgb(151, 148, 148) transparent rgb(151, 148, 148) transparent;
     -webkit-animation: lds-dual-ring 1.2s linear infinite;
-            animation: lds-dual-ring 1.2s linear infinite;
+    animation: lds-dual-ring 1.2s linear infinite;
 }
 
 @-webkit-keyframes lds-dual-ring {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -72,6 +73,7 @@
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -96,4 +98,84 @@
 
 .text-white {
     color: #fff;
+}
+
+/* thead th {
+    max-width: 200px !important;
+    width: 200px !important;
+    height: 50px;
+    padding: 1px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+tbody td {
+    max-width: 200px !important;
+    width: 200px !important;
+    height: 50px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 576px) {
+    thead th {
+        max-width:  200px;
+        width:  200px;
+        height: 50px;
+        padding: 1px;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    tbody td {
+        max-width:  200px;
+        width:  200px;
+        height: 50px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+} */
+
+.custom-table {
+    table-layout: fixed;
+    width: auto !important;
+}
+
+.custom-table td,
+.custom-table th {
+    width: 110px !important;
+    height: 50px !important;
+    max-width: 110px !important;
+    max-height: 50px !important;
+    min-width: 110px !important;
+    min-height: 50px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+.table thead th {
+     vertical-align: middle;
+     border-bottom: 2px solid #dee2e6;
+}
+.pagination li.active {
+    z-index: 1;
+}
+
+.equal-height {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.equal-height-item {
+    flex: 1 0 auto;
 }

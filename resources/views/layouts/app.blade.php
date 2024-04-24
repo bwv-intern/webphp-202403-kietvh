@@ -16,6 +16,9 @@
     <link href="{{ asset('css/lib/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/lib/font-awesome/css/all.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/adminlte.min.css') }}" rel="stylesheet" />
+    <link href=
+    'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
+        rel='stylesheet'>
     @vite(['resources/css/common.css'], 'build')
     @stack('styles')
 </head>
@@ -24,47 +27,16 @@
     <x-partials.header />
     <div class="wrapper">
         <x-partials.menu />
-        <div class="content-wrapper">
+        <div class="content-wrapper bg-white">
             <section class="content">
                 <div class="container-fluid">
-                    @if (Session::has('error'))
-                        @php
-                            $errorType = 'danger';
-                            $errorMessages = Session::get('error');
-                        @endphp
-                        <x-alert :messages="$errorMessages" :type="$errorType" />
-                    @endif
-                    @if (Session::has('success'))
-                        @php
-                            $successType = 'success';
-                            $successMessages = Session::get('success');
-                        @endphp
-                        <x-alert :messages="$successMessages" :type="$successType" />
-                    @endif
-                    @if (isset($errors) && $errors->any())
-                        <div class="alert alert-danger">
-                            <ul class="m-0">
-                                @php
-                                    $errorsUnique = array_unique($errors->all());
-                                @endphp
-                                @if (count($errorsUnique) === 1)
-                                    @foreach ($errorsUnique as $error)
-                                        {!! $error !!}
-                                    @endforeach
-                                @else
-                                    @foreach ($errorsUnique as $error)
-                                        <li>{!! $error !!}</li>
-                                    @endforeach
-                                @endif
-                            </ul>
-                        </div>
-                    @endif
+                    
                     {{ $slot }}
                 </div>
             </section>
         </div>
     </div>
-    {{--<x-partials.footer />--}}
+    {{-- <x-partials.footer /> --}}
     <x-loading />
     <!-- JS Files -->
     <script src="{{ asset('js/lib/jquery-3.7.1.min.js') }}"></script>
@@ -72,7 +44,13 @@
     <script src="{{ asset('js/lib/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('js/lib/jquery-validation/additional-methods.min.js') }}"></script>
     <script src="{{ asset('js/adminlte.min.js') }}"></script>
-    @vite(['resources/js/common.js', 'resources/js/lib/jquery-validation/additional-setting.js'], 'build')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+    @vite(['resources/js/common.js', 
+    'resources/js/lib/jquery-validation/my-validation.js',
+           'resources/js/lib/jquery-validation/additional-setting.js',
+           ], 'build')
     @stack('scripts')
 </body>
 

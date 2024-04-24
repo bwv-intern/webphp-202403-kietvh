@@ -1,6 +1,6 @@
 <nav class="main-header navbar navbar-expand navbar-white navbar-light m-0 border py-4">
     <!-- Left navbar links -->
-    <ul class="navbar-nav d-sm-none">
+    <ul class="navbar-nav d-lg-none">
         <li class="nav-item" id="mobile-toggle">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>

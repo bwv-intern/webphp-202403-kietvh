@@ -20,9 +20,9 @@
 
 <div class="input-group" style="{{ $attributes['style'] }}">
     @if (isset($label))
-        <x-forms.label :label="$label" :isRequired="$isRequired" class="{{ 'col-2'. $attributes['classLabel'] }}" />
+        <x-forms.label :label="$label" :isRequired="$isRequired" class="{{ 'col-6  '. $attributes['classLabel'] }}" />
     @endif
-    <div class="col-10">
+    <div class="col-sm-6">
         <x-forms.text
             :type="$type"
             :label="$label"
@@ -34,6 +34,7 @@
             :isHidden="$isHidden"
             class="{{ $attributes['classInput'] }}"
         />
+        <x-error-message field="{{$name}}" />
         @if ($isHidden)
             <input
                 type="hidden"
@@ -44,4 +45,3 @@
     </div>
 
 </div>
-

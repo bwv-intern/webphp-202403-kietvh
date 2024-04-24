@@ -108,6 +108,7 @@ $.extend(jQuery.validator, {
         checkCustomerCanceledContract: $.validator.format('一度解約された場合、同じ物件での再申し込みはできかねます。'),
         checkBuildingUnique: $.validator.format('入力された内容に一致する建物が既に存在します。同じ建物は複数登録できません。'),
         checkPasswordIsNotSameCustomerId: $.validator.format('パスワードとお客様IDが同じです。違うパスワードを入力してください。'),
+        startDateBeforeEndDate:$.validator.format('解約予定日は契約終了日前を指定してください。'),
     },
 });
 
@@ -555,3 +556,13 @@ $.validator.addMethod('checkDateOfBirth', function(value, element) {
     }
     return true;
 });
+
+
+$.validator.addMethod("startDateBeforeEndDate", function(value, element) {
+    var startDate = moment($("#started-date-from").val(), "DD/MM/YYYY");
+    var endDate = moment($("#started-date-to").val(), "DD/MM/YYYY");
+    if (startDate.isValid() && endDate.isValid()) {
+        return startDate.isSameOrBefore(endDate);
+    }
+    return true;
+}, "解約予定日は契約終了日前を指定してください。");

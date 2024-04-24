@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckDirector;
 use App\Http\Middleware\NoCacheMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -64,6 +65,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'checkLogin' => \App\Http\Middleware\CheckLogin::class,
         'no-cache' => NoCacheMiddleware::class,
+        'check-director' => CheckDirector::class,
     ];
 
     /**

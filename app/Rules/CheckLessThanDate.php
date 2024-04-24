@@ -36,6 +36,12 @@ class CheckLessThanDate implements Rule
         if (empty($value) && empty($this->valueFrom)) {
             return true;
         }
+        try {
+            Carbon::createFromFormat($this->format, $value);
+            Carbon::createFromFormat($this->format, $this->valueFrom);
+        } catch (\Exception $e) {
+            return false; // Invalid date format.
+        }
         return Carbon::createFromFormat($this->format, $value) >= Carbon::createFromFormat($this->format, $this->valueFrom);
     }
 
@@ -45,6 +51,6 @@ class CheckLessThanDate implements Rule
      * @return string
      */
     public function message() {
-        return ConfigUtil::getMessage('ECL029', [$this->labelTo, $this->labelFrom]);
+        return ConfigUtil::getMessage('EBT044', [$this->labelTo, $this->labelFrom]);
     }
 }
