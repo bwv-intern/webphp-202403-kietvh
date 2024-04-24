@@ -7,6 +7,8 @@ use App\Repositories\UserRepository;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Auth, Cookie};
+use Carbon\Carbon;
+use Illuminate\Support\Facades\{Session};
 
 class UserController extends Controller
 {
@@ -20,72 +22,103 @@ class UserController extends Controller
     }
 
     public function userList(SearchUsersRequest $request) {
+        // check user logged
         if (! Auth::check() || Auth::user()->deleted_date != null) {
             return redirect()->route('login');
         }
-        if ($request->query->has('page')) {
-            return $this->handlesearch($request);
-        }
-        if (count($request->all()) > 0) {
-            return $this->searchUserList($request);
-        }
-       
-        return view('screens.user.list');
-    }
+        
+        // get params search
+        $searchParams = $request->only(['name', 'started_date_from', 'started_date_to']);
 
-    public function searchUserList(SearchUsersRequest $request) {
-        $params = $request->only(
-            ['name',
-                'started_date_from',
-                'started_date_to',
-            ],
-        );
+        if (count(array_filter($searchParams)) === 0) {
+            $searchParams = [
+                'name' => null,
+                'started_date_from' => null,
+                'started_date_to' => null,
+            ];
+        }
 
         session()->forget('user.search');
-        session()->put('user.search', $params);
+        session()->put('user.search', $searchParams);
 
+        // handle search
         return $this->handlesearch($request);
     }
 
+
     public function handlesearch(SearchUsersRequest $request) {
+
         $searchParams = session()->get('user.search');
-
-        // Main search
-
-        if ($searchParams == null) {
-            return redirect()->route('admin.userList');
+        $isSearch = session()->get('user.isSearch');
+        
+        if(count($request->all()) >0){
+            $isSearch = true;
+            session()->put('user.isSearch',$isSearch);
         }
+        
+        // If not search ( first time visit page) show view with empty value
+        if(!$isSearch){
+            $users = [];
+            $searchParams =[];
+            return view('screens.user.list', compact('users', 'searchParams'));
+        }
+        
+        // search data with search params
         $users = $this->userService->search($searchParams);
         $users = $this->pagination($users);
 
+        // return view with users value and searchParams
+        if(count($users) == 0){
+            Session::flash('notFound','No User Found');
+        }
         return view('screens.user.list', compact('users', 'searchParams'));
+        
+       
     }
 
     public function exportCSV() {
         $exportParams = session()->get('user.search');
-        
+        if($exportParams == null || count($exportParams) == 0){
+            return back();
+        }
+
         $users = $this->userService->exportCSV($exportParams);
 
         if ($users == null || count($users) == 0) {
             return back();
         }
 
-        $filePath = storage_path('app/users.csv');
+        $fileName = 'list_user_'.Carbon::now('Asia/Ho_Chi_Minh')->format('YmdHis').'.csv';
+        
+        $filePath = storage_path('app/'.$fileName);
         $file = fopen($filePath, 'w');
 
-        fputcsv($file, ['User Name', 'User Name', 'Email', 'Group ID', 'Group Name', 'Started Date', 'Position', 'Created Date', 'Updated Date']);
+        fputcsv($file, ['"ID"', '"User Name"', '"Email"', '"Group ID"', '"Group Name"', '"Started Date"', '"Position"', '"Created Date"', '"Updated Date"']);
         foreach ($users as $row) {
             fputcsv($file, $row);
         }
         fclose($file);
 
-        session()->forget('user.search.btnExport');
-
-        $response = response()->download($filePath, 'users.csv')->deleteFileAfterSend(true);
+        $response = response()->download($filePath,  $fileName)->deleteFileAfterSend(true);
         $cookie = Cookie::make('exported', 'Ok', 1, null, null, false, false);
         $response->headers->setCookie($cookie);
 
         return $response;
+    }
+
+    public function clearSearch(Request $request){
+        try{
+            $request -> session() -> forget('user.search');
+            $request -> session() -> forget('user.isSearch');
+            return response()->json([
+                'hasError' => false,
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'hasError' => true,
+            ]);
+        }
     }
 
     public function add() {

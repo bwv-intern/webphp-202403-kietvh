@@ -5,7 +5,7 @@
             <ul class="nav nav-sidebar flex-column pt-5">
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('admin/user*') ? 'text-decoration-underline active' : '' }}"
-                        href="{{ route('admin.userList') }}">User List</a>
+                        href="{{ route('admin.userList') }}" id= "menu-userList" >User List</a>
                 </li>
                 @if (Auth::check() && Auth::user()->position_id == 0)
                     <li class="nav-item">

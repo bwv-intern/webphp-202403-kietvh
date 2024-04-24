@@ -1,7 +1,6 @@
 <x-app-layout title="User List">
     <div class="mb-sm-5 mx-sm-5 pt-5 col-sm-8">
-        <form action="{{ route('admin.searchUserList') }}" method="post" name="formSearch" id="formSearch">
-            @csrf
+        <form action="{{ route('admin.userList') }}" method="get" name="formSearch" id="formSearch">
             <div class="row pt-2">
                 <div class="col-sm-6 ">
                     <x-forms.text-group label="User Name" name="name" :value="$searchParams['name'] ?? old('name')" />
@@ -80,14 +79,15 @@
 
                     </div>
                 </div>
-            @else
-                <div class="row mt-5">
-                    <div class="col-sm-10">
-                        <span class="mx-1">
-                            No User Found
-                        </span>
-                    </div>
+            @endif
+            @if (session('notFound'))
+            <div class="row mt-5 mx-1">
+                <div class="col-sm-8 h-25 w-100 py-3 bg-danger border d-flex justify-content-center align-items-center">
+                    <span class="mx-1 text-white">
+                       {{ session('notFound')}}
+                    </span>
                 </div>
+            </div>
             @endif
 
         @endif

@@ -40,8 +40,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
     Route::group(['prefix' => 'user'], function () {
         // user list search
         Route::get('/', [UserController::class, 'userList'])->name('userList');
-        Route::post('/', [UserController::class, 'userList'])->name('searchUserList');
         Route::post('/export',[UserController::class, 'exportCSV'])->name('userExport');
+        Route::post('/clear',[UserController::class, 'clearSearch'])->name('clear');
 
         // add
         Route::get('/add-edit-delete', [UserController::class, 'add'])->name('add');

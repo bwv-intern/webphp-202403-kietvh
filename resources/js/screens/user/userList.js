@@ -42,11 +42,8 @@ $(function () {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
-            url: '/common/resetSearch',
-            type: 'get',
-            data: {
-                screen: 'user.search',
-            },
+            url: '/admin/user/clear',
+            type: 'post',
             dataType: 'json',
             success: function (response) {
                 console.log(response);
