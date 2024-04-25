@@ -44,7 +44,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
         Route::post('/clear',[UserController::class, 'clearSearch'])->name('clear');
 
         // add
-        Route::get('/add-edit-delete', [UserController::class, 'add'])->name('add');
+        Route::get('/add-edit-delete', [UserController::class, 'add'])->middleware('check-director')->name('add');
         Route::post('/add-edit-delete', [UserController::class, 'handleAdd'])->name('handleAdd');
 
         // edit delele

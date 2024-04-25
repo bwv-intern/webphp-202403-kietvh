@@ -58,13 +58,9 @@
                                             </a>
                                         </td>
                                         <td>
-                                            @if (Auth::user()->position_id == 0)
-                                                <a class="text-decoration-underline ">
-                                                    {{ nl2br($user->email) }}
-                                                </a>
-                                            @else
+                                        
                                                 {{ nl2br($user->email) }}
-                                            @endif
+                                        
                                         </td>
                                         <td class="">{{ nl2br($user->group->name ?? '') }}</td>
                                         <td class="">

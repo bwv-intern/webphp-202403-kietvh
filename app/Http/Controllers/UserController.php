@@ -130,10 +130,7 @@ class UserController extends Controller
         if (! Auth::check() || Auth::user()->deleted_date != null) {
             return redirect()->route('login');
         }
-        if(Auth::user()->position_id != 0){
-            return redirect()->route('error');
-        }
-
+        
         $groups = $this -> groupRepository->getListGroupForNewScreen();
         
         return view('screens.user.add-edit-delete', compact('groups'));
@@ -147,7 +144,10 @@ class UserController extends Controller
         if($user == null){
             return redirect()->route('error');
         }
-        return 'Đây là màn hình edit của user ID :' . $id;
+
+        $groups = $this -> groupRepository->getListGroupForNewScreen();
+
+        return view('screens.user.add-edit-delete', compact('groups','user'));
     }
 
     public function handleEdit(Request $request) {

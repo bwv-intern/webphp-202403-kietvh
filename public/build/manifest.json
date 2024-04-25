@@ -1,6 +1,6 @@
 {
   "resources/css/common.css": {
-    "file": "assets/common-l9lbJGkO.css",
+    "file": "assets/common-Km2IgB2s.css",
     "isEntry": true,
     "src": "resources/css/common.css"
   },
@@ -15,7 +15,7 @@
     "src": "resources/js/lib/jquery-validation/additional-setting.js"
   },
   "resources/js/lib/jquery-validation/my-validation.js": {
-    "file": "assets/my-validation-Xl_-M-NS.js",
+    "file": "assets/my-validation-Kae15q5G.js",
     "isEntry": true,
     "src": "resources/js/lib/jquery-validation/my-validation.js"
   },
@@ -29,8 +29,13 @@
     "isEntry": true,
     "src": "resources/js/screens/auth/login.js"
   },
+  "resources/js/screens/user/userAdd.js": {
+    "file": "assets/userAdd--a9pN74V.js",
+    "isEntry": true,
+    "src": "resources/js/screens/user/userAdd.js"
+  },
   "resources/js/screens/user/userList.js": {
-    "file": "assets/userList-nkvGoCdf.js",
+    "file": "assets/userList-COmg8fLX.js",
     "isEntry": true,
     "src": "resources/js/screens/user/userList.js"
   }

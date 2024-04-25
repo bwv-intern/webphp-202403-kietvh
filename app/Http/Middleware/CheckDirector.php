@@ -21,6 +21,6 @@ class CheckDirector
             return $next($request);
         }
 
-        return redirect()->route('error');
+        return redirect()->route('logout');
     }
 }
