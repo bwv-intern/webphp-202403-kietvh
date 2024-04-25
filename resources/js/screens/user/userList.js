@@ -72,4 +72,13 @@ $(function () {
             $.removeCookie('exported', { path: '/' });
         }
     }, 1000);
+
+    $('option').each(function() {
+        console.log("OK");;
+        var text = $(this).text();
+        if (text.length > 20) {
+            text = text.substring(0, 19) + '...';
+            $(this).text(text);
+        }
+    }); 
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\User\SearchUsersRequest;
 use App\Models\User;
+use App\Repositories\GroupRepository;
 use App\Repositories\UserRepository;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -15,11 +16,14 @@ class UserController extends Controller
 {
     protected UserRepository $userRepository;
 
+    protected GroupRepository $groupRepository;
+
     protected UserService $userService;
 
-    public function __construct(UserRepository $userRepository, UserService $userService) {
+    public function __construct(UserRepository $userRepository, UserService $userService, GroupRepository $groupRepository) {
         $this->userRepository = $userRepository;
         $this->userService = $userService;
+        $this->groupRepository = $groupRepository;
     }
 
     public function userList(SearchUsersRequest $request) {
@@ -129,7 +133,10 @@ class UserController extends Controller
         if(Auth::user()->position_id != 0){
             return redirect()->route('error');
         }
-        return view('screens.user.add-edit-delete');
+
+        $groups = $this -> groupRepository->getListGroupForNewScreen();
+        
+        return view('screens.user.add-edit-delete', compact('groups'));
     }
 
     public function handleAdd(Request $request) {

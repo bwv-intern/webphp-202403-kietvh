@@ -45,7 +45,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
 
         // add
         Route::get('/add-edit-delete', [UserController::class, 'add'])->name('add');
-        Route::post('/add-edit-delete/{id}', [UserController::class, 'handleAdd'])->name('handleAdd');
+        Route::post('/add-edit-delete', [UserController::class, 'handleAdd'])->name('handleAdd');
 
         // edit delele
         Route::get('/add-edit-delete/{id}', [UserController::class, 'edit'])->name('edit');
