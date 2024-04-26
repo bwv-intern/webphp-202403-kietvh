@@ -51,7 +51,7 @@ class UserController extends Controller
 
         $searchParams = session()->get('user.search');
         $isSearch = session()->get('user.isSearch');
-        
+        $messageNotFound = "";
         if(count($request->all()) >0){
             $isSearch = true;
             session()->put('user.isSearch',$isSearch);
@@ -61,18 +61,18 @@ class UserController extends Controller
         if(!$isSearch){
             $users = [];
             $searchParams =[];
-            return view('screens.user.list', compact('users', 'searchParams'));
+            return view('screens.user.list', compact('users', 'searchParams','messageNotFound'));
         }
         
         // search data with search params
         $users = $this->userService->search($searchParams);
         $users = $this->pagination($users);
-
+       
         // return view with users value and searchParams
         if(count($users) == 0){
-            Session::flash('notFound','No User Found');
+            $messageNotFound = "No User Found";
         }
-        return view('screens.user.list', compact('users', 'searchParams'));
+        return view('screens.user.list', compact('users', 'searchParams', 'messageNotFound'));
         
        
     }
