@@ -80,11 +80,12 @@ class UserController extends Controller
     public function exportCSV() {
         $exportParams = session()->get('user.search');
         if($exportParams == null || count($exportParams) == 0){
+            
             return back();
         }
-
+        
         $users = $this->userService->exportCSV($exportParams);
-
+       
         if ($users == null || count($users) == 0) {
             return back();
         }

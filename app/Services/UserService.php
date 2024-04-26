@@ -27,8 +27,15 @@ class UserService
     }
 
     public function exportCSV(array $params) {
-        $users = $this->userRepository->exportCSV($params);
+        if (isset($params['started_date_from'])) {
+            $params['started_date_from'] = DateUtil::formatDate2($params['started_date_from'], 'Y/m/d');
+        }
 
+        if (isset($params['started_date_to'])) {
+            $params['started_date_to'] = DateUtil::formatDate2($params['started_date_to'], 'Y/m/d');
+        }
+         
+        $users = $this->userRepository->exportCSV($params);
         return $users;
     }
 }
