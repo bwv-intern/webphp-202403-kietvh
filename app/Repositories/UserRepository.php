@@ -90,7 +90,7 @@ class UserRepository extends BaseRepository
                 $results[] = $this->mapUserToCsvRow($user);
             }
         });
-
+        
         return $results;
     }
 
