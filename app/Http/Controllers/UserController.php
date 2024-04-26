@@ -100,6 +100,9 @@ class UserController extends Controller
         }
         fclose($file);
 
+        $fileContents = file_get_contents($filePath);
+        $fileContents = str_replace('""', '', $fileContents);
+        file_put_contents($filePath, $fileContents);
         $response = response()->download($filePath,  $fileName)->deleteFileAfterSend(true);
         $cookie = Cookie::make('exported', 'Ok', 1, null, null, false, false);
         $response->headers->setCookie($cookie);
