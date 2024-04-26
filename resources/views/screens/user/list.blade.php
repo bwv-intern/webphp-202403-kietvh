@@ -79,11 +79,11 @@
 
                     </div>
                 </div>
-            @else
+            @elseif ($messageNotFound != "")
             <div class="row mt-5 mx-1">
                 <div class="col-sm-8 h-25 w-100 py-3 bg-danger border d-flex justify-content-center align-items-center">
                     <span class="mx-1 text-white">
-                       {{ session('notFound')}}
+                       {{$messageNotFound}}
                     </span>
                 </div>
             </div>
