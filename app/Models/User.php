@@ -33,6 +33,7 @@ class User extends Authenticatable
         'name',
         'group_id',
         'position_id',
+        'started_date',
     ];
 
     /**

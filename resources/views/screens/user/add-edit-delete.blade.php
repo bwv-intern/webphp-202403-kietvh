@@ -49,7 +49,7 @@
                             Position
                         </label>
                         <div class="col-sm-6">
-                            <select class="form-select text-truncate border rounded-1" name="positon_id">
+                            <select class="form-select text-truncate border rounded-1" name="position_id">
                                 <option value="0">General Director</option>
                                 <option value="1">Department Leader</option>
                                 <option value="2">Team Leader</option>

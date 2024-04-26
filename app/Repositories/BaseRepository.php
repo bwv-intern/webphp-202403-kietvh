@@ -6,12 +6,12 @@ use App\Libs\ValueUtil;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
-
+use App\Traits\Loggable;
 abstract class BaseRepository
 {
     protected $model;
     protected $validDelFlg;
-
+    use Loggable;
     public function __construct()
     {
         $this->setModel();
@@ -73,7 +73,7 @@ abstract class BaseRepository
             DB::commit();
             return $result;
         } catch (\Throwable $th) {
-            Log::error($th);
+            $this->logError($th);
             DB::rollBack();
             return false;
         }

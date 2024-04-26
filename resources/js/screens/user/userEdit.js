@@ -15,6 +15,9 @@ $(document).ready(function () {
    
     $("#started-date").datepicker({
         dateFormat: 'dd/mm/yy',
+        onSelect: function (selectedDate) {
+            $('#started-date').valid();
+        }
     });
    
 
@@ -22,12 +25,37 @@ $(document).ready(function () {
         rules: {
             'name': {
                 required: true,
-                katakanaMaxLength: 100,
+                maxlength: 100,
             },
             'email': {
                 required: true,
                 checkValidEmailRFC: true,
                 maxlength: 255,
+                remote: {
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "/admin/user/checkEmail/",
+                    type: "post",
+                    data: {
+                        id: function () {
+                            return $('#id').val();
+                        },
+                        email: function () {
+                            return $('#email').val();
+                        },
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    dataFilter: function (response) {
+                        var data = JSON.parse(response); 
+                        console.log(response)
+                        if (data.duplicate === true) {
+                            console.log("OK");
+                           return false;
+                        }
+                        return true;
+                    }
+                },
             },
             'group_id': {
                 required: true,
@@ -61,14 +89,15 @@ $(document).ready(function () {
 
         },
         messages: {
+            'email':{
+                remote: 'すでにメールアドレスは登録されています。', // EBT019
+            },
             'started_date': {
                 dateDMY: "Started Date Toは日付を正しく入力してください。" 
             },
             'password': {
-                azAZ09: "パスワードには半角数字のみ、または半角英字のみの値は使用できません。", // EBT025
             },
             'repassword': {
-                azAZ09: "パスワードには半角数字のみ、または半角英字のみの値は使用できません。", // EBT025
                 equalTo: "確認用のパスワードが間違っています。", // EBT030
             }
         }

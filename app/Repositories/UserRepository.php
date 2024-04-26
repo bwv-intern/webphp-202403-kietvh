@@ -66,7 +66,7 @@ class UserRepository extends BaseRepository
             return false;
         }
 
-        return count($result) > 1;
+        return count($result) >= 1;
     }
 
     public function search(array $params) {

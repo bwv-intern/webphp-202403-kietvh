@@ -4,6 +4,9 @@ namespace App\Services;
 
 use App\Libs\{DateUtil};
 use App\Repositories\UserRepository;
+use Carbon\Carbon;
+use DateTime;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
@@ -30,5 +33,26 @@ class UserService
         $users = $this->userRepository->exportCSV($params);
 
         return $users;
+    }
+
+    public function create($data)
+    {
+        $email = $data['email'];
+        $password = $data['password'];
+        $name = $data['name'];
+        $group_id = $data['group_id'];
+        $started_date = $data['started_date'] ?? null;
+        $position_id = $data['position_id'] ?? null;
+
+        $userData = [
+            'email' => $email,
+            'password' => Hash::make($password),
+            'name' => $name,
+            'group_id' => $group_id,
+            'started_date' => $started_date ? DateTime::createFromFormat('d/m/Y', $started_date)->format('Y-m-d') : null,
+            'position_id' => $position_id,
+        ];
+        return $this->userRepository->save(null, $userData, true);
+
     }
 }

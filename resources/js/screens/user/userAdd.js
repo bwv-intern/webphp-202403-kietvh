@@ -10,8 +10,10 @@ $(function () {
 
     $("#started-date").datepicker({
         dateFormat: 'dd/mm/yy',
+        onSelect: function (selectedDate) {
+            $('#started-date').valid();
+        }
     });
-
 
     $('#formAddUser').validate({
         rules: {
@@ -87,10 +89,8 @@ $(function () {
                 dateDMY: "Started Date Toは日付を正しく入力してください。" 
             },
             'password': {
-                azAZ09: "パスワードには半角数字のみ、または半角英字のみの値は使用できません。", // EBT025
             },
             'repassword': {
-                azAZ09: "パスワードには半角数字のみ、または半角英字のみの値は使用できません。", // EBT025
                 equalTo: "確認用のパスワードが間違っています。", // EBT030
             }
         }

@@ -41,7 +41,7 @@ class AddUserRequest extends FormRequest
                 'required',
                 'date_format:d/m/Y',
             ],
-            'positon_id' => [
+            'position_id' => [
                 'required',
                 new CheckNotNull(),
                 new CheckOnlyNumberAndAlphabetOneByte(),

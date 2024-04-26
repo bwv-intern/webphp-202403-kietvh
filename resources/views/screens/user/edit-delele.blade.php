@@ -67,7 +67,7 @@
 
                             @endphp
                             <div class="col-sm-6">
-                                <select class="form-select text-truncate border rounded-1" name="positon_id">
+                                <select class="form-select text-truncate border rounded-1" name="position_id">
                                     @foreach ($positions as $positionValue => $positionLabel)
                                         <option value="{{ $positionValue }}"{{ $positionValue == $selected ? 'selected' : '' }}>{{ $positionLabel }}</option>
                                     @endforeach
