@@ -108,7 +108,7 @@ class UserRepository extends BaseRepository
             $user->group_id,
             $user->group->name ?? '',
             $started_date,
-            $user->position_id,
+            $user->getPosition(),
             $created_date,
             $updated_date,
         ]);
