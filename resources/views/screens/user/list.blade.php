@@ -53,9 +53,13 @@
                                 @foreach ($users as $user)
                                     <tr>
                                         <td>
-                                            <a href="{{ route('admin.edit', ['id' => $user->id]) }}"
-                                                class="text-decoration-underline "> {{nl2br($user->name) }}
-                                            </a>
+                                            @if (Auth::user()->position_id == 0)
+                                                <a href="{{ route('admin.edit', ['id' => $user->id]) }}"
+                                                    class="text-decoration-underline "> {{ nl2br($user->name) }}
+                                                </a>
+                                            @else
+                                                {{ nl2br($user->name) }}
+                                            @endif
                                         </td>
                                         <td>
                                             @if (Auth::user()->position_id == 0)
@@ -79,31 +83,34 @@
 
                     </div>
                 </div>
-            @elseif ($messageNotFound != "")
-            <div class="row mt-5 mx-1">
-                <div class="col-sm-8 h-25 w-100 py-3 bg-danger border d-flex justify-content-center align-items-center">
-                    <span class="mx-1 text-white">
-                       {{$messageNotFound}}
-                    </span>
+            @elseif ($messageNotFound != '')
+                <div class="row mt-5 mx-1">
+                    <div
+                        class="col-sm-8 h-25 w-100 py-3 bg-danger border d-flex justify-content-center align-items-center">
+                        <span class="mx-1 text-white">
+                            {{ $messageNotFound }}
+                        </span>
+                    </div>
                 </div>
-            </div>
             @endif
 
         @endif
 
         @if (Auth::user()->position_id == 0)
-        <div class="row d-block">
-            <div class="col">
-                <x-button.userlist label="New" class="btn btn-secondary m-1 text-truncate" type="button" style="width: 100px;" id="btnNew" name="btnNew"></x-button.userlist>
-                @if (isset($users) && count($users) > 0)
-                    <form action="{{ route('admin.userExport') }}" method="post" style="display: inline;">
-                        @csrf
-                        <x-button.userlist label="Export CSV" class="btn btn-secondary m-1 text-truncate" style="width: 100px;" id="btnExport" name="btnExport"></x-button.userlist>
-                    </form>
-                @endif
+            <div class="row d-block">
+                <div class="col">
+                    <x-button.userlist label="New" class="btn btn-secondary m-1 text-truncate" type="button"
+                        style="width: 100px;" id="btnNew" name="btnNew"></x-button.userlist>
+                    @if (isset($users) && count($users) > 0)
+                        <form action="{{ route('admin.userExport') }}" method="post" style="display: inline;">
+                            @csrf
+                            <x-button.userlist label="Export CSV" class="btn btn-secondary m-1 text-truncate"
+                                style="width: 100px;" id="btnExport" name="btnExport"></x-button.userlist>
+                        </form>
+                    @endif
+                </div>
             </div>
-        </div>
-    @endif
+        @endif
 
 
 
