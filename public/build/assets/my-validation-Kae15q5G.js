@@ -1,1 +1,0 @@
-$.validator.addMethod("dateDMY",function(t,d){return this.optional(d)||/^\d{2}\/\d{2}\/\d{4}$/.test(t)});$.validator.addMethod("azAZ09",function(t,d){return this.optional(d)||/^[a-zA-Z0-9]+$/i.test(t)},"パスワードには半角数字のみ、または半角英字のみの値は使用できません。");

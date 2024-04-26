@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddUserRequest;
 use App\Http\Requests\User\SearchUsersRequest;
 use App\Models\User;
 use App\Repositories\GroupRepository;
@@ -136,7 +137,7 @@ class UserController extends Controller
         return view('screens.user.add-edit-delete', compact('groups'));
     }
 
-    public function handleAdd(Request $request) {
+    public function handleAdd(AddUserRequest $request) {
     }
 
     public function edit($id) {
@@ -147,12 +148,25 @@ class UserController extends Controller
 
         $groups = $this -> groupRepository->getListGroupForNewScreen();
 
-        return view('screens.user.add-edit-delete', compact('groups','user'));
+        return view('screens.user.edit-delele', compact('groups','user'));
     }
 
     public function handleEdit(Request $request) {
     }
 
     public function handleDelete(Request $request) {
+    }
+
+    public function CheckExistEmail(Request $request){
+        if($request -> id == null){
+            $email = $request -> email;
+            $bool = $this -> userRepository -> checkExistEmail($email);
+            return response()->json([
+                'duplicate' => $bool,
+            ]);
+        }
+        return response()->json([
+            'duplicate' => false,
+        ]);
     }
 }

@@ -52,6 +52,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
         Route::put('/add-edit-delete/{id}', [UserController::class, 'handleEdit'])->name('handleEdit');
         Route::delete('/add-edit-delete/{id}', [UserController::class, 'handleDelete'])->name('handleDelete');
 
+        // route check email exist
+        Route::post('/checkEmail', [UserController::class, 'CheckExistEmail'])->name('checkEmail');
+
     });
 
     Route::group(['prefix' => 'group', 'middleware' => ['check-director']], function () {

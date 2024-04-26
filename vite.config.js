@@ -14,6 +14,7 @@ const jsFiles = [
     'resources/js/screens/user/userList.js',
     'resources/js/screens/user/userAdd.js',
     'resources/js/screens/user/userEdit.js',
+    'resources/js/lib/jquery-validation/my-validate-message.js',
 ];
 
 export default defineConfig({

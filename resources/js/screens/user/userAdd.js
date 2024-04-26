@@ -1,7 +1,6 @@
 $(function () {
 
     $('option').each(function () {
-        console.log("OK");;
         var text = $(this).text();
         if (text.length > 20) {
             text = text.substring(0, 19) + '...';
@@ -12,7 +11,7 @@ $(function () {
     $("#started-date").datepicker({
         dateFormat: 'dd/mm/yy',
     });
-   
+
 
     $('#formAddUser').validate({
         rules: {
@@ -24,25 +23,66 @@ $(function () {
                 required: true,
                 checkValidEmailRFC: true,
                 maxlength: 255,
+                remote: {
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "/admin/user/checkEmail/",
+                    type: "post",
+                    data: {
+                        id: function () {
+                            return $('#id').val();
+                        },
+                        email: function () {
+                            return $('#email').val();
+                        },
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    dataFilter: function (response) {
+                        var data = JSON.parse(response); 
+                        if (data.duplicate === true) {
+                            console.log("OK");
+                           return false;
+                        }
+                        return true;
+                    }
+                },
+                
             },
+            'group_id': {
+                required: true,
+                notNull: true,
+                onlyNumberAndAlphabetOneByte: true,
+            },
+
+            'position_id': {
+                required: true,
+                notNull: true,
+                onlyNumberAndAlphabetOneByte: true,
+            },
+
             'started_date': {
                 required: true,
                 dateDMY: true,
             },
             'password': {
                 required: true,
-                azAZ09: true,
+                onlyNumberAndAlphabetForPassword: true,
                 maxlength: 20,
+                stringValueRange: [8, 20],
             },
             'repassword': {
                 required: true,
-                azAZ09: true,
+                onlyNumberAndAlphabetForPassword: true,
                 maxlength: 20,
                 equalTo: "#password",
             }
 
         },
         messages: {
+            'email':{
+                remote: 'すでにメールアドレスは登録されています。', // EBT019
+            },
             'started_date': {
                 dateDMY: "Started Date Toは日付を正しく入力してください。" 
             },
@@ -55,7 +95,7 @@ $(function () {
             }
         }
     });
-   
-     
-    
+
+
+
 });

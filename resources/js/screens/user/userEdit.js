@@ -1,7 +1,6 @@
 $(document).ready(function () {
 
     $('option').each(function () {
-        console.log("OK");;
         var text = $(this).text();
         if (text.length > 20) {
             text = text.substring(0, 19) + '...';
@@ -23,27 +22,39 @@ $(document).ready(function () {
         rules: {
             'name': {
                 required: true,
-                maxlength: 100,
+                katakanaMaxLength: 100,
             },
             'email': {
                 required: true,
                 checkValidEmailRFC: true,
                 maxlength: 255,
             },
+            'group_id': {
+                required: true,
+                notNull: true,
+                onlyNumberAndAlphabetOneByte: true,
+            },
+
+            'position_id': {
+                required: true,
+                notNull: true,
+                onlyNumberAndAlphabetOneByte: true,
+            },
+
             'started_date': {
                 required: true,
                 dateDMY: true,
             },
             'password': {
-               
-                azAZ09: true,
+                onlyNumberAndAlphabetForPassword: true,
                 maxlength: 20,
+                stringValueRange: [8, 20],
             },
             'repassword': {
                 required: function (element) {
                     return $('#password').val().length > 0;
                 },
-                azAZ09: true,
+                onlyNumberAndAlphabetForPassword: true,
                 maxlength: 20,
                 equalTo: "#password",
             }

@@ -1,6 +1,6 @@
 {
   "resources/css/common.css": {
-    "file": "assets/common-Km2IgB2s.css",
+    "file": "assets/common-6ylfQBei.css",
     "isEntry": true,
     "src": "resources/css/common.css"
   },
@@ -14,8 +14,13 @@
     "isEntry": true,
     "src": "resources/js/lib/jquery-validation/additional-setting.js"
   },
+  "resources/js/lib/jquery-validation/my-validate-message.js": {
+    "file": "assets/my-validate-message-S_8XRT6R.js",
+    "isEntry": true,
+    "src": "resources/js/lib/jquery-validation/my-validate-message.js"
+  },
   "resources/js/lib/jquery-validation/my-validation.js": {
-    "file": "assets/my-validation-Kae15q5G.js",
+    "file": "assets/my-validation-2wMxE0dU.js",
     "isEntry": true,
     "src": "resources/js/lib/jquery-validation/my-validation.js"
   },
@@ -30,12 +35,17 @@
     "src": "resources/js/screens/auth/login.js"
   },
   "resources/js/screens/user/userAdd.js": {
-    "file": "assets/userAdd--a9pN74V.js",
+    "file": "assets/userAdd-KtH6otau.js",
     "isEntry": true,
     "src": "resources/js/screens/user/userAdd.js"
   },
+  "resources/js/screens/user/userEdit.js": {
+    "file": "assets/userEdit-20Jtcf1D.js",
+    "isEntry": true,
+    "src": "resources/js/screens/user/userEdit.js"
+  },
   "resources/js/screens/user/userList.js": {
-    "file": "assets/userList-COmg8fLX.js",
+    "file": "assets/userList-CZkhudGW.js",
     "isEntry": true,
     "src": "resources/js/screens/user/userList.js"
   }
