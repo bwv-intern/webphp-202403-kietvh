@@ -52,7 +52,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
         Route::put('/add-edit-delete/{id}', [UserController::class, 'handleEdit'])->middleware(['checkPermissions','check-director'])->name('handleEdit');
        
         Route::get('/delete/{id}', [UserController::class, 'handleDelete'])->middleware(['checkPermissions'])->name('handleDelete');
-
+        Route::get('/cancle', [UserController::class, 'cancle']);
         // route check email exist
         Route::post('/checkEmail', [UserController::class, 'CheckExistEmail'])->name('checkEmail');
 

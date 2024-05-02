@@ -1,4 +1,10 @@
 <x-app-layout title="UserAddEditDelete">
+    @php
+        $isDisable = false;
+        if (in_array(Auth::user()->position_id, [1, 2, 3])) {
+            $isDisable = true;
+        }
+    @endphp
     <div class="mb-sm-5 mx-sm-5 pt-5 col-sm-8">
         @if (session('error'))
             <div class="alert alert-danger text-white p-1">
@@ -18,12 +24,13 @@
                     </div>
                 </div>
                 <div class="col-sm-6 ">
-                    <x-forms.text-group label="User Name" name="name" :isRequired="true" />
+                    <x-forms.text-group label="User Name" name="name" :isRequired="true" :isDisabled="$isDisable" />
                 </div>
             </div>
             <div class="row pt-2">
                 <div class="col-sm-6 ">
-                    <x-forms.text-group label="Email" id="email" name="email" :isRequired="true" />
+                    <x-forms.text-group label="Email" id="email" name="email" :isRequired="true"
+                        :isDisabled="$isDisable" />
 
                 </div>
                 <div class="col-sm-6">
@@ -33,7 +40,7 @@
                         </label>
                         <div class="col-sm-6">
                             {{-- select2 --}}
-                            <select class="form-select text-truncate border rounded-1 " name="group_id">
+                            <select class="form-select text-truncate border rounded-1 " name="group_id"  {{ $isDisable ? 'disabled' : '' }}>
                                 @foreach ($groups as $group)
                                     <option value="{{ $group->id }}">{{ $group->name }}</option>
                                 @endforeach
@@ -44,7 +51,8 @@
             </div>
             <div class="row pt-2">
                 <div class="col-sm-6 ">
-                    <x-forms.text-group label="Started Date" id="started_date" name="started_date" :isRequired="true" />
+                    <x-forms.text-group label="Started Date" id="started_date" name="started_date" :isRequired="true"
+                        :isDisabled="$isDisable" />
 
                 </div>
                 <div class="col-sm-6">
@@ -53,7 +61,8 @@
                             Position
                         </label>
                         <div class="col-sm-6">
-                            <select class="form-select text-truncate border rounded-1" name="position_id">
+                            <select class="form-select text-truncate border rounded-1" name="position_id"
+                                {{ $isDisable ? 'disabled' : '' }}>
                                 <option value="0">Director</option>
                                 <option value="1">Group Leader</option>
                                 <option value="2">Leader</option>
@@ -86,8 +95,8 @@
                     <x-button.userlist label="Delete" class="btn btn-secondary d-none  text-truncate" type="button"
                         style="width: 100px;" id="deleteButton"></x-button.userlist>
 
-                    <x-button.userlist label="Cancel" class="btn btn-secondary  text-truncate" type="button"
-                        style="width: 100px;" id="cancelButton"></x-button.userlist>
+                        <a class="btn btn-secondary  text-truncate" href="/admin/user/cancle"
+                                style="width: 100px;" id="Cancel">Cancel</a> 
                 </div>
             </div>
 

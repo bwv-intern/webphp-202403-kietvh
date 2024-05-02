@@ -1,4 +1,10 @@
 <x-app-layout title="UserAddEditDelete">
+    @php
+        $isDisable = false;
+        if (in_array(Auth::user()->position_id, [1, 2, 3])) {
+            $isDisable = true;
+        }
+    @endphp
     <div class="mb-sm-5 mx-sm-5 pt-5 col-sm-8">
         @if (session('error'))
             <div class="alert alert-danger text-white p-1">
@@ -24,12 +30,12 @@
                         </div>
                     </div>
                     <div class="col-sm-6 ">
-                        <x-forms.text-group label="User Name" name="name" :isRequired="true" :value="old('name') ?? $user->name" />
+                        <x-forms.text-group label="User Name" name="name" :isRequired="true" :value="old('name') ?? $user->name"  :isDisabled="$isDisable" />
                     </div>
                 </div>
                 <div class="row pt-2">
                     <div class="col-sm-6 ">
-                        <x-forms.text-group label="Email" id="email" name="email" :isRequired="true"
+                        <x-forms.text-group label="Email" id="email" name="email" :isRequired="true"  :isDisabled="$isDisable"
                             :value="old('email') ?? $user->email" />
 
                     </div>
@@ -40,7 +46,7 @@
                             </label>
                             <div class="col-sm-6">
                                 {{-- select2 --}}
-                                <select class="form-select text-truncate border rounded-1 " name="group_id">
+                                <select class="form-select text-truncate border rounded-1 " name="group_id" {{ $isDisable ? 'disabled' : '' }}>
                                     @php
                                         $selected = old('group_id') ?? $user->group_id;
                                     @endphp
@@ -54,7 +60,7 @@
                 </div>
                 <div class="row pt-2">
                     <div class="col-sm-6 ">
-                        <x-forms.text-group label="Started Date" id="started_date" name="started_date"
+                        <x-forms.text-group label="Started Date" id="started_date" name="started_date"  :isDisabled="$isDisable"
                             :isRequired="true" :value="old('started_date') ?? $user->started_date->format('d/m/Y')" />
 
                     </div>
@@ -76,7 +82,7 @@
 
                             @endphp
                             <div class="col-sm-6">
-                                <select class="form-select text-truncate border rounded-1" name="position_id">
+                                <select class="form-select text-truncate border rounded-1" name="position_id" {{ $isDisable ? 'disabled' : '' }}>
                                     @foreach ($positions as $positionValue => $positionLabel)
                                         <option value="{{ $positionValue }}"{{ $positionValue == $selected ? 'selected' : '' }}>{{ $positionLabel }}</option>
                                     @endforeach
@@ -112,8 +118,8 @@
                         {{-- <a class="btn btn-secondary  text-truncate" href="/admin/user/delete/{{$user->id}}"
                             style="width: 100px;" id="deleteButton">Delete</a> --}}
 
-                        <x-button.userlist label="Cancel" class="btn btn-secondary  text-truncate" type="button"
-                            style="width: 100px;" id="cancelButton"></x-button.userlist>
+                            <a class="btn btn-secondary  text-truncate" href="/admin/user/cancle"
+                                style="width: 100px;" id="Cancel">Cancel</a> 
                     </div>
                 </div>
 
@@ -132,8 +138,8 @@
                 name="" id="">
                 このユーザーを削除してもいいですか？
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Delete</button>
+                    <button type="submit" class="btn btn-primary">OK</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </form>
         </div>

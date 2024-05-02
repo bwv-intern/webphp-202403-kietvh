@@ -34,7 +34,7 @@ class UserController extends Controller
         }
 
         // get params search
-        $searchParams = $request->only(['name', 'started_date_from', 'started_date_to']);
+        $searchParams = $request->only(['name', 'started_date_from', 'started_date_to','page']);
 
         if (count(array_filter($searchParams)) === 0) {
             $searchParams = [
@@ -210,5 +210,11 @@ class UserController extends Controller
         return response()->json([
             'duplicate' => false,
         ]);
+    }
+
+    public function cancle(){
+        $searchParams = session()->get('user.search');
+                $url = route('admin.userList', $searchParams);
+                return redirect($url);
     }
 }
