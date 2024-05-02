@@ -2,7 +2,7 @@
     <div class="row m-5 px-sm-5 d-flex justify-content-center align-item-center">
         <div class="col-sm-3">
             @if (session('error'))
-            <div class="custom-alert bg-danger text-white p-1">
+            <div class="alert alert-danger text-white p-1">
                 <span>{{ session('error') }}</span>
             </div>
         @endif
