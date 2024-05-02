@@ -141,9 +141,10 @@ class UserController extends Controller
     public function handleAdd(AddUserRequest $request) {
         $result = $this->userService->create($request);
         if ($result) {
-            $this->clearSearch($request);
+            $searchParams = session()->get('user.search');
+            $url = route('admin.userList', $searchParams); // Build the URL with search parameters
 
-            return redirect()->route('admin.userList')->with('success', ConfigUtil::getMessage('EBT096'));
+            return redirect($url)->with('success', ConfigUtil::getMessage('EBT096'));
         }
 
         return redirect()->back()->with('error', ConfigUtil::getMessage('EBT093'));

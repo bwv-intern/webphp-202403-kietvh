@@ -1,6 +1,10 @@
 <x-app-layout title="UserAddEditDelete">
     <div class="mb-sm-5 mx-sm-5 pt-5 col-sm-8">
-
+        @if (session('error'))
+            <div class="alert alert-danger text-white p-1">
+                <span>{{ session('error') }}</span>
+            </div>
+        @endif
         {{-- FORM INSERT --}}
         <form action="{{ route('admin.handleAdd') }}" method="post" name="formAddUser" id="formAddUser">
             @csrf

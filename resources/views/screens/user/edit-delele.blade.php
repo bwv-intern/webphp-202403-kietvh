@@ -1,8 +1,10 @@
 <x-app-layout title="UserAddEditDelete">
     <div class="mb-sm-5 mx-sm-5 pt-5 col-sm-8">
-        {{-- @if ($errors->any())
-        <x-alert :messages="$errors->all()" type="danger" />
-    @endif --}}
+        @if (session('error'))
+            <div class="alert alert-danger text-white p-1">
+                <span>{{ session('error') }}</span>
+            </div>
+        @endif
             {{-- FORM UPDATE --}}
             <form action="{{ route('admin.handleEdit',$user->id) }}" method="POST" name="formEditUser"
                 id="formEditUser">
