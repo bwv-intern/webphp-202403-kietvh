@@ -4,6 +4,7 @@ namespace App\Http\Requests\User;
 
 use App\Libs\ConfigUtil;
 use App\Rules\{CheckGreatherThanDate, CheckLessThanDate, CheckMaxLength};
+use DateTime;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,20 +23,18 @@ class SearchUsersRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array {
-        $startedDateFrom = $this->input('started_date_from');
-        $startedDateTo = $this->input('started_date_to');
+
+        $checkGreaterStart = DateTime::createFromFormat('d/m/Y',
+        $this->get('started_date_to')) ? '|before_or_equal:started_date_to' : '';
+
 
         return [
             'name' => [
                 new CheckMaxLength('User Name', 100),
             ],
-            'started_date_from' => ['nullable',
-                'date_format:d/m/Y',
-                'before_or_equal:started_date_to',
-            ],
+            'started_date_from' => 'nullable|date_format:d/m/Y'.$checkGreaterStart,
             'started_date_to' => ['nullable',
                 'date_format:d/m/Y',
-                
             ],
         ];
     }

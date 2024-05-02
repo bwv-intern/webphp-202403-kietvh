@@ -54,8 +54,8 @@ class UserController extends Controller
     public function handlesearch(SearchUsersRequest $request) {
         $searchParams = session()->get('user.search');
         $isSearch = session()->get('user.isSearch');
-
-        if (count($request->all()) > 0) {
+        $messageNotFound = "";
+        if(count($request->all()) >0){
             $isSearch = true;
             session()->put('user.isSearch', $isSearch);
         }
@@ -63,31 +63,32 @@ class UserController extends Controller
         // If not search ( first time visit page) show view with empty value
         if (! $isSearch) {
             $users = [];
-            $searchParams = [];
-
-            return view('screens.user.list', compact('users', 'searchParams'));
+            $searchParams =[];
+            return view('screens.user.list', compact('users', 'searchParams','messageNotFound'));
         }
 
         // search data with search params
         $users = $this->userService->search($searchParams);
         $users = $this->pagination($users);
-
+       
         // return view with users value and searchParams
-        if (count($users) == 0) {
-            Session::flash('notFound', 'No User Found');
+        if(count($users) == 0){
+            $messageNotFound = "No User Found";
         }
-
-        return view('screens.user.list', compact('users', 'searchParams'));
+        return view('screens.user.list', compact('users', 'searchParams', 'messageNotFound'));
+        
+       
     }
 
     public function exportCSV() {
         $exportParams = session()->get('user.search');
-        if ($exportParams == null || count($exportParams) == 0) {
+        if($exportParams == null || count($exportParams) == 0){
+            
             return back();
         }
-
+        
         $users = $this->userService->exportCSV($exportParams);
-
+       
         if ($users == null || count($users) == 0) {
             return back();
         }
@@ -103,7 +104,10 @@ class UserController extends Controller
         }
         fclose($file);
 
-        $response = response()->download($filePath, $fileName)->deleteFileAfterSend(true);
+        $fileContents = file_get_contents($filePath);
+        $fileContents = str_replace('""', '', $fileContents);
+        file_put_contents($filePath, $fileContents);
+        $response = response()->download($filePath,  $fileName)->deleteFileAfterSend(true);
         $cookie = Cookie::make('exported', 'Ok', 1, null, null, false, false);
         $response->headers->setCookie($cookie);
 

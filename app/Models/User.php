@@ -71,10 +71,10 @@ class User extends Authenticatable
     public function getPosition()
     {
         $positions = [
-            0 => 'General Director',
-            1 => 'Department Leader',
-            2 => 'Team Leader',
-            3 => 'Team Member',
+            0 => 'Director',
+            1 => 'Group Leader',
+            2 => 'Leader',
+            3 => 'Member',
         ];
     
         return $positions[$this->position_id] ?? '';
