@@ -6,7 +6,7 @@ use App\Libs\ConfigUtil;
 use App\Rules\{CheckMailRFC, CheckMaxLength, CheckNotNull, CheckOnlyNumberAndAlphabetOneByte};
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddUserRequest extends FormRequest
+class EditUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +30,7 @@ class AddUserRequest extends FormRequest
             'email' => [
                 'required',
                 new CheckMailRFC(),
-                'unique:user,email,'.$id,
+                'unique:user,email,' . $id,
                 new CheckMaxLength('Email', 255),
             ],
             'group_id' => [
@@ -47,22 +47,21 @@ class AddUserRequest extends FormRequest
                 new CheckNotNull(),
                 new CheckOnlyNumberAndAlphabetOneByte(),
             ],
-            'password' => [
+            'password' => $this->isPasswordUpdateRequested() ? [
                 'required',
                 'regex:/^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-z]+$/',
-                 new CheckMaxLength('Password', 20),
+                new CheckMaxLength('Password', 20),
                 'between:8,20',
-            ],
-            'repassword' => [
+            ] : '',
+            'repassword' => $this->isPasswordUpdateRequested() ? [
                 'required',
                 new CheckMaxLength('Password Confirmation', 20),
                 'same:password',
-            ],
+            ] : '',
         ];
     }
 
-    public function messages()
-    {
+    public function messages() {
         return [
             'name.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
 
@@ -82,13 +81,10 @@ class AddUserRequest extends FormRequest
 
             'repassword.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
             'repassword.same' => ConfigUtil::getMessage('EBT030'),
-
         ];
     }
 
-
-    public function attributes()
-    {
+    public function attributes() {
         return [
             'name' => 'User Name',
             'email' => 'Email',
@@ -98,5 +94,9 @@ class AddUserRequest extends FormRequest
             'password' => 'Password',
             'repassword' => 'Password Confirmation',
         ];
+    }
+
+    private function isPasswordUpdateRequested(): bool {
+        return $this->filled('password');
     }
 }

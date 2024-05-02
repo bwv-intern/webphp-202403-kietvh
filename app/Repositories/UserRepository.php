@@ -58,16 +58,31 @@ class UserRepository extends BaseRepository
         return false;
     }
 
-    public function checkExistEmail(string $email) {
-        try {
+   /**
+     * Get user list by email
+     *
+     * @param string email
+     * @param @mixed id
+     * @return @mixed $result
+     */
+    public function getByEmail(string $email, $id = null)
+    {
+        if (isset($id)) {
+            $result = $this->model->where('email', $email)
+                ->where('id', '!=', $id)
+                ->get();
+        } else {
             $result = $this->model->where('email', $email)
                 ->get();
-        } catch (Exception $exption) {
-            return false;
         }
 
-        return count($result) >= 1;
+        if ($result) {
+            return $result;
+        }
+
+        return [];
     }
+
 
     public function search(array $params) {
         $query = User::whereRaw('1=1');

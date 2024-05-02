@@ -62,4 +62,28 @@ class UserService
         return $this->userRepository->save(null, $userData, true);
 
     }
+
+
+    public function edit($data)
+    {   $id = $data['id'];
+        $email = $data['email'];
+        $newPassword  = $data['password'];
+        $name = $data['name'];
+        $group_id = $data['group_id'];
+        $started_date = $data['started_date'] ?? null;
+        $position_id = $data['position_id'] ?? null;
+
+        $userData = [
+            'email' => $email,
+            'name' => $name,
+            'group_id' => $group_id,
+            'started_date' => $started_date ? DateTime::createFromFormat('d/m/Y', $started_date)->format('Y-m-d') : null,
+            'position_id' => $position_id,
+        ];
+        if ($newPassword) {
+            $userData['password'] = Hash::make($newPassword);
+        }
+        return $this->userRepository->save($id , $userData, true);
+
+    }
 }

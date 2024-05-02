@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AddUserRequest;
 use App\Http\Requests\User\SearchUsersRequest;
+use App\Http\Requests\{AddUserRequest, EditUserRequest};
+use App\Libs\ConfigUtil;
 use App\Models\User;
 use App\Repositories\{GroupRepository, UserRepository};
 use App\Services\UserService;
@@ -11,7 +12,6 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Auth, Cookie};
-use Illuminate\Support\Facades\{Session};
 
 class UserController extends Controller
 {
@@ -54,8 +54,8 @@ class UserController extends Controller
     public function handlesearch(SearchUsersRequest $request) {
         $searchParams = session()->get('user.search');
         $isSearch = session()->get('user.isSearch');
-        $messageNotFound = "";
-        if(count($request->all()) >0){
+        $messageNotFound = '';
+        if (count($request->all()) > 0) {
             $isSearch = true;
             session()->put('user.isSearch', $isSearch);
         }
@@ -63,32 +63,31 @@ class UserController extends Controller
         // If not search ( first time visit page) show view with empty value
         if (! $isSearch) {
             $users = [];
-            $searchParams =[];
-            return view('screens.user.list', compact('users', 'searchParams','messageNotFound'));
+            $searchParams = [];
+
+            return view('screens.user.list', compact('users', 'searchParams', 'messageNotFound'));
         }
 
         // search data with search params
         $users = $this->userService->search($searchParams);
         $users = $this->pagination($users);
-       
+
         // return view with users value and searchParams
-        if(count($users) == 0){
-            $messageNotFound = "No User Found";
+        if (count($users) == 0) {
+            $messageNotFound = 'No User Found';
         }
+
         return view('screens.user.list', compact('users', 'searchParams', 'messageNotFound'));
-        
-       
     }
 
     public function exportCSV() {
         $exportParams = session()->get('user.search');
-        if($exportParams == null || count($exportParams) == 0){
-            
+        if ($exportParams == null || count($exportParams) == 0) {
             return back();
         }
-        
+
         $users = $this->userService->exportCSV($exportParams);
-       
+
         if ($users == null || count($users) == 0) {
             return back();
         }
@@ -107,7 +106,7 @@ class UserController extends Controller
         $fileContents = file_get_contents($filePath);
         $fileContents = str_replace('""', '', $fileContents);
         file_put_contents($filePath, $fileContents);
-        $response = response()->download($filePath,  $fileName)->deleteFileAfterSend(true);
+        $response = response()->download($filePath, $fileName)->deleteFileAfterSend(true);
         $cookie = Cookie::make('exported', 'Ok', 1, null, null, false, false);
         $response->headers->setCookie($cookie);
 
@@ -142,14 +141,16 @@ class UserController extends Controller
     public function handleAdd(AddUserRequest $request) {
         $result = $this->userService->create($request);
         if ($result) {
-            return redirect()->route('admin.userList');
+            $this->clearSearch($request);
+
+            return redirect()->route('admin.userList')->with('success', ConfigUtil::getMessage('EBT096'));
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('error', ConfigUtil::getMessage('EBT093'));
     }
 
     public function edit($id) {
-        $user = User::find($id);
+        $user = $this->userRepository->findById($id);
         if ($user == null) {
             return redirect()->route('error');
         }
@@ -159,33 +160,54 @@ class UserController extends Controller
         return view('screens.user.edit-delele', compact('groups', 'user'));
     }
 
-    public function handleEdit(Request $request) {
+    public function handleEdit(EditUserRequest $request) {
+        $result = $this->userService->edit($request);
+        if ($result) {
+            $searchParams = session()->get('user.search');
+            $url = route('admin.userList', $searchParams); // Build the URL with search parameters
+
+            return redirect($url)->with('success', ConfigUtil::getMessage('EBT096'));
+        }
+
+        return redirect()->back()->with('error', ConfigUtil::getMessage('EBT093'));
     }
 
-    public function handleDelete(Request $request) {
+    public function handleDelete($id) {
+        if ($id) {
+            if ($id == Auth::user()->id) {
+                return redirect()->route('admin.userList')
+                    ->with('error', ConfigUtil::getMessage('EBT086'));
+            }
+            $userFound = $this->userRepository->findById($id);
+            if ($userFound == null) {
+                return route('error');
+            }
+            $userFound['deleted_date'] = Carbon::now()->toDateString();
+            if ($userFound->save()) {
+                $searchParams = session()->get('user.search');
+                $url = route('admin.userList', $searchParams); // Build the URL with search parameters
+                return redirect($url)->with('success', ConfigUtil::getMessage('EBT096'));
+            }
+
+            return redirect()->route('admin.userList')->with('error', ConfigUtil::getMessage('EBT093'));
+        }
     }
 
     public function CheckExistEmail(Request $request) {
-        if ($request->id == null) {
-            $email = $request->email;
-            $bool = $this->userRepository->checkExistEmail($email);
-
-            return response()->json([
-                'duplicate' => $bool,
-            ]);
+        if (isset($request->id)) {
+            $user = $this->userRepository->getByEmail($request->email, $request->id);
+        } else {
+            $user = $this->userRepository->getByEmail($request->email);
         }
 
-        if ($request->email == Auth::user()->email) {
+        if ($user->count()) {
             return response()->json([
                 'duplicate' => true,
             ]);
         }
 
-        $email = $request->email;
-        $bool = $this->userRepository->checkExistEmail($email);
-
         return response()->json([
-            'duplicate' => $bool,
+            'duplicate' => false,
         ]);
     }
 }

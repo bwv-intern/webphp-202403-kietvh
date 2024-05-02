@@ -50,10 +50,10 @@
                         </label>
                         <div class="col-sm-6">
                             <select class="form-select text-truncate border rounded-1" name="position_id">
-                                <option value="0">General Director</option>
-                                <option value="1">Department Leader</option>
-                                <option value="2">Team Leader</option>
-                                <option value="3">Team Member</option>
+                                <option value="0">Director</option>
+                                <option value="1">Group Leader</option>
+                                <option value="2">Leader</option>
+                                <option value="3">Member</option>
                             </select>
                         </div>
                     </div>
@@ -62,12 +62,12 @@
             <div class="row pt-2">
                 <div class="col-sm-6 ">
                     <x-forms.text-group type="password" label="Password" id="password" name="password"
-                        :isRequired="true" />
+                        :isRequired="true" :value="old('password')" />
 
                 </div>
                 <div class="col-sm-6">
                     <x-forms.text-group type="password" label="Password Confirmation" id="repassword" name="repassword"
-                        :isRequired="true" />
+                        :isRequired="true" :value="old('repassword')" />
                 </div>
             </div>
 

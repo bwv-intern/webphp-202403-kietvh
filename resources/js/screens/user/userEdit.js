@@ -8,10 +8,7 @@ $(document).ready(function () {
         }
     });
 
-    $("#deleteButton").click(function (e) {
-        alert("hello");
-    });
-
+   
    
     $("#started-date").datepicker({
         dateFormat: 'dd/mm/yy',
@@ -20,6 +17,16 @@ $(document).ready(function () {
         }
     });
    
+    $("#password").on('input', function() {
+        if($("#password").val().length > 0){
+            $("#password").closest('.input-group').find('label').addClass('input-required');
+            $("#repassword").closest('.input-group').find('label').addClass('input-required');
+        }
+        else{
+            $("#password").closest('.input-group').find('label').removeClass('input-required');
+            $("#repassword").closest('.input-group').find('label').removeClass('input-required');
+        }
+    });
 
     $('#formEditUser').validate({
         rules: {
@@ -103,6 +110,5 @@ $(document).ready(function () {
         }
     });
    
-
 
 });

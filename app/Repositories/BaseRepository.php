@@ -39,7 +39,7 @@ abstract class BaseRepository
         try {
             $query = $this->model->where($this->model->getKeyName(), $id);
             if (!$isFindAll) {
-                $query->where('del_flg', ValueUtil::constToValue('common.del_flg.VALID'));
+                $query->whereNull('deleted_date');
             }
             return $query->first();
         } catch (\Exception $e) {
@@ -63,7 +63,7 @@ abstract class BaseRepository
             if ($id) {
                 $result = $this->findById($id, $isFindAll);
                 $result->fill($params);
-                $result = $result->save($result);
+                $result = $result->save();
             } else {
                 $result = $this->model->create($params);
             }
@@ -72,7 +72,7 @@ abstract class BaseRepository
             }
             DB::commit();
             return $result;
-        } catch (\Throwable $th) {
+        } catch (\Exception $th) {
             $this->logError($th);
             DB::rollBack();
             return false;

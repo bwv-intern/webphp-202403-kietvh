@@ -40,17 +40,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
     Route::group(['prefix' => 'user'], function () {
         // user list search
         Route::get('/', [UserController::class, 'userList'])->name('userList');
-        Route::post('/export',[UserController::class, 'exportCSV'])->name('userExport');
+        Route::post('/export',[UserController::class, 'exportCSV'])->middleware(['checkPermissions','check-director'])->name('userExport');
         Route::post('/clear',[UserController::class, 'clearSearch'])->name('clear');
 
         // add
-        Route::get('/add-edit-delete', [UserController::class, 'add'])->middleware('check-director')->name('add');
-        Route::post('/add-edit-delete', [UserController::class, 'handleAdd'])->name('handleAdd');
+        Route::get('/add-edit-delete', [UserController::class, 'add'])->middleware(['checkPermissions','check-director'])->name('add');
+        Route::post('/add-edit-delete', [UserController::class, 'handleAdd'])->middleware(['checkPermissions','check-director'])->name('handleAdd');
 
         // edit delele
-        Route::get('/add-edit-delete/{id}', [UserController::class, 'edit'])->name('edit');
-        Route::put('/add-edit-delete/{id}', [UserController::class, 'handleEdit'])->name('handleEdit');
-        Route::delete('/add-edit-delete/{id}', [UserController::class, 'handleDelete'])->name('handleDelete');
+        Route::get('/add-edit-delete/{id}', [UserController::class, 'edit'])->middleware(['checkPermissions'])->name('edit');
+        Route::put('/add-edit-delete/{id}', [UserController::class, 'handleEdit'])->middleware(['checkPermissions','check-director'])->name('handleEdit');
+       
+        Route::get('/delete/{id}', [UserController::class, 'handleDelete'])->middleware(['checkPermissions'])->name('handleDelete');
 
         // route check email exist
         Route::post('/checkEmail', [UserController::class, 'CheckExistEmail'])->name('checkEmail');
