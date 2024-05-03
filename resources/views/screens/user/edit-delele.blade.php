@@ -25,7 +25,7 @@
                             <div class="col-sm-6">
                                 {{-- select2 --}}
                                 <input type="hidden" value="{{ $user->id}}" name="id" id="id">
-                                {{ $user->id }}
+                                <input type="text" name="" value="{{ $user->id}}" class="form-control" id="" placeholder="" disabled>
                             </div>
                         </div>
                     </div>

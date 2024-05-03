@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\{App};
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
-
+use Illuminate\Support\Facades\Log;
 class Handler extends ExceptionHandler
 {
     /**
@@ -26,8 +26,8 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontFlash = [
-        'password',
-        'password_confirmation',
+        // 'password',
+        // 'password_confirmation',
     ];
 
     /**

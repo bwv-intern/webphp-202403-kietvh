@@ -181,7 +181,7 @@ class UserController extends Controller
             }
             $userFound = $this->userRepository->findById($id);
             if ($userFound == null) {
-                return route('error');
+                return  redirect()->route('error');
             }
             $userFound['deleted_date'] = Carbon::now()->toDateString();
             if ($userFound->save()) {
@@ -189,9 +189,9 @@ class UserController extends Controller
                 $url = route('admin.userList', $searchParams); // Build the URL with search parameters
                 return redirect($url)->with('success', ConfigUtil::getMessage('EBT096'));
             }
-
             return redirect()->route('admin.userList')->with('error', ConfigUtil::getMessage('EBT093'));
         }
+        return redirect()->route('admin.userList')->with('error', ConfigUtil::getMessage('EBT093'));
     }
 
     public function CheckExistEmail(Request $request) {

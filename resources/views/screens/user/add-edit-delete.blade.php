@@ -21,15 +21,18 @@
                             ID
                         </label>
                         <input type="hidden" name="id" value="">
+                        <div class="col-sm-6 ">
+                            <input type="text" name="" value="" class="form-control" id="" placeholder="" disabled>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6 ">
-                    <x-forms.text-group label="User Name" name="name" :isRequired="true" :isDisabled="$isDisable" />
+                    <x-forms.text-group label="User Name" name="name" :isRequired="true" :isDisabled="$isDisable" :value="old('name')" />
                 </div>
             </div>
             <div class="row pt-2">
                 <div class="col-sm-6 ">
-                    <x-forms.text-group label="Email" id="email" name="email" :isRequired="true"
+                    <x-forms.text-group label="Email" id="email" name="email" :isRequired="true" :value="old('email')"
                         :isDisabled="$isDisable" />
 
                 </div>
@@ -41,8 +44,11 @@
                         <div class="col-sm-6">
                             {{-- select2 --}}
                             <select class="form-select text-truncate border rounded-1 " name="group_id"  {{ $isDisable ? 'disabled' : '' }}>
+                                @php
+                                    $oldSelected = old('group_id') ?? '';
+                                @endphp
                                 @foreach ($groups as $group)
-                                    <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                    <option value="{{ $group->id }}"@if ($oldSelected == $group->id) selected @endif>{{ $group->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -52,7 +58,7 @@
             <div class="row pt-2">
                 <div class="col-sm-6 ">
                     <x-forms.text-group label="Started Date" id="started_date" name="started_date" :isRequired="true"
-                        :isDisabled="$isDisable" />
+                        :isDisabled="$isDisable" :value="old('started_date')" />
 
                 </div>
                 <div class="col-sm-6">
@@ -60,15 +66,24 @@
                         <label class="input-required col-6">
                             Position
                         </label>
-                        <div class="col-sm-6">
-                            <select class="form-select text-truncate border rounded-1" name="position_id"
-                                {{ $isDisable ? 'disabled' : '' }}>
-                                <option value="0">Director</option>
-                                <option value="1">Group Leader</option>
-                                <option value="2">Leader</option>
-                                <option value="3">Member</option>
-                            </select>
-                        </div>
+                        @php
+
+                                $positions = [
+                                    '0' => 'Director',
+                                    '1' => 'Group Leader',
+                                    '2' => 'Leader',
+                                    '3' => 'Member',
+                                ];
+                                $selected = old('position_id') ?? '';
+
+                            @endphp
+                            <div class="col-sm-6">
+                                <select class="form-select text-truncate border rounded-1" name="position_id" {{ $isDisable ? 'disabled' : '' }}>
+                                    @foreach ($positions as $positionValue => $positionLabel)
+                                        <option value="{{ $positionValue }}"{{ $positionValue == $selected ? 'selected' : '' }}>{{ $positionLabel }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -96,7 +111,7 @@
                         style="width: 100px;" id="deleteButton"></x-button.userlist>
 
                         <a class="btn btn-secondary  text-truncate" href="/admin/user/cancle"
-                                style="width: 100px;" id="Cancel">Cancel</a> 
+                                style="width: 100px;" id="Cancel">Cancel</a>
                 </div>
             </div>
 

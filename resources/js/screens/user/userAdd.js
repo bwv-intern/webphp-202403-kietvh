@@ -92,7 +92,13 @@ $(function () {
             },
             'repassword': {
                 equalTo: "確認用のパスワードが間違っています。", // EBT030
-            }
+            },
+            'group_id': {
+                notNull: "Groupは必須です。",
+            },
+            'position_id': {
+                notNull: "Positionは必須です。",
+            },
         }
     });
 
