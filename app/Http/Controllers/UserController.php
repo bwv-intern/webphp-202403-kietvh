@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{App, Auth, Cookie};
 use Carbon\Carbon;
 use Illuminate\Support\Facades\{Session};
-use Illuminate\Http\Response;
 class UserController extends Controller
 {
     protected UserRepository $userRepository;
@@ -83,13 +82,13 @@ class UserController extends Controller
         $exportParams = session()->get('user.search');
         if($exportParams == null || count($exportParams) == 0){
             
-            return new Response('', 204);
+            return back();
         }
         
         $users = $this->userService->exportCSV($exportParams);
        
         if ($users == null || count($users) == 0) {
-            return new Response('', 204);
+            return back();
         }
 
         $fileName = 'list_user_'.Carbon::now('Asia/Ho_Chi_Minh')->format('YmdHis').'.csv';
