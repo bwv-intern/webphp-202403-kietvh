@@ -1,6 +1,6 @@
 {
   "resources/css/common.css": {
-    "file": "assets/common-l9lbJGkO.css",
+    "file": "assets/common-FIrodVPh.css",
     "isEntry": true,
     "src": "resources/css/common.css"
   },
@@ -25,7 +25,7 @@
     "src": "resources/js/nocache.js"
   },
   "resources/js/screens/auth/login.js": {
-    "file": "assets/login-tQ2XpBV8.js",
+    "file": "assets/login-JNOL8IPM.js",
     "isEntry": true,
     "src": "resources/js/screens/auth/login.js"
   },

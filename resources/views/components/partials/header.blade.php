@@ -15,10 +15,18 @@
         </li>
     </ul>
 
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav mx-auto">
         <li>
-            <div class="info d-flex gap-5 ">
+            <div class="info d-flex">
+                <h4>{{Session('pageTitle')}}</h4>
+            </div>
+        </li>
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav">
+        <li>
+            <div class="info d-flex">
                 {{ Str::limit(\Illuminate\Support\Facades\Auth::user()->name , 50);}}
 
                 <a href="{{ route('logout') }}" class="px-2">Logout</a>

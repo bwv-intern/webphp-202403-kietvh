@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{App, Auth, Cookie};
 use Carbon\Carbon;
 use Illuminate\Support\Facades\{Session};
-
 class UserController extends Controller
 {
     protected UserRepository $userRepository;
@@ -48,6 +47,8 @@ class UserController extends Controller
 
 
     public function handlesearch(SearchUsersRequest $request) {
+        $pageTitle = "User List";
+        $request->session()->put('pageTitle', $pageTitle);
 
         $searchParams = session()->get('user.search');
         $isSearch = session()->get('user.isSearch');
