@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{App, Auth, Cookie};
 use Carbon\Carbon;
 use Illuminate\Support\Facades\{Session};
-
+use Illuminate\Http\Response;
 class UserController extends Controller
 {
     protected UserRepository $userRepository;
@@ -48,6 +48,8 @@ class UserController extends Controller
 
 
     public function handlesearch(SearchUsersRequest $request) {
+        $pageTitle = "User List";
+        $request->session()->put('pageTitle', $pageTitle);
 
         $searchParams = session()->get('user.search');
         $isSearch = session()->get('user.isSearch');
@@ -81,13 +83,13 @@ class UserController extends Controller
         $exportParams = session()->get('user.search');
         if($exportParams == null || count($exportParams) == 0){
             
-            return back();
+            return new Response('', 204);
         }
         
         $users = $this->userService->exportCSV($exportParams);
        
         if ($users == null || count($users) == 0) {
-            return back();
+            return new Response('', 204);
         }
 
         $fileName = 'list_user_'.Carbon::now('Asia/Ho_Chi_Minh')->format('YmdHis').'.csv';
