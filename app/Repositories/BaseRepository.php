@@ -6,12 +6,12 @@ use App\Libs\ValueUtil;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
-
+use App\Traits\Loggable;
 abstract class BaseRepository
 {
     protected $model;
     protected $validDelFlg;
-
+    use Loggable;
     public function __construct()
     {
         $this->setModel();
@@ -37,9 +37,12 @@ abstract class BaseRepository
      */
     public function findById($id, $isFindAll = false) {
         try {
+            if(!is_numeric($id)){
+                return false;
+            }
             $query = $this->model->where($this->model->getKeyName(), $id);
             if (!$isFindAll) {
-                $query->where('del_flg', ValueUtil::constToValue('common.del_flg.VALID'));
+                $query->whereNull('deleted_date');
             }
             return $query->first();
         } catch (\Exception $e) {
@@ -63,7 +66,7 @@ abstract class BaseRepository
             if ($id) {
                 $result = $this->findById($id, $isFindAll);
                 $result->fill($params);
-                $result = $result->save($result);
+                $result = $result->save();
             } else {
                 $result = $this->model->create($params);
             }
@@ -72,8 +75,8 @@ abstract class BaseRepository
             }
             DB::commit();
             return $result;
-        } catch (\Throwable $th) {
-            Log::error($th);
+        } catch (\Exception $th) {
+            $this->logError($th);
             DB::rollBack();
             return false;
         }

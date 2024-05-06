@@ -49,6 +49,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     @vite(['resources/js/common.js', 
     'resources/js/lib/jquery-validation/my-validation.js',
+            'resources/js/lib/jquery-validation/my-validate-message.js',
            'resources/js/lib/jquery-validation/additional-setting.js',
            ], 'build')
     @stack('scripts')

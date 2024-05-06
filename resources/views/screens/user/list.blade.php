@@ -1,5 +1,15 @@
 <x-app-layout title="User List">
-    <div class="mx-sm-5 pt-5 col-sm-8">
+    <div class="mb-sm-5 mx-sm-5 pt-5 col-sm-8">
+        @if (session('error'))
+            <div class="alert alert-danger text-white p-1">
+                <span>{{ session('error') }}</span>
+            </div>
+        @endif
+        @if (session('success'))
+            <div class="alert alert-success text-white p-1">
+                <span>{{ session('success') }}</span>
+            </div>
+        @endif
         <form action="{{ route('admin.userList') }}" method="get" name="formSearch" id="formSearch">
             <div class="row pt-2">
                 <div class="col-sm-6 ">
@@ -65,9 +75,9 @@
                                             @endif
                                         </td>
                                         <td>
-
-                                            {{ nl2br($user->email) }}
-
+                                        
+                                                {{ nl2br($user->email) }}
+                                       
                                         </td>
                                         <td class="">{{ nl2br($user->group->name ?? '') }}</td>
                                         <td class="">

@@ -12,12 +12,9 @@ class ModelObserver
      */
     public function creating(Model $model): void
     {
-        $model->created_by = auth()->id();
-        $model->created_at = Carbon::now();
-        $model->updated_by = auth()->id();
-        $model->updated_at = Carbon::now();
-        $model->deleted_by = null;
-        $model->deleted_at = null;
+        $model->created_date = Carbon::now()->toDateString();
+        $model->updated_date =  Carbon::now()->toDateString();
+    
     }
 
     /**
@@ -25,12 +22,10 @@ class ModelObserver
      */
     public function updating(Model $model): void
     {
-        if ($model->isDirty('del_flg') && $model->del_flg == 1){
-            $model->deleted_by = auth()->id();
-            $model->deleted_at = Carbon::now();
+        if ($model->isDirty('deleted_date') && $model->deleted_date == NULL){
+            $model->deleted_date = Carbon::now()->toDateString();
         } else {
-            $model->updated_by = auth()->id();
-            $model->updated_at = Carbon::now();
+            $model->updated_date = Carbon::now()->toDateString();
         }
     }
 }

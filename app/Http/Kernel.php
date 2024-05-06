@@ -66,6 +66,7 @@ class Kernel extends HttpKernel
         'checkLogin' => \App\Http\Middleware\CheckLogin::class,
         'no-cache' => NoCacheMiddleware::class,
         'check-director' => CheckDirector::class,
+        'checkPermissions' => \App\Http\Middleware\CheckPermissions::class,
     ];
 
     /**

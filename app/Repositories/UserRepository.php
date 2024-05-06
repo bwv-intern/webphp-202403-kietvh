@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use Exception;
-use Illuminate\Support\Facades\{Hash, Log};
+use Illuminate\Support\Facades\{Hash};
 
 class UserRepository extends BaseRepository
 {
@@ -37,26 +37,52 @@ class UserRepository extends BaseRepository
         return null;
     }
 
-    public function checkDuplicateEmailForLogin(string $email,string $password)
-    {
+    public function checkDuplicateEmailForLogin(string $email, string $password) {
         try {
             $result = $this->model->where('email', $email)
                 ->whereNull('deleted_date')
                 ->get();
-        } catch (\Exception $exption) {
-            
+        } catch (Exception $exption) {
         }
         if ($result) {
             $duplicate = [];
-            foreach($result as $user){
-                if(Hash::check($password, $user->password)){
+            foreach ($result as $user) {
+                if (Hash::check($password, $user->password)) {
                     $duplicate[] = $user;
                 }
             }
+
             return count($duplicate) > 1;
         }
+
         return false;
     }
+
+   /**
+     * Get user list by email
+     *
+     * @param string email
+     * @param @mixed id
+     * @return @mixed $result
+     */
+    public function getByEmail(string $email, $id = null)
+    {
+        if (isset($id)) {
+            $result = $this->model->where('email', $email)
+                ->where('id', '!=', $id)
+                ->get();
+        } else {
+            $result = $this->model->where('email', $email)
+                ->get();
+        }
+
+        if ($result) {
+            return $result;
+        }
+
+        return [];
+    }
+
 
     public function search(array $params) {
         $query = User::whereRaw('1=1');
