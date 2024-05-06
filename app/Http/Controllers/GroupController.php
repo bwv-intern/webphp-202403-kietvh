@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 class GroupController extends Controller
 {
     public function groupList(){
-        return "I have not done yet";
+        $pageTitle = "";
+        Session()->put('pageTitle', $pageTitle);
+        return view('screens.group.list');
     }
 }
