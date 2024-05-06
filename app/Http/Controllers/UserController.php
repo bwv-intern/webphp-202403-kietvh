@@ -156,7 +156,7 @@ class UserController extends Controller
     }
 
     public function edit($id) {
-        $pageTitle = "UserAddEditDelete";
+        $pageTitle = "";
         Session()->put('pageTitle', $pageTitle);
         $user = $this->userRepository->findById($id);
         if ($user == null) {
