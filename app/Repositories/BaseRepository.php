@@ -37,6 +37,9 @@ abstract class BaseRepository
      */
     public function findById($id, $isFindAll = false) {
         try {
+            if(!is_numeric($id)){
+                return false;
+            }
             $query = $this->model->where($this->model->getKeyName(), $id);
             if (!$isFindAll) {
                 $query->whereNull('deleted_date');

@@ -147,7 +147,7 @@ class UserController extends Controller
             return redirect($url)->with('success', ConfigUtil::getMessage('EBT096'));
         }
 
-        return redirect()->back()->with('error', ConfigUtil::getMessage('EBT093'));
+        return redirect()->back()->withInput()->with('error', ConfigUtil::getMessage('EBT093'));
     }
 
     public function edit($id) {
@@ -170,7 +170,7 @@ class UserController extends Controller
             return redirect($url)->with('success', ConfigUtil::getMessage('EBT096'));
         }
 
-        return redirect()->back()->with('error', ConfigUtil::getMessage('EBT093'));
+        return redirect()->back()->withInput()->with('error', ConfigUtil::getMessage('EBT093'));
     }
 
     public function handleDelete($id) {

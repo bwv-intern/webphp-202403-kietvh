@@ -105,10 +105,8 @@
 
                 <div class="row ">
                     <div class="col-sm-9  d-flex justify-content-between">
-                        <x-button.userlist label="Register" class="btn btn-secondary d-none text-truncate"
-                            type="submit" style="width: 100px;" id="registerButton"
-                            name="registerButton"></x-button.userlist>
-
+                        <div class="" style="width: 100px;"></div>
+                       
                         <x-button.userlist label="Update" class="btn btn-secondary  text-truncate" type="button"
                             type="submit" style="width: 100px;" id="updateButton"
                             name="updateButton"></x-button.userlist>
