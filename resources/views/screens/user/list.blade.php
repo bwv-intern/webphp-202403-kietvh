@@ -39,17 +39,20 @@
             </div>
 
         </form>
+    </div>
+    <div class="mx-sm-5 col-sm-10">
         @if (isset($users))
             @if (count($users) > 0)
-                <div class="row d-flex mt-2 justify-content-center">
-                    <div class="col-sm-4 d-md-none"></div>
-                    <div class="col-sm-8 col-md-11 gap-5 ml-md-2 ml-sm-0">
+                <div class="row d-flex my-2 mx-1">
+                    <div class=" d-flex justify-content-end">
                         {{ $users->links('common.pagination') }}
                     </div>
                 </div>
                 <div class="row mt-5">
-                    <div class="col-sm-10">
+
+                    <div class="col">
                         <table class="table table-bordered table-responsive-sm custom-table">
+
                             <thead>
                                 <tr>
                                     <th class="fw-normal text-center">User Name</th>
@@ -64,8 +67,8 @@
                                     <tr>
                                         <td>
                                             @if (Auth::user()->position_id == 0)
-                                                <a href="{{ route('admin.edit', ['id' => $user->id]) }}"
-                                                    class="text-decoration-underline "> {{ nl2br($user->name) }}
+                                                <a href="{{ route('admin.edit', ['id' => $user->id]) }}" class="">
+                                                    {{ nl2br($user->name) }}
                                                 </a>
                                             @else
                                                 {{ nl2br($user->name) }}
@@ -74,7 +77,7 @@
                                         <td>
                                         
                                                 {{ nl2br($user->email) }}
-                                        
+                                       
                                         </td>
                                         <td class="">{{ nl2br($user->group->name ?? '') }}</td>
                                         <td class="">
@@ -85,27 +88,25 @@
                                 @endforeach
                             </tbody>
                         </table>
-
-
                     </div>
                 </div>
             @elseif ($messageNotFound != '')
                 <div class="row mt-5 mx-1">
-                    <div
-                        class="col-sm-8 h-25 w-100 py-3 bg-danger border d-flex justify-content-center align-items-center">
-                        <span class="mx-1 text-white">
-                            {{ $messageNotFound }}
+                    <div class="col-sm-12 h-25 w-100 py-3 d-flex justify-content-center align-items-center">
+                        <span class="mx-1 text-gray">
+                            <h4> {{ $messageNotFound }}</h4>
                         </span>
                     </div>
                 </div>
             @endif
 
         @endif
-
+    </div>
+    <div class="mx-sm-5 col-sm-8">
         @if (Auth::user()->position_id == 0)
             <div class="row d-block">
                 <div class="col">
-                    <x-button.userlist label="New" class="btn btn-secondary m-1 text-truncate" type="button"
+                    <x-button.userlist label="Add New" class="btn btn-secondary m-1 text-truncate" type="button"
                         style="width: 100px;" id="btnNew" name="btnNew"></x-button.userlist>
                     @if (isset($users) && count($users) > 0)
                         <form action="{{ route('admin.userExport') }}" method="post" style="display: inline;">
@@ -117,9 +118,6 @@
                 </div>
             </div>
         @endif
-
-
-
     </div>
 
     @push('scripts')

@@ -9,9 +9,10 @@ use App\Models\User;
 use App\Repositories\{GroupRepository, UserRepository};
 use App\Services\UserService;
 use Carbon\Carbon;
+
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{Auth, Cookie};
+use Illuminate\Support\Facades\{Auth, Cookie, Session};
 
 class UserController extends Controller
 {
@@ -52,6 +53,8 @@ class UserController extends Controller
     }
 
     public function handlesearch(SearchUsersRequest $request) {
+        $pageTitle = "User List";
+        $request->session()->put('pageTitle', $pageTitle);
         $searchParams = session()->get('user.search');
         $isSearch = session()->get('user.isSearch');
         $messageNotFound = '';
