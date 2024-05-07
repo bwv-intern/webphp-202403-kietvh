@@ -131,6 +131,11 @@ class UserController extends Controller
     }
 
     public function add() {
+
+        if (! Auth::check() || Auth::user()->deleted_date != null) {
+            return redirect()->route('login');
+        }
+
         $pageTitle = 'UserAddEditDelete';
         session()->put('pageTitle', $pageTitle);
         if (! Auth::check() || Auth::user()->deleted_date != null) {
@@ -165,6 +170,11 @@ class UserController extends Controller
     }
 
     public function edit($id) {
+        
+        if (! Auth::check() || Auth::user()->deleted_date != null) {
+            return redirect()->route('login');
+        }
+
         $pageTitle = '';
         session()->put('pageTitle', $pageTitle);
         $user = $this->userRepository->findById($id);
