@@ -15,6 +15,14 @@ class AddUserRequest extends FormRequest
         return true;
     }
 
+    public function getLenghtOfValueByAttributeName(string $attributeName)
+    {
+        $attribute = $this->get($attributeName);
+
+        return strlen($attribute);
+    }
+
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,13 +33,13 @@ class AddUserRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                new CheckMaxLength('Name', 100),
+                'max:100',
             ],
             'email' => [
                 'required',
                 new CheckMailRFC(),
                 'unique:user,email,'.$id,
-                new CheckMaxLength('Email', 255),
+                'max:255',
             ],
             'group_id' => [
                 'required',
@@ -50,12 +58,12 @@ class AddUserRequest extends FormRequest
             'password' => [
                 'required',
                 'regex:/^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-z]+$/',
-                 new CheckMaxLength('Password', 20),
+                'max:20',
                 'between:8,20',
             ],
             'repassword' => [
                 'required',
-                new CheckMaxLength('Password Confirmation', 20),
+                'max:20',
                 'same:password',
             ],
         ];
@@ -65,10 +73,18 @@ class AddUserRequest extends FormRequest
     {
         return [
             'name.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
-
+            'name.max' => ConfigUtil::getMessage('EBT002', [
+                ':attribute',
+                ':max',
+                $this->getLenghtOfValueByAttributeName('name'),
+            ]),
             'email.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
             'email.unique' => ConfigUtil::getMessage('EBT019'),
-
+            'email.max' => ConfigUtil::getMessage('EBT002', [
+                ':attribute',
+                ':max',
+                $this->getLenghtOfValueByAttributeName('email'),
+            ]),
             'group_id.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
 
             'started_date.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
@@ -79,10 +95,19 @@ class AddUserRequest extends FormRequest
             'password.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
             'password.regex' => ConfigUtil::getMessage('EBT025', [':attribute']),
             'password.between' => ConfigUtil::getMessage('EBT023'),
-
+            'password.max' => ConfigUtil::getMessage('EBT002', [
+                ':attribute',
+                ':max',
+                $this->getLenghtOfValueByAttributeName('password'),
+            ]),
+            
             'repassword.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
             'repassword.same' => ConfigUtil::getMessage('EBT030'),
-
+            'repassword.max' => ConfigUtil::getMessage('EBT002', [
+                ':attribute',
+                ':max',
+                $this->getLenghtOfValueByAttributeName('repassword'),
+            ]),
         ];
     }
 
