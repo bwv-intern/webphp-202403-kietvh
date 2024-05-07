@@ -11,6 +11,9 @@
                 <span>{{ session('error') }}</span>
             </div>
         @endif
+            <div class="error-delete">
+                
+            </div>
             {{-- FORM UPDATE --}}
             <form action="{{ route('admin.handleEdit',$user->id) }}" method="POST" name="formEditUser"
                 id="formEditUser">
@@ -115,8 +118,7 @@
                             type="submit" style="width: 100px;" id="updateButton"
                             name="updateButton"></x-button.userlist>
                             <x-button.userlist label="Delete" class="btn btn-secondary  text-truncate" type="button"
-                            style="width: 100px;" data-bs-toggle="modal"
-                            data-bs-target="#deleteUserModal"></x-button.userlist>
+                            style="width: 100px;"  id="deleteButton" name="deleteButton"></x-button.userlist>
                         {{-- <a class="btn btn-secondary  text-truncate" href="/admin/user/delete/{{$user->id}}"
                             style="width: 100px;" id="deleteButton">Delete</a> --}}
 
@@ -126,7 +128,7 @@
                 </div>
 
             </form>
-
+            <input type="hidden" value="{{Auth::user()->id}}" name="current-userId" id="current-userId">
        
     </div>
 <!-- Modal -->
