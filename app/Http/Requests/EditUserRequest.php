@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Libs\ConfigUtil;
-use App\Rules\{CheckMailRFC, CheckNotNull, CheckOnlyNumberAndAlphabetOneByte};
+use App\Rules\{CheckMailRFC, CheckMaxLength, CheckNotNull, CheckOnlyNumberAndAlphabetOneByte};
 use Illuminate\Foundation\Http\FormRequest;
 
 class EditUserRequest extends FormRequest
@@ -15,12 +15,6 @@ class EditUserRequest extends FormRequest
         return true;
     }
 
-    public function getLenghtOfValueByAttributeName(string $attributeName) {
-        $attribute = $this->get($attributeName);
-
-        return strlen($attribute);
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -28,17 +22,16 @@ class EditUserRequest extends FormRequest
      */
     public function rules(): array {
         $id = $this->id ?? -1;
-
         return [
             'name' => [
                 'required',
-                'max:100',
+                new CheckMaxLength('Name', 100),
             ],
             'email' => [
                 'required',
                 new CheckMailRFC(),
                 'unique:user,email,' . $id,
-                'max:255',
+                new CheckMaxLength('Email', 255),
             ],
             'group_id' => [
                 'required',
@@ -57,12 +50,12 @@ class EditUserRequest extends FormRequest
             'password' => $this->isPasswordUpdateRequested() ? [
                 'required',
                 'regex:/^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-z]+$/',
-                'max:20',
+                new CheckMaxLength('Password', 20),
                 'between:8,20',
             ] : '',
             'repassword' => $this->isPasswordUpdateRequested() ? [
                 'required',
-                'max:20',
+                new CheckMaxLength('Password Confirmation', 20),
                 'same:password',
             ] : '',
         ];
@@ -71,18 +64,10 @@ class EditUserRequest extends FormRequest
     public function messages() {
         return [
             'name.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
-            'name.max' => ConfigUtil::getMessage('EBT002', [
-                ':attribute',
-                ':max',
-                $this->getLenghtOfValueByAttributeName('name'),
-            ]),
+
             'email.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
             'email.unique' => ConfigUtil::getMessage('EBT019'),
-            'email.max' => ConfigUtil::getMessage('EBT002', [
-                ':attribute',
-                ':max',
-                $this->getLenghtOfValueByAttributeName('email'),
-            ]),
+
             'group_id.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
 
             'started_date.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
@@ -93,19 +78,9 @@ class EditUserRequest extends FormRequest
             'password.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
             'password.regex' => ConfigUtil::getMessage('EBT025', [':attribute']),
             'password.between' => ConfigUtil::getMessage('EBT023'),
-            'password.max' => ConfigUtil::getMessage('EBT002', [
-                ':attribute',
-                ':max',
-                $this->getLenghtOfValueByAttributeName('password'),
-            ]),
 
             'repassword.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
             'repassword.same' => ConfigUtil::getMessage('EBT030'),
-            'repassword.max' => ConfigUtil::getMessage('EBT002', [
-                ':attribute',
-                ':max',
-                $this->getLenghtOfValueByAttributeName('repassword'),
-            ]),
         ];
     }
 
