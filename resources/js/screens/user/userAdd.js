@@ -29,8 +29,8 @@ $(function () {
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "/admin/user/checkemail/",
-                    type: "POST",
+                    url:  $("#check_mail_url").data('add-route'),
+                    type: "GET",
                     data: {
                         id: function () {
                             return $('#id').val();
