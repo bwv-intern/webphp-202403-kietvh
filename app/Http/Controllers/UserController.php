@@ -9,10 +9,9 @@ use App\Models\User;
 use App\Repositories\{GroupRepository, UserRepository};
 use App\Services\UserService;
 use Carbon\Carbon;
-
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{Auth, Cookie, Session};
+use Illuminate\Support\Facades\{Auth, Cookie};
 
 class UserController extends Controller
 {
@@ -35,7 +34,7 @@ class UserController extends Controller
         }
 
         // get params search
-        $searchParams = $request->only(['name', 'started_date_from', 'started_date_to','page']);
+        $searchParams = $request->only(['name', 'started_date_from', 'started_date_to', 'page']);
 
         if (count(array_filter($searchParams)) === 0) {
             $searchParams = [
@@ -53,7 +52,7 @@ class UserController extends Controller
     }
 
     public function handlesearch(SearchUsersRequest $request) {
-        $pageTitle = "User List";
+        $pageTitle = 'User List';
         $request->session()->put('pageTitle', $pageTitle);
         $searchParams = session()->get('user.search');
         $isSearch = session()->get('user.isSearch');
@@ -132,8 +131,8 @@ class UserController extends Controller
     }
 
     public function add() {
-        $pageTitle = "UserAddEditDelete";
-        Session()->put('pageTitle', $pageTitle);
+        $pageTitle = 'UserAddEditDelete';
+        session()->put('pageTitle', $pageTitle);
         if (! Auth::check() || Auth::user()->deleted_date != null) {
             return redirect()->route('login');
         }
@@ -156,8 +155,8 @@ class UserController extends Controller
     }
 
     public function edit($id) {
-        $pageTitle = "";
-        Session()->put('pageTitle', $pageTitle);
+        $pageTitle = '';
+        session()->put('pageTitle', $pageTitle);
         $user = $this->userRepository->findById($id);
         if ($user == null) {
             return redirect()->route('error');
@@ -188,20 +187,23 @@ class UserController extends Controller
             }
             $userFound = $this->userRepository->findById($id);
             if ($userFound == null) {
-                return  redirect()->route('error');
+                return redirect()->route('error');
             }
             $userFound['deleted_date'] = Carbon::now()->toDateString();
             if ($userFound->save()) {
                 $searchParams = session()->get('user.search');
                 $url = route('admin.userList', $searchParams); // Build the URL with search parameters
+
                 return redirect($url)->with('success', ConfigUtil::getMessage('EBT096'));
             }
+
             return redirect()->route('admin.userList')->with('error', ConfigUtil::getMessage('EBT093'));
         }
+
         return redirect()->route('admin.userList')->with('error', ConfigUtil::getMessage('EBT093'));
     }
 
-    public function CheckExistEmail(Request $request) {
+    public function checkExistEmail(Request $request) {
         if (isset($request->id)) {
             $user = $this->userRepository->getByEmail($request->email, $request->id);
         } else {
@@ -219,9 +221,10 @@ class UserController extends Controller
         ]);
     }
 
-    public function cancle(){
+    public function cancle() {
         $searchParams = session()->get('user.search');
-                $url = route('admin.userList', $searchParams);
-                return redirect($url);
+        $url = route('admin.userList', $searchParams);
+
+        return redirect($url);
     }
 }
