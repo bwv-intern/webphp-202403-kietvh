@@ -36,8 +36,8 @@
                 <div class="row pt-2">
                     <div class="col-sm-6 ">
                         <x-forms.text-group label="Email" id="email" name="email" :isRequired="true"  :isDisabled="$isDisable"
-                            :value="old('email') ?? $user->email" />
-
+                            :value="old('email') ?? $user->email"/>
+                        <input type="hidden" value="" data-add-route="{{route('admin.checkEmail')}}" name="check_mail_url" id="check_mail_url">
                     </div>
                     <div class="col-sm-6">
                         <div class="input-group" style="">

@@ -54,7 +54,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
         Route::get('/delete/{id}', [UserController::class, 'handleDelete'])->middleware(['checkPermissions'])->name('handleDelete');
         Route::get('/cancle', [UserController::class, 'cancle']);
         // route check email exist
-        Route::post('/checkemail', [UserController::class, 'checkExistEmail'])->name('checkEmail');
+        Route::get('/checkemail', [UserController::class, 'checkExistEmail'])->name('checkEmail');
 
     });
 
