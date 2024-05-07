@@ -32,3 +32,17 @@ $.validator.addMethod('stringValueRange', function (value, element, param) {
 $.validator.addMethod('katakanaMaxLength', function (value, element, param) {
     return this.optional(element) || Array.from(value).length <= param;
 });
+
+jQuery.validator.addMethod("greaterStart", function (value, element, param) {
+    let [dayFrom, monthFrom, yearFrom] = $(param).val().split('/');
+    const dateFrom = new Date(+yearFrom, +monthFrom - 1, +dayFrom);
+
+    let [dayTo, monthTo, yearTo] = value.split('/');
+    const dateTo = new Date(+yearTo, +monthTo - 1, +dayTo);
+
+    if (! /Invalid|NaN/.test(dateFrom) && !/Invalid|NaN/.test(dateTo)) {
+        return this.optional(element) || dateTo >= dateFrom;
+    }
+
+    return true;
+});

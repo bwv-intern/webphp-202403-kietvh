@@ -3,7 +3,7 @@ FROM php:8.2-apache
 ARG user
 ARG uid
 
-# Install system dependencies
+# Install  system dependencies
 RUN apt-get update \
     && apt-get install -y git unzip zip npm \
     && apt-get install -y vim \
