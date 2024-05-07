@@ -11,7 +11,7 @@ use App\Services\UserService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{Auth, Cookie};
+use Illuminate\Support\Facades\{Auth, Cookie, Validator};
 
 class UserController extends Controller
 {
@@ -142,7 +142,17 @@ class UserController extends Controller
         return view('screens.user.add-edit-delete', compact('groups'));
     }
 
-    public function handleAdd(AddUserRequest $request) {
+    public function handleAdd(Request $request) {
+        $addUserRequest = new AddUserRequest();
+
+        $validator = Validator::make($request->all(), $addUserRequest->rules(), $addUserRequest->messages(), $addUserRequest->attributes());
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+       
         $result = $this->userService->create($request);
         if ($result) {
             $searchParams = session()->get('user.search');
@@ -167,7 +177,18 @@ class UserController extends Controller
         return view('screens.user.edit-delele', compact('groups', 'user'));
     }
 
-    public function handleEdit(EditUserRequest $request) {
+    public function handleEdit(EditUserRequest $request) 
+    {
+        $editUserRequest = new EditUserRequest();
+
+        $validator = Validator::make($request->all(), $editUserRequest->rules(), $editUserRequest->messages(), $editUserRequest->attributes());
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $result = $this->userService->edit($request);
         if ($result) {
             $searchParams = session()->get('user.search');
