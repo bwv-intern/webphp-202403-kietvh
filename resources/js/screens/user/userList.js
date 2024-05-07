@@ -4,14 +4,21 @@ $(function () {
         onSelect: function (selectedDate) {
             $('#started-date-from').valid();
         }
+    }).on('change', function() {
+        $(this).valid();
+        $("#started-date-to").valid();
     });
+;
 
     $("#started-date-to").datepicker({
         dateFormat: 'dd/mm/yy',
         onSelect: function (selectedDate) {
             $('#started-date-from').valid();
         }
-    });
+    }).on('change', function() {
+        $(this).valid();
+        $("#started-date-from").valid();
+    });;
 
     $('#formSearch').validate({
         rules: {
