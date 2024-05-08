@@ -11,6 +11,9 @@
                 <span>{{ session('error') }}</span>
             </div>
         @endif
+            <div class="error-delete">
+                
+            </div>
             {{-- FORM UPDATE --}}
             <form action="{{ route('admin.handleEdit',$user->id) }}" method="POST" name="formEditUser"
                 id="formEditUser">
@@ -50,10 +53,12 @@
                                     @php
                                         $selected = old('group_id') ?? $user->group_id;
                                     @endphp
+                                    <option value="null">[---]</option>
                                     @foreach ($groups as $group)
                                         <option value="{{ $group->id }}"@if ($selected == $group->id) selected @endif>{{ $group->name }}</option>
                                     @endforeach
                                 </select>
+                                <x-error-message field="group_id" />
                             </div>
                         </div>
                     </div>
@@ -83,10 +88,12 @@
                             @endphp
                             <div class="col-sm-6">
                                 <select class="form-select text-truncate border rounded-1" name="position_id" {{ $isDisable ? 'disabled' : '' }}>
+                                    <option value="null">[---]</option>
                                     @foreach ($positions as $positionValue => $positionLabel)
                                         <option value="{{ $positionValue }}"{{ $positionValue == $selected ? 'selected' : '' }}>{{ $positionLabel }}</option>
                                     @endforeach
                                 </select>
+                                <x-error-message field="position_id" />
                             </div>
                         </div>
                     </div>
@@ -111,8 +118,7 @@
                             type="submit" style="width: 100px;" id="updateButton"
                             name="updateButton"></x-button.userlist>
                             <x-button.userlist label="Delete" class="btn btn-secondary  text-truncate" type="button"
-                            style="width: 100px;" data-bs-toggle="modal"
-                            data-bs-target="#deleteUserModal"></x-button.userlist>
+                            style="width: 100px;"  id="deleteButton" name="deleteButton"></x-button.userlist>
                         {{-- <a class="btn btn-secondary  text-truncate" href="/admin/user/delete/{{$user->id}}"
                             style="width: 100px;" id="deleteButton">Delete</a> --}}
 
@@ -122,7 +128,7 @@
                 </div>
 
             </form>
-
+            <input type="hidden" value="{{Auth::user()->id}}" name="current-userId" id="current-userId">
        
     </div>
 <!-- Modal -->
