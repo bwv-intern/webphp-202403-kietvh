@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Libs\{CSVUtil, ConfigUtil};
 use App\Repositories\GroupRepository;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class GroupService
@@ -92,6 +93,7 @@ class GroupService
             // Check if the number of fields in the row is different from the number of headerCSV
             if (count($row) != count($headersCSV)) {
                 fclose($file);
+
                 return [
                     'message' => 'WRONG_HEADER',
                     'data' => [],
@@ -111,8 +113,10 @@ class GroupService
             } else {
                 if ($row['id'] === '') {
                     unset($row['id']);
+                    $row['deleted_date'] = "";
                     $savedGroups[] = $row;
                 } else {
+                    $row['deleted_date'] = Carbon::now()->toDateString();
                     $editedGroups[] = $row;
                     $savedIDEdit[] = $row['id'];
                 }
@@ -120,7 +124,7 @@ class GroupService
         }
         fclose($file);
         if (count($errorList) > 0) {
-            dd($errorList);
+
             return [
                 'message' => 'ERROR',
                 'data' => $errorList,
@@ -128,14 +132,12 @@ class GroupService
         }
 
         if (count($savedGroups) > 0) {
-            // $this->insertMany($savedGroups);
+            $this->groupRepository->insertMany($savedGroups);
         }
 
         if (count($editedGroups) > 0) {
-            // $this->editMany($editedGroups);
+            $this->groupRepository->editMany($editedGroups);
         }
-
-        dd($savedGroups, $editedGroups);
 
         return [
             'message' => 'SUCCESS',

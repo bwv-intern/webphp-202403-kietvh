@@ -10,6 +10,13 @@
                 <span>{{ session('success') }}</span>
             </div>
         @endif
+        @if ($errors && $errors->any())
+        <div class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+                <p class="m-0 p-0">{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
     </div>
     <div class="col-sm-12">
 

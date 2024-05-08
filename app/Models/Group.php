@@ -27,6 +27,7 @@ class Group extends Model
         'note',
         'group_leader_id',
         'group_floor_number',
+        'deleted_date',
     ];
 
 
