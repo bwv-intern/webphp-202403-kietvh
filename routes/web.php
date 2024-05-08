@@ -60,5 +60,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
 
     Route::group(['prefix' => 'group', 'middleware' => ['check-director']], function () {
         Route::get('/', [GroupController::class, 'groupList'])->name('groupList');
+        Route::post('/import', [GroupController::class, 'import'])->name('import');
     });
 });

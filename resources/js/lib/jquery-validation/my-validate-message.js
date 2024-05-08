@@ -6,5 +6,7 @@ $().ready(function() {
         stringValueRange: jQuery.validator.format('パスワードは半角英数字記号で8～20文字で入力してください。'),
         existsEmail: jQuery.validator.format('すでにメールアドレスは登録されています。'),
         greaterStart: jQuery.validator.format('解約予定日は契約終了日前を指定してください。'),
+        extension: jQuery.validator.format('ファイル形式が誤っています。{0}を選択してください。'),  
+        filesize: jQuery.validator.format('ファイルのサイズ制限{0}を超えています。'),
     });
 })
