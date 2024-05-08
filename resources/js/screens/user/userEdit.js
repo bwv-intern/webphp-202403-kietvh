@@ -8,21 +8,21 @@ $(document).ready(function () {
         }
     });
 
-   
-   
+
+
     $("#started-date").datepicker({
         dateFormat: 'dd/mm/yy',
         onSelect: function (selectedDate) {
             $('#started-date').valid();
         }
     });
-   
-    $("#password").on('input', function() {
-        if($("#password").val().length > 0){
+
+    $("#password").on('input', function () {
+        if ($("#password").val().length > 0) {
             $("#password").closest('.input-group').find('label').addClass('input-required');
             $("#repassword").closest('.input-group').find('label').addClass('input-required');
         }
-        else{
+        else {
             $("#password").closest('.input-group').find('label').removeClass('input-required');
             $("#repassword").closest('.input-group').find('label').removeClass('input-required');
         }
@@ -42,7 +42,7 @@ $(document).ready(function () {
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url:  $("#check_mail_url").data('add-route'),
+                    url: $("#check_mail_url").data('add-route'),
                     type: "GET",
                     data: {
                         id: function () {
@@ -54,11 +54,11 @@ $(document).ready(function () {
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     dataFilter: function (response) {
-                        var data = JSON.parse(response); 
+                        var data = JSON.parse(response);
                         console.log(response)
                         if (data.duplicate === true) {
                             console.log("OK");
-                           return false;
+                            return false;
                         }
                         return true;
                     }
@@ -96,11 +96,11 @@ $(document).ready(function () {
 
         },
         messages: {
-            'email':{
+            'email': {
                 remote: 'すでにメールアドレスは登録されています。', // EBT019
             },
             'started_date': {
-                dateDMY: "Started Date Toは日付を正しく入力してください。" 
+                dateDMY: "Started Date Toは日付を正しく入力してください。"
             },
             'password': {
             },
@@ -113,9 +113,20 @@ $(document).ready(function () {
             'position_id': {
                 notNull: "Positionは必須です。",
             },
-            
+
         }
     });
-   
 
+    $('#deleteButton').on('click', function () {
+        var currentUserId = $("#current-userId").val();
+        if ($("#id").val() != currentUserId) {
+            $('#deleteUserModal').modal('show');
+        }
+        else {
+            var errorDiv = $('<div class="alert alert-danger text-white p-1 error-remove">').append(
+                $('<span>').text('すでに証明書番号は登録されています。')
+            );
+            $('.error-delete').empty().append(errorDiv);
+        }
+    });
 });

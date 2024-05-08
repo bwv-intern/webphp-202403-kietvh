@@ -35,7 +35,7 @@ Route::prefix('common')->as('common.')->group(function () {
     Route::get('resetSearch', [CommonController::class, 'resetSearch'])->name('resetSearch');
 });
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'checkLogin']], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'checkLogin','no-cache']], function () {
 
     Route::group(['prefix' => 'user'], function () {
         // user list search
