@@ -16,4 +16,10 @@ class GroupRepository extends BaseRepository
         $query->orderBy('name', 'asc');
         return $query->get();
     }
+
+    public function getAll(){
+        $query = Group::whereRaw('1=1');
+        $query->orderBy('id', 'desc');
+        return $query;
+    }
 }

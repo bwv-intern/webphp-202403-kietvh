@@ -13,5 +13,8 @@ class GroupService
         $this->groupRepository = $groupRepository;
     }
 
+    public function getAll() {
+        return $this->groupRepository->getAll();
+    }
     
 }

@@ -2,14 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Services\GroupService;
 
 class GroupController extends Controller
 {
-    public function groupList(){
-        $pageTitle = "";
-        Session()->put('pageTitle', $pageTitle);
-        return view('screens.group.list');
+    protected GroupService $groupService;
+
+    public function __construct(GroupService $groupService) {
+        $this->groupService = $groupService;
+    }
+
+    public function groupList() {
+        $pageTitle = '';
+        session()->put('pageTitle', $pageTitle);
+
+        $groups = $this->groupService->getAll();
+        $groups = $this->pagination($groups);
+
+        $messageNotFound = '';
+
+        return view('screens.group.list',compact('groups','messageNotFound'));
     }
 }
