@@ -3,15 +3,16 @@
 namespace App\Http\Requests;
 
 use App\Libs\ConfigUtil;
-use App\Rules\{CheckMailRFC, CheckMaxLength, CheckNotNull, CheckOnlyNumberAndAlphabetOneByte};
+use App\Rules\CheckMaxLength;
 use Illuminate\Foundation\Http\FormRequest;
 
-class EditUserRequest extends FormRequest
+class UpdatePasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool {
+    public function authorize(): bool
+    {
         return true;
     }
 
@@ -20,33 +21,9 @@ class EditUserRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array {
-        $id = $this->id ?? -1;
+    public function rules(): array
+    {
         return [
-            'name' => [
-                'required',
-                new CheckMaxLength('Name', 100),
-            ],
-            'email' => [
-                'required',
-                new CheckMailRFC(),
-                'unique:user,email,' . $id,
-                new CheckMaxLength('Email', 255),
-            ],
-            'group_id' => [
-                'required',
-                new CheckNotNull(),
-                new CheckOnlyNumberAndAlphabetOneByte(),
-            ],
-            'started_date' => [
-                'required',
-                'date_format:d/m/Y',
-            ],
-            'position_id' => [
-                'required',
-                new CheckNotNull(),
-                new CheckOnlyNumberAndAlphabetOneByte(),
-            ],
             'password' => $this->isPasswordUpdateRequested() ? [
                 'required',
                 'between:8,20',
@@ -61,20 +38,9 @@ class EditUserRequest extends FormRequest
         ];
     }
 
+
     public function messages() {
         return [
-            'name.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
-
-            'email.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
-            'email.unique' => ConfigUtil::getMessage('EBT019'),
-
-            'group_id.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
-
-            'started_date.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
-            'started_date.date_format' => ConfigUtil::getMessage('EBT008', [':attribute']),
-
-            'position_id.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
-
             'password.required' => ConfigUtil::getMessage('EBT001', [':attribute']),
             'password.regex' => ConfigUtil::getMessage('EBT025', [':attribute']),
             'password.between' => ConfigUtil::getMessage('EBT023'),

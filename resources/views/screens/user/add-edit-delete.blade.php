@@ -47,7 +47,7 @@
                                 @php
                                     $oldSelected = old('group_id') ?? '';
                                 @endphp
-                                <option value="null">[---]</option>
+                                <option value="null">---</option>
                                 @foreach ($groups as $group)
                                     <option value="{{ $group->id }}"@if ($oldSelected == $group->id) selected @endif>{{ $group->name }}</option>
                                 @endforeach
@@ -81,7 +81,7 @@
                             @endphp
                             <div class="col-sm-6">
                                 <select class="form-select text-truncate border rounded-1" name="position_id" {{ $isDisable ? 'disabled' : '' }}>
-                                    <option value="null">[---]</option>
+                                    <option value="null">---</option>
                                     @foreach ($positions as $positionValue => $positionLabel)
                                         <option value="{{ $positionValue }}"{{ $positionValue == $selected ? 'selected' : '' }}>{{ $positionLabel }}</option>
                                     @endforeach

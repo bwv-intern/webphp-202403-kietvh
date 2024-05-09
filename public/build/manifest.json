@@ -35,12 +35,12 @@
     "src": "resources/js/screens/auth/login.js"
   },
   "resources/js/screens/user/userAdd.js": {
-    "file": "assets/userAdd-G2kLZcDS.js",
+    "file": "assets/userAdd-N-bVGYB9.js",
     "isEntry": true,
     "src": "resources/js/screens/user/userAdd.js"
   },
   "resources/js/screens/user/userEdit.js": {
-    "file": "assets/userEdit-7RuGivBP.js",
+    "file": "assets/userEdit-qavFIXj-.js",
     "isEntry": true,
     "src": "resources/js/screens/user/userEdit.js"
   },
