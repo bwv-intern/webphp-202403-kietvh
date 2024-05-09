@@ -136,7 +136,7 @@ class UserController extends Controller
             return redirect()->route('login');
         }
 
-        $pageTitle = 'UserAddEditDelete';
+        $pageTitle = 'User Add';
         session()->put('pageTitle', $pageTitle);
         if (! Auth::check() || Auth::user()->deleted_date != null) {
             return redirect()->route('login');
@@ -166,7 +166,7 @@ class UserController extends Controller
             return redirect()->route('login');
         }
 
-        $pageTitle = '';
+        $pageTitle = 'User Edit';
         session()->put('pageTitle', $pageTitle);
         $user = $this->userRepository->findById($id);
         if ($user == null) {
