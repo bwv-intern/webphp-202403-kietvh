@@ -151,11 +151,11 @@ tbody td {
 
 .custom-table td,
 .custom-table th {
-    width: 200px !important;
+    width: 242px !important;
     height: 50px !important;
-    max-width: 200px !important;
+    max-width: 242px !important;
     max-height: 50px !important;
-    min-width: 200px !important;
+    min-width: 242px !important;
     min-height: 50px !important;
     white-space: nowrap;
     overflow: hidden;
