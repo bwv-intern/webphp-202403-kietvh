@@ -43,14 +43,15 @@
     <div class="mx-sm-1 col-sm-12">
         @if (isset($users))
             @if (count($users) > 0)
-                <div class="row d-flex my-2 mx-1">
-                    <div class=" d-flex justify-content-end">
-                        {{ $users->links('common.pagination') }}
-                    </div>
-                </div>
+                
                 <div class="row mt-5">
-                    <div class="col-sm-11">
-                        <table class="table table-bordered table-responsive-lg custom-table">
+                    <div class="col-sm-12">
+                        <div class="row mb-3 mt-2">
+                            <div class=" d-flex justify-content-end">
+                                {{ $users->links('common.pagination') }}
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-responsive-lg list-user-table">
 
                             <thead>
                                 <tr>

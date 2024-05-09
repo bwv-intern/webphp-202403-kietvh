@@ -1,8 +1,13 @@
 {
   "resources/css/common.css": {
-    "file": "assets/common-7lg2rYjh.css",
+    "file": "assets/common-NMEPTdYc.css",
     "isEntry": true,
     "src": "resources/css/common.css"
+  },
+  "resources/css/list-user.css": {
+    "file": "assets/list-user-UFbQzNci.css",
+    "isEntry": true,
+    "src": "resources/css/list-user.css"
   },
   "resources/js/common.js": {
     "file": "assets/common-oga1OUT-.js",
