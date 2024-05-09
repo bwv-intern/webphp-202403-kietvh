@@ -151,17 +151,18 @@ tbody td {
 
 .custom-table td,
 .custom-table th {
-    width: 242px !important;
+    width: 200px !important;
     height: 50px !important;
-    max-width: 242px !important;
+    max-width: 200px !important;
     max-height: 50px !important;
-    min-width: 242px !important;
+    min-width: 200px !important;
     min-height: 50px !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: middle;
 }
+
 
 .table thead th {
      vertical-align: middle;
