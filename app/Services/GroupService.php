@@ -113,10 +113,8 @@ class GroupService
             } else {
                 if ($row['id'] === '') {
                     unset($row['id']);
-                    $row['deleted_date'] = "";
                     $savedGroups[] = $row;
                 } else {
-                    $row['deleted_date'] = Carbon::now()->toDateString();
                     $editedGroups[] = $row;
                     $savedIDEdit[] = $row['id'];
                 }
