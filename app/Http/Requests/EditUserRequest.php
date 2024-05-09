@@ -49,14 +49,14 @@ class EditUserRequest extends FormRequest
             ],
             'password' => $this->isPasswordUpdateRequested() ? [
                 'required',
+                'between:8,20',
                 'regex:/^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-z]+$/',
                 new CheckMaxLength('Password', 20),
-                'between:8,20',
             ] : '',
             'repassword' => $this->isPasswordUpdateRequested() ? [
                 'required',
-                new CheckMaxLength('Password Confirmation', 20),
                 'same:password',
+                new CheckMaxLength('Password Confirmation', 20),
             ] : '',
         ];
     }

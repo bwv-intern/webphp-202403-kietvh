@@ -69,9 +69,9 @@ $(function () {
             },
             'password': {
                 required: true,
+                stringValueRange: [8, 20],
                 onlyNumberAndAlphabetForPassword: true,
                 maxlength: 20,
-                stringValueRange: [8, 20],
             },
             'repassword': {
                 required: true,
