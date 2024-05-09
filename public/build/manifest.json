@@ -1,6 +1,6 @@
 {
   "resources/css/common.css": {
-    "file": "assets/common-ac7STjxR.css",
+    "file": "assets/common-y69LUIPz.css",
     "isEntry": true,
     "src": "resources/css/common.css"
   },
@@ -15,7 +15,7 @@
     "src": "resources/js/lib/jquery-validation/additional-setting.js"
   },
   "resources/js/lib/jquery-validation/my-validate-message.js": {
-    "file": "assets/my-validate-message-s0iKSFMs.js",
+    "file": "assets/my-validate-message-1dw2gSGu.js",
     "isEntry": true,
     "src": "resources/js/lib/jquery-validation/my-validate-message.js"
   },

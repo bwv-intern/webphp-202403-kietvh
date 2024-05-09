@@ -5,6 +5,7 @@ group_import_csv_configs:
         - nullable
         - numeric
         - digits_between:1,2147483647
+        - exists:group,id
   name:
       header: Group Name
       validate:
@@ -26,6 +27,8 @@ group_import_csv_configs:
       header: Floor Number
       validate:
         - required
+        - numeric
+        - digits_between:1,2147483647
   deleted_date:
       header: Delete
       validate:

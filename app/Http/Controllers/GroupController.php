@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ImportCsvRequest;
+use App\Libs\ConfigUtil;
 use App\Libs\CSVUtil;
 use App\Services\GroupService;
 
@@ -33,8 +34,8 @@ class GroupController extends Controller
             $tempPath = $csvFile->getRealPath();
             $result = $this->groupService->importCsv($tempPath);
             switch ($result['message']) {
-                case 'WRONG_HEADER':
-                    return redirect()->back()->withErrors('EBT095')->withInput();
+                // case 'WRONG_HEADER':
+                //     return redirect()->back()->withErrors(ConfigUtil::getMessage('EBT095'))->withInput();
                 case 'ERROR':
                     return redirect()->back()->withErrors($result['data'])->withInput();
                 case 'SUCCESS':

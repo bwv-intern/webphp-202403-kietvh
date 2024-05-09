@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Libs\{CSVUtil, ConfigUtil};
 use App\Repositories\GroupRepository;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class GroupService
@@ -23,6 +22,7 @@ class GroupService
         $messages = [
             'id.numeric' => "Dòng {$rowIndex}:" . ConfigUtil::getMessage('EBT010', ['ID']),
             'id.digits_between' => "Dòng {$rowIndex}:" . ConfigUtil::getMessage('EBT010', ['ID']),
+            'id.exists' => "Dòng {$rowIndex}:" . ConfigUtil::getMessage('EBT094', ['ID']),
 
             'name.required' => "Dòng {$rowIndex}:" . ConfigUtil::getMessage('EBT001', ['Group Name']),
             'name.string' => "Dòng {$rowIndex}:" . ConfigUtil::getMessage('EBT010', ['Group Name']),
@@ -36,6 +36,8 @@ class GroupService
             'group_leader_id.exists' => "Dòng {$rowIndex}:" . ConfigUtil::getMessage('EBT094', ['Group Leader']),
 
             'group_floor_number.required' => "Dòng {$rowIndex}:" . ConfigUtil::getMessage('EBT001', ['Floor Number']),
+            'group_floor_number.numeric' => "Dòng {$rowIndex}:" . ConfigUtil::getMessage('EBT010', ['Floor Number']),
+            'group_floor_number.digits_between' => "Dòng {$rowIndex}:" . ConfigUtil::getMessage('EBT010', ['Floor Number']),
         ];
 
         return $messages;
@@ -46,7 +48,7 @@ class GroupService
         $validator->setCustomMessages($this->messages($row, $rowIndex));
         $validator->after(function ($validator) use ($row, $rowIndex) {
             if ($row['deleted_date'] != '' && $row['deleted_date'] != 'Y') {
-                $validator->errors()->add('deleted_date', "Dòng {$rowIndex} :" . ConfigUtil::getMessage('EBT010', ['Delete']));
+                $validator->errors()->add('deleted_date', "Dòng {$rowIndex}:" . ConfigUtil::getMessage('EBT010', ['Delete']));
             }
         });
 
@@ -58,6 +60,14 @@ class GroupService
     }
 
     public function importCsv($filePath) {
+        $savedGroups = [];
+        $editedGroups = [];
+        $errorList = [];
+
+        $savedIDEdit = [];
+
+        $rowIndex = 1;
+
         $csvUtil = new CSVUtil();
 
         $file = fopen($filePath, 'r');
@@ -68,21 +78,8 @@ class GroupService
         $headersCSV = $csvUtil->getHeaderCSVFile($file);
         $checkHeader = $csvUtil->checkHeader($headersYaml, $headersCSV);
         if (! $checkHeader) {
-            fclose($file);
-
-            return [
-                'message' => 'WRONG_HEADER',
-                'data' => [],
-            ];
+            $errorList[] = 'Dòng 1:' . ConfigUtil::getMessage('EBT095');
         }
-
-        $savedGroups = [];
-        $editedGroups = [];
-        $errorList = [];
-
-        $savedIDEdit = [];
-
-        $rowIndex = 0;
 
         $keyYaml = $csvUtil->getKeyYaml($fileYAMLPath, $configName);
 
@@ -90,22 +87,16 @@ class GroupService
         while ($row = fgetcsv($file)) {
             $rowIndex++;
 
-            // Check if the number of fields in the row is different from the number of headerCSV
             if (count($row) != count($headersCSV)) {
-                fclose($file);
-
-                return [
-                    'message' => 'WRONG_HEADER',
-                    'data' => [],
-                ];
+                $errorList[] = "Dòng {$rowIndex} :" . ConfigUtil::getMessage('EBT095');
+                continue;
             }
-
             $row = array_combine($keyYaml, $row);
             $rules = array_combine($keyYaml, $rules);
             if (in_array($row['id'], $savedIDEdit)) {
                 $errorList[] = "Row {$rowIndex} :" . ConfigUtil::getMessage('EBT057', ['ID']);
+                continue;
             }
-
             // validate row
             $errors = $this->validateRow($row, $rules, $rowIndex);
             if (count($errors) > 0) {
@@ -122,7 +113,6 @@ class GroupService
         }
         fclose($file);
         if (count($errorList) > 0) {
-
             return [
                 'message' => 'ERROR',
                 'data' => $errorList,
