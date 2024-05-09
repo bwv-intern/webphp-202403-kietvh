@@ -40,25 +40,25 @@
 
         </form>
     </div>
-    <div class="mx-sm-5 col-sm-10">
+    <div class="mx-sm-1 col-sm-12">
         @if (isset($users))
             @if (count($users) > 0)
-                <div class="row d-flex my-2 mx-1">
-                    <div class=" d-flex justify-content-end">
-                        {{ $users->links('common.pagination') }}
-                    </div>
-                </div>
+                
                 <div class="row mt-5">
-
-                    <div class="col">
-                        <table class="table table-bordered table-responsive-sm custom-table">
+                    <div class="col-sm-12">
+                        <div class="row mb-3 mt-2">
+                            <div class=" d-flex justify-content-end">
+                                {{ $users->links('common.pagination') }}
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-responsive-lg list-user-table">
 
                             <thead>
                                 <tr>
                                     <th class="fw-normal text-center">User Name</th>
                                     <th class="fw-normal text-center">Email</th>
                                     <th class="fw-normal text-center">Group Name</th>
-                                    <th class="fw-normal text-center">Started Date</th>
+                                    <th class="fw-normal text-center" style=" max-width: 175px !important; width: 175px !important; min-width: 175px !important;">Started Date</th>
                                     <th class="fw-normal text-center">Position</th>
                                 </tr>
                             </thead>
@@ -80,7 +80,7 @@
                                        
                                         </td>
                                         <td class="">{{ nl2br($user->group->name ?? '') }}</td>
-                                        <td class="">
+                                        <td class="" style=" max-width: 175px !important; width: 175px !important; min-width: 175px !important;">
                                             {{ nl2br($user->started_date != null ? $user->started_date->format('d/m/Y') : '') }}
                                         </td>
                                         <td class="">{{ nl2br($user->getPosition()) }}</td>
