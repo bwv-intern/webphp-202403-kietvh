@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\User\SearchUsersRequest;
-use App\Http\Requests\{AddUserRequest, EditUserRequest};
+use App\Http\Requests\{AddUserRequest, EditUserRequest, UpdatePasswordRequest};
 use App\Libs\ConfigUtil;
 use App\Models\User;
 use App\Repositories\{GroupRepository, UserRepository};
@@ -11,7 +11,7 @@ use App\Services\UserService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{Auth, Cookie, Validator};
+use Illuminate\Support\Facades\{Auth, Cookie, Hash, Validator};
 
 class UserController extends Controller
 {
@@ -238,5 +238,21 @@ class UserController extends Controller
         $url = route('admin.userList', $searchParams);
 
         return redirect($url);
+    }
+
+    public function updatePassword(UpdatePasswordRequest $request){
+        $id = $request-> id;
+        $password = $request-> password;
+        $user = $this->userRepository->findById($id);
+        if($user){
+            $user->password =  Hash::make($password);
+            $user->save();
+
+            $searchParams = session()->get('user.search');
+            $url = route('admin.userList', $searchParams);
+            return redirect($url)->with('success', ConfigUtil::getMessage('EBT096'));
+        }
+        
+        return redirect()->route('admin.userList')->with('error', ConfigUtil::getMessage('EBT093'));
     }
 }

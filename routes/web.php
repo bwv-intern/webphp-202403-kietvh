@@ -50,7 +50,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
         // edit delele
         Route::get('/add-edit-delete/{id}', [UserController::class, 'edit'])->middleware(['checkPermissions'])->name('edit');
         Route::put('/add-edit-delete/{id}', [UserController::class, 'handleEdit'])->middleware(['checkPermissions','check-director'])->name('handleEdit');
-       
+        Route::put('/updatePassword/{id}', [UserController::class, 'updatePassword'])->name('updatePassword');
         Route::get('/delete/{id}', [UserController::class, 'handleDelete'])->middleware(['checkPermissions'])->name('handleDelete');
         Route::get('/cancle', [UserController::class, 'cancle']);
         // route check email exist

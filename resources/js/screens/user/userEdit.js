@@ -81,17 +81,17 @@ $(document).ready(function () {
                 dateDMY: true,
             },
             'password': {
+                stringValueRange: [8, 20],
                 onlyNumberAndAlphabetForPassword: true,
                 maxlength: 20,
-                stringValueRange: [8, 20],
             },
             'repassword': {
                 required: function (element) {
                     return $('#password').val().length > 0;
                 },
                 onlyNumberAndAlphabetForPassword: true,
-                maxlength: 20,
                 equalTo: "#password",
+                maxlength: 20,
             }
 
         },
