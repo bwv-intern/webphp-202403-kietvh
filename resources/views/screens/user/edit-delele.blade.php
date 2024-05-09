@@ -15,7 +15,16 @@
                 
             </div>
             {{-- FORM UPDATE --}}
-            <form action="{{ route('admin.handleEdit',$user->id) }}" method="POST" name="formEditUser"
+
+            @php
+            $route = 'admin.handleEdit';
+                if(isset($user)) {
+                    if(Auth::id() == $user->id && Auth::user()->position_id != 0) {
+                        $route = 'admin.updatePassword';
+                    }
+                }
+            @endphp
+            <form action="{{ route($route,$user->id) }}" method="POST" name="formEditUser"
                 id="formEditUser">
                 @method('put')
                 @csrf
@@ -44,22 +53,27 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="input-group" style="">
-                            <label class="input-required col-6">
-                                Group
-                            </label>
-                            <div class="col-sm-6">
-                                {{-- select2 --}}
-                                <select class="form-select text-truncate border rounded-1 " name="group_id" {{ $isDisable ? 'disabled' : '' }}>
-                                    @php
-                                        $selected = old('group_id') ?? $user->group_id;
-                                    @endphp
-                                    <option value="null">---</option>
-                                    @foreach ($groups as $group)
-                                        <option value="{{ $group->id }}"@if ($selected == $group->id) selected @endif>{{ $group->name }}</option>
-                                    @endforeach
-                                </select>
-                                <x-error-message field="group_id" />
-                            </div>
+                           @if ($isDisable)
+                           
+                           @else
+                           <label class="input-required col-6">
+                            Group
+                        </label>
+                        <div class="col-sm-6">
+                            {{-- select2 --}}
+                            <select class="form-select text-truncate border rounded-1 " name="group_id" {{ $isDisable ? 'disabled' : '' }}>
+                                @php
+                                    $selected = old('group_id') ?? $user->group_id;
+                                @endphp
+                                <option value="null">---</option>
+                                @foreach ($groups as $group)
+                                    <option value="{{ $group->id }}"@if ($selected == $group->id) selected @endif>{{ $group->name }}</option>
+                                @endforeach
+                            </select>
+                            <x-error-message field="group_id" />
+                        </div>
+                           @endif
+
                         </div>
                     </div>
                 </div>
