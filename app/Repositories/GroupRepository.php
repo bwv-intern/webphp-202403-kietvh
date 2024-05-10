@@ -37,6 +37,8 @@ class GroupRepository extends BaseRepository
                 $group->note = $data['note'];
                 $group->group_leader_id = $data['group_leader_id'];
                 $group->group_floor_number = $data['group_floor_number'];
+                $group->created_date =  Carbon::now()->toDateString();
+                $group->updated_date =  Carbon::now()->toDateString();
                 $group->deleted_date = ($data['deleted_date'] == 'Y') ? Carbon::now()->toDateString() : null;
                 $group->save();
             }
@@ -58,6 +60,7 @@ class GroupRepository extends BaseRepository
                     $group->note = $data['note'];
                     $group->group_leader_id = $data['group_leader_id'];
                     $group->group_floor_number = $data['group_floor_number'];
+                    $group->updated_date =  Carbon::now()->toDateString();
                     $group->deleted_date = ($data['deleted_date'] == 'Y') ? Carbon::now()->toDateString() : null;
                     $group->save();
                 }
