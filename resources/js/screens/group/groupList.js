@@ -7,11 +7,13 @@ $(document).ready(function () {
     $('#formImportCSV').validate({
         rules: {
             'csvFile': {
+                required: true,
                 extension: 'csv',
             }
         },
         messages: {
             'csvFile': {
+                required: "File は必須です。",
                 extension: function (extension) {
                     return jQuery.validator.messages.extension('CSV');
                 }
