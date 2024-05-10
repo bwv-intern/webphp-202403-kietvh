@@ -193,3 +193,17 @@ tbody td {
 .select2 .select2-container .select2-container--default{
     width: 100%;
 }
+
+.grouplist-table td,
+.grouplist-table th {
+    width: 125px !important;
+    height: 50px !important;
+    max-width: 125px !important;
+    max-height: 50px !important;
+    min-width: 125px !important;
+    min-height: 50px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}

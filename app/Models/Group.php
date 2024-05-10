@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Observers\GroupObserver;
 use App\Traits\ObservantTrait;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+#[ObservedBy([GroupObserver::class])]
 class Group extends Model
 {
-    use ObservantTrait;
     use HasFactory;
 
     public $timestamps = false;
@@ -27,6 +28,7 @@ class Group extends Model
         'note',
         'group_leader_id',
         'group_floor_number',
+        'deleted_date',
     ];
 
 

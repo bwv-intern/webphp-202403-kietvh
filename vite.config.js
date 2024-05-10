@@ -4,6 +4,7 @@ import laravel from 'laravel-vite-plugin';
 const cssFiles = [
     'resources/css/common.css',
     'resources/css/list-user.css',
+    'resources/css/list-group.css',
 ];
 
 const jsFiles = [
