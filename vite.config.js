@@ -3,6 +3,7 @@ import laravel from 'laravel-vite-plugin';
 
 const cssFiles = [
     'resources/css/common.css',
+    'resources/css/list-user.css',
 ];
 
 const jsFiles = [

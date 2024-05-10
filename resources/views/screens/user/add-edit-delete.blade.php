@@ -5,7 +5,7 @@
             $isDisable = true;
         }
     @endphp
-    <div class="mb-sm-5 mx-sm-5 pt-5 col-sm-8">
+    <div class="mb-sm-5 mx-sm-2 pt-5 col-sm-11">
         @if (session('error'))
             <div class="alert alert-danger text-white p-1">
                 <span>{{ session('error') }}</span>
@@ -15,7 +15,9 @@
         <form action="{{ route('admin.handleAdd') }}" method="post" name="formAddUser" id="formAddUser">
             @csrf
             <div class="row pt-2">
-                <div class="col-sm-6 ">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-5">
                     <div class="input-group" style="">
                         <label class=" col-6">
                             ID
@@ -26,17 +28,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 ">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-5">
                     <x-forms.text-group label="User Name" name="name" :isRequired="true" :isDisabled="$isDisable" :value="old('name')" />
                 </div>
             </div>
             <div class="row pt-2">
-                <div class="col-sm-6 ">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-5">
                     <x-forms.text-group label="Email" id="email" name="email" :isRequired="true" :value="old('email')"
                         :isDisabled="$isDisable" />
                     <input type="hidden" value="" data-add-route="{{route('admin.checkEmail')}}" name="check_mail_url" id="check_mail_url">
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-5">
                     <div class="input-group" style="">
                         <label class="input-required col-6">
                             Group
@@ -58,12 +66,16 @@
                 </div>
             </div>
             <div class="row pt-2">
-                <div class="col-sm-6 ">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-5">
                     <x-forms.text-group label="Started Date" id="started_date" name="started_date" :isRequired="true"
                         :isDisabled="$isDisable" :value="old('started_date')" />
 
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-5">
                     <div class="input-group" style="">
                         <label class="input-required col-6">
                             Position
@@ -92,12 +104,16 @@
                 </div>
             </div>
             <div class="row pt-2">
-                <div class="col-sm-6 ">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-5">
                     <x-forms.text-group type="password" label="Password" id="password" name="password"
                         :isRequired="true" :value="old('password')" />
 
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-5">
                     <x-forms.text-group type="password" label="Password Confirmation" id="repassword" name="repassword"
                         :isRequired="true" :value="old('repassword')" />
                 </div>

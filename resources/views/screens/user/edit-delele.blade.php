@@ -5,7 +5,7 @@
             $isDisable = true;
         }
     @endphp
-    <div class="mb-sm-5 mx-sm-5 pt-5 col-sm-8">
+    <div class="mb-sm-5 mx-sm-2 pt-5 col-sm-11">
         @if (session('error'))
             <div class="alert alert-danger text-white p-1">
                 <span>{{ session('error') }}</span>
@@ -29,7 +29,9 @@
                 @method('put')
                 @csrf
                 <div class="row pt-2">
-                    <div class="col-sm-6 ">
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-5">
                         <div class="input-group" style="">
                             <label class=" col-6">
                                 ID
@@ -41,17 +43,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 ">
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-5">
                         <x-forms.text-group label="User Name" name="name" :isRequired="true" :value="old('name') ?? $user->name"  :isDisabled="$isDisable" />
                     </div>
                 </div>
                 <div class="row pt-2">
-                    <div class="col-sm-6 ">
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-5">
                         <x-forms.text-group label="Email" id="email" name="email" :isRequired="true"  :isDisabled="$isDisable"
                             :value="old('email') ?? $user->email"/>
                         <input type="hidden" value="" data-add-route="{{route('admin.checkEmail')}}" name="check_mail_url" id="check_mail_url">
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-5">
                         <div class="input-group" style="">
                            @if ($isDisable)
                            
@@ -78,12 +86,16 @@
                     </div>
                 </div>
                 <div class="row pt-2">
-                    <div class="col-sm-6 ">
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-5">
                         <x-forms.text-group label="Started Date" id="started_date" name="started_date"  :isDisabled="$isDisable"
                             :isRequired="true" :value="old('started_date') ?? $user->started_date->format('d/m/Y')" />
 
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-5">
                         <div class="input-group" style="">
                             <label class="input-required col-6">
                                 Position
@@ -113,12 +125,16 @@
                     </div>
                 </div>
                 <div class="row pt-2">
-                    <div class="col-sm-6 ">
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-5">
                         <x-forms.text-group type="password" label="Password" id="password" name="password"
                             :value="old('password')" />
 
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-5">
                         <x-forms.text-group type="password" label="Password Confirmation" id="repassword"
                             name="repassword" : :value="old('repassword')" />
                     </div>
@@ -154,7 +170,9 @@
             </div>
             <form action="/admin/user/delete/{{$user->id}}" method="get" 
                 name="" id="">
-                このユーザーを削除してもいいですか？
+                <div class="row">
+                    <div class="d-flex align-items-center justify-content-center"> このユーザーを削除してもいいですか？</div>
+                </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">OK</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
