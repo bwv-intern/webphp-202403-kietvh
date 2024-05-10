@@ -59,16 +59,17 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                    @elseif ($messageNotFound != '')
-                        <div class="row mt-5 mx-1">
-                            <div class="col-sm-12 h-25 w-100 py-3 d-flex justify-content-center align-items-center">
-                                <span class="mx-1 text-gray">
-                                    <h4> {{ $messageNotFound }}</h4>
-                                </span>
-                            </div>
-                        </div>
                     @endif
                 </table>
+                @if ($messageNotFound != '')
+                    <div class="row mt-5 mx-1">
+                        <div class="col-sm-12 h-25 w-100 py-3 d-flex justify-content-center align-items-center">
+                            <span class="mx-1 text-gray">
+                                <h4> {{ $messageNotFound }}</h4>
+                            </span>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -110,7 +111,8 @@
     </div>
 
 
-    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true" data-bs-toggle="modal" và data-bs-target="#errorModal">
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true"
+        data-bs-toggle="modal" và data-bs-target="#errorModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -120,7 +122,7 @@
                 <div class="modal-body">
                     <ul id="errorList" class="list-unstyled">
                         @if ($errors && $errors->any())
-                            <li >
+                            <li>
                                 @foreach ($errors->all() as $error)
                                     <p class="m-0 p-0 text-red">{{ $error }}</p>
                                 @endforeach
@@ -134,11 +136,11 @@
             </div>
         </div>
     </div>
-  
-        
+
+
     <!-- Modal -->
     @push('scripts')
         @vite(['resources/js/screens/group/groupList.js'], 'build')
     @endpush
-    
+
 </x-app-layout>

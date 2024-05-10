@@ -22,6 +22,9 @@ class GroupController extends Controller
         $groups = $this->pagination($groups);
 
         $messageNotFound = '';
+        if(count($groups) == 0){
+            $messageNotFound = 'No Group Found';
+        }
 
         return view('screens.group.list', compact('groups', 'messageNotFound'));
     }
