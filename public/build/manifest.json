@@ -44,6 +44,11 @@
     "isEntry": true,
     "src": "resources/js/screens/auth/login.js"
   },
+  "resources/js/screens/group/groupList.js": {
+    "file": "assets/groupList-j6ni38fO.js",
+    "isEntry": true,
+    "src": "resources/js/screens/group/groupList.js"
+  },
   "resources/js/screens/user/userAdd.js": {
     "file": "assets/userAdd-N-bVGYB9.js",
     "isEntry": true,
