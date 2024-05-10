@@ -4,7 +4,9 @@ namespace App\Observers;
 
 use App\Models\Group;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 
+#[ObservedBy([Group::class])]
 class GroupObserver
 {
     /**
