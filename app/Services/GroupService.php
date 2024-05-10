@@ -76,9 +76,22 @@ class GroupService
 
         $headersYaml = $csvUtil->getHeaderFromConfigsYAML($fileYAMLPath);
         $headersCSV = $csvUtil->getHeaderCSVFile($file);
+        // Case header is empty
+        if(empty($headersCSV)){
+            $errorList[] = 'Dòng 1:' . ConfigUtil::getMessage('EBT095');
+            return [
+                'message' => 'ERROR',
+                'data' => $errorList,
+            ];
+        }
+        // compare header of file with header in config
         $checkHeader = $csvUtil->checkHeader($headersYaml, $headersCSV);
         if (! $checkHeader) {
             $errorList[] = 'Dòng 1:' . ConfigUtil::getMessage('EBT095');
+             return [
+                'message' => 'ERROR',
+                'data' => $errorList,
+            ];
         }
 
         $keyYaml = $csvUtil->getKeyYaml($fileYAMLPath, $configName);

@@ -4,6 +4,11 @@
     "isEntry": true,
     "src": "resources/css/common.css"
   },
+  "resources/css/list-group.css": {
+    "file": "assets/list-group-uCBmGmk_.css",
+    "isEntry": true,
+    "src": "resources/css/list-group.css"
+  },
   "resources/css/list-user.css": {
     "file": "assets/list-user-UFbQzNci.css",
     "isEntry": true,

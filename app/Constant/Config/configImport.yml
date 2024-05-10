@@ -4,7 +4,7 @@ group_import_csv_configs:
       validate:
         - nullable
         - numeric
-        - digits_between:1,2147483647
+        - digits_between:1,9223372036854775807
         - exists:group,id
   name:
       header: Group Name
@@ -21,7 +21,7 @@ group_import_csv_configs:
       validate:
         - required
         - numeric
-        - digits_between:1,2147483647
+        - digits_between:1,9223372036854775807
         - exists:user,id
   group_floor_number:
       header: Floor Number

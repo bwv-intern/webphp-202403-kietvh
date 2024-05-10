@@ -29,17 +29,17 @@
         @endif
         <div class="row mt-5">
             <div class="col">
-                <table class="table table-bordered table-responsive-sm grouplist-table">
+                <table class="table table-bordered table-responsive-sm group-list-table">
                     <thead>
                         <tr>
-                            <th class="fw-normal text-center">ID</th>
-                            <th class="fw-normal text-center">Group Name</th>
-                            <th class="fw-normal text-center">Group Note</th>
-                            <th class="fw-normal text-center">Group Leader</th>
-                            <th class="fw-normal text-center">Floor Number</th>
-                            <th class="fw-normal text-center">Created Date</th>
-                            <th class="fw-normal text-center">Updated Date</th>
-                            <th class="fw-normal text-center">Deleted Date</th>
+                            <th class="fw-normal">ID</th>
+                            <th class="fw-normal">Group Name</th>
+                            <th class="fw-normal">Group Note</th>
+                            <th class="fw-normal">Group Leader</th>
+                            <th class="fw-normal">Floor Number</th>
+                            <th class="fw-normal">Created Date</th>
+                            <th class="fw-normal">Updated Date</th>
+                            <th class="fw-normal ">Deleted Date</th>
                         </tr>
                     </thead>
                     @if (count($groups) > 0)
@@ -51,9 +51,9 @@
                                     <td>{{ $group->note }}</td>
                                     <td>{{ $group->leader->name ?? '' }}</td>
                                     <td>{{ $group->group_floor_number }}</td>
-                                    <td>{{ $group->created_date->format('d/m/Y') ?? '' }}</td>
-                                    <td>{{ $group->updated_date->format('d/m/Y') ?? '' }}</td>
-                                    <td>
+                                    <td class="text-center">{{ $group->created_date->format('d/m/Y') ?? '' }}</td>
+                                    <td class="text-center">{{ $group->updated_date->format('d/m/Y') ?? '' }}</td>
+                                    <td class="text-center">
                                         {{ $group->deleted_date ? $group->deleted_date->format('d/m/Y') : '' }}
                                     </td>
                                 </tr>

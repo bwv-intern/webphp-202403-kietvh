@@ -19,7 +19,7 @@
     <link href=
     'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
         rel='stylesheet'>
-    @vite(['resources/css/common.css','resources/css/list-user.css'], 'build')
+    @vite(['resources/css/common.css','resources/css/list-user.css','resources/css/list-group.css'], 'build')
     @stack('styles')
 </head>
 

@@ -7,7 +7,7 @@ $(document).ready(function () {
     $('#formImportCSV').validate({
         rules: {
             'csvFile': {
-                extension: 'csv|txt',
+                extension: 'csv',
             }
         },
         messages: {

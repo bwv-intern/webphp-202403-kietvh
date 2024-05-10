@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ImportCsvRequest;
-use App\Libs\ConfigUtil;
-use App\Libs\CSVUtil;
+use App\Libs\{ConfigUtil};
 use App\Services\GroupService;
 
 class GroupController extends Controller

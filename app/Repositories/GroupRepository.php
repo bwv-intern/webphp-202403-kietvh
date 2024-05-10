@@ -37,12 +37,7 @@ class GroupRepository extends BaseRepository
                 $group->note = $data['note'];
                 $group->group_leader_id = $data['group_leader_id'];
                 $group->group_floor_number = $data['group_floor_number'];
-                if ($data['deleted_date'] == 'Y') {
-                    $group->deleted_date = Carbon::now()->toDateString();
-                }
-                else{
-                    $group->deleted_date = NULL;
-                }
+                $group->deleted_date = ($data['deleted_date'] == 'Y') ? Carbon::now()->toDateString() : null;
                 $group->save();
             }
             DB::commit();
@@ -63,10 +58,7 @@ class GroupRepository extends BaseRepository
                     $group->note = $data['note'];
                     $group->group_leader_id = $data['group_leader_id'];
                     $group->group_floor_number = $data['group_floor_number'];
-                    $group->deleted_date = NULL;
-                    if ($data['deleted_date'] == 'Y') {
-                        $group->deleted_date = Carbon::now()->toDateString();
-                    } 
+                    $group->deleted_date = ($data['deleted_date'] == 'Y') ? Carbon::now()->toDateString() : null;
                     $group->save();
                 }
             }
