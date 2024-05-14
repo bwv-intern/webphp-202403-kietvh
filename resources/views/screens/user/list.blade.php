@@ -46,10 +46,8 @@
                 
                 <div class="row mt-5">
                     <div class="col-sm-12">
-                        <div class="row mb-3 mt-2">
-                            <div class=" d-flex justify-content-end">
-                                {{ $users->links('common.pagination') }}
-                            </div>
+                        <div class="d-flex justify-content-end my-4 ">
+                            {{ $users->links('common.pagination') }}
                         </div>
                         <table class="table table-bordered table-responsive-lg list-user-table">
 
