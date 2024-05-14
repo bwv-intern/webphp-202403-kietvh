@@ -85,13 +85,13 @@ class UserController extends Controller
     public function exportCSV() {
         $exportParams = session()->get('user.search');
         if ($exportParams == null || count($exportParams) == 0) {
-            return back();
+            return response()->json([], 204); // empty response 
         }
 
         $users = $this->userService->exportCSV($exportParams);
 
         if ($users == null || count($users) == 0) {
-            return back();
+            return response()->json([], 204); // empty response 
         }
 
         $fileName = 'list_user_' . Carbon::now('Asia/Ho_Chi_Minh')->format('YmdHis') . '.csv';
