@@ -50,12 +50,12 @@
     "src": "resources/js/screens/group/groupList.js"
   },
   "resources/js/screens/user/userAdd.js": {
-    "file": "assets/userAdd-N-bVGYB9.js",
+    "file": "assets/userAdd-9-1OQh7U.js",
     "isEntry": true,
     "src": "resources/js/screens/user/userAdd.js"
   },
   "resources/js/screens/user/userEdit.js": {
-    "file": "assets/userEdit-qavFIXj-.js",
+    "file": "assets/userEdit-4-I3uOKz.js",
     "isEntry": true,
     "src": "resources/js/screens/user/userEdit.js"
   },
