@@ -129,4 +129,8 @@ $(document).ready(function () {
             $('.error-delete').empty().append(errorDiv);
         }
     });
+
+    $('#deleteUserForm').on('submit', function() {
+        $('#okButton').prop('disabled', true);
+    });
 });

@@ -165,12 +165,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="/admin/user/delete/{{$user->id}}" method="get" 
-                name="" id="">
+                name="" id="deleteUserForm">
                 <div class="row">
                     <div class="d-flex align-items-center justify-content-center"> このユーザーを削除してもいいですか？</div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">OK</button>
+                    <button type="submit" class="btn btn-primary"  id="okButton">OK</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </form>
