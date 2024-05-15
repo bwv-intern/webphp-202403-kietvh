@@ -49,7 +49,7 @@
                         <div class="d-flex justify-content-end my-4">
                             {{ $users->links('common.pagination') }}
                         </div>
-                        <table class="table table-bordered table-responsive-lg list-user-table">
+                        <table class="table table-bordered table-responsive-sm list-user-table">
 
                             <thead>
                                 <tr>

@@ -1,6 +1,10 @@
+.table-container {
+    width: 100%;
+}
+
 .list-user-table {
     table-layout: fixed;
-    width: auto !important;
+    width: 100%;
 }
 
 .list-user-table td,
