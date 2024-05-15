@@ -56,12 +56,18 @@ class GroupRepository extends BaseRepository
                 $id = $data['id'];
                 $group = $this->findById($id, true);
                 if ($group) {
-                    $group->name = $data['name'];
-                    $group->note = $data['note'];
-                    $group->group_leader_id = $data['group_leader_id'];
-                    $group->group_floor_number = $data['group_floor_number'];
-                    $group->updated_date =  Carbon::now()->toDateString();
-                    $group->deleted_date = ($data['deleted_date'] == 'Y') ? Carbon::now()->toDateString() : null;
+                    // OrderSpecChange #128461
+                    if($data['deleted_date'] == 'Y'){
+                        $group->deleted_date = Carbon::now()->toDateString();
+                    }
+                    else{
+                        $group->name = $data['name'];
+                        $group->note = $data['note'];
+                        $group->group_leader_id = $data['group_leader_id'];
+                        $group->group_floor_number = $data['group_floor_number'];
+                        $group->updated_date =  Carbon::now()->toDateString();
+                        $group->deleted_date = null;
+                    }
                     $group->save();
                 }
             }

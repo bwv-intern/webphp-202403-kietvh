@@ -47,6 +47,16 @@ class GroupService
     }
 
     public function validateRow($row, $rules, $rowIndex) {
+        
+        // OrderSpecChange #128461
+        if($row['id'] != '' && $row['deleted_date'] == 'Y'){
+            $rules = array_map(function ($item) {
+                return array_values(array_filter($item, function ($value) {
+                    return $value !== "required";
+                }));
+            }, $rules);
+        }
+        
         $validator = Validator::make($row, $rules);
         $validator->setCustomMessages($this->messages($row, $rowIndex));
         $validator->after(function ($validator) use ($row, $rowIndex) {
@@ -131,7 +141,10 @@ class GroupService
                     unset($row['id']);
                     $savedGroups[] = $row;
                 } else {
+                    // OrderSpecChange #128461
+                    // Only proceed with deletion processing (updating the deleted_date field), not updating items that send values
                     $editedGroups[] = $row;
+                    
                     $savedIDEdit[] = $row['id'];
                 }
             }
