@@ -5,7 +5,7 @@
     "src": "resources/css/common.css"
   },
   "resources/css/list-user.css": {
-    "file": "assets/list-user-qWvQnQDn.css",
+    "file": "assets/list-user-ziijOaDZ.css",
     "isEntry": true,
     "src": "resources/css/list-user.css"
   },
@@ -50,7 +50,7 @@
     "src": "resources/js/screens/user/userEdit.js"
   },
   "resources/js/screens/user/userList.js": {
-    "file": "assets/userList-w7usfS0q.js",
+    "file": "assets/userList-4v0Xo68p.js",
     "isEntry": true,
     "src": "resources/js/screens/user/userList.js"
   }

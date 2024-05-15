@@ -88,4 +88,34 @@ $(function () {
             $(this).text(text);
         }
     }); 
+   
+});
+
+const container = $('.table-container');
+const containerWidth = container.outerWidth();
+console.log(containerWidth);
+const columnWidth = containerWidth / 5;
+console.log(columnWidth);
+const table = container.find('.list-user-table');
+const cells = table.find('td, th');
+cells.css({
+    width: columnWidth + 'px',
+    maxWidth: columnWidth + 'px',
+    minWidth: columnWidth + 'px'
+});
+
+// this for responsive event
+$(window).on('resize', function() {
+    const container = $('.table-container');
+    const containerWidth = container.outerWidth();
+    console.log(containerWidth);
+    const columnWidth = containerWidth / 5;
+    console.log(columnWidth);
+    const table = container.find('.list-user-table');
+    const cells = table.find('td, th');
+    cells.css({
+        width: columnWidth + 'px',
+        maxWidth: columnWidth + 'px',
+        minWidth: columnWidth + 'px'
+    });
 });
