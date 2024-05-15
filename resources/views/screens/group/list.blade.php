@@ -18,7 +18,7 @@
             </div>
         @endif --}}
     </div>
-    <div class="col-sm-11">
+    <div class="col-sm-12">
 
         @if (count($groups) > 0)
             <div class="row d-flex my-2">
@@ -29,7 +29,7 @@
         @endif
         <div class="row mt-5">
             <div class="col">
-                <table class="table table-bordered table-responsive-sm group-list-table">
+                <table class="table table-bordered table-responsive-md group-list-table">
                     <thead>
                         <tr>
                             <th class="fw-normal">ID</th>

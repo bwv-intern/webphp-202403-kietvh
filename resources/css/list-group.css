@@ -11,3 +11,7 @@
     text-overflow: ellipsis;
     vertical-align: middle;
 }
+
+body {
+    overflow-y: scroll;
+}

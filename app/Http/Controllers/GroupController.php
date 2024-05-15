@@ -15,7 +15,7 @@ class GroupController extends Controller
     }
 
     public function groupList() {
-        $pageTitle = '';
+        $pageTitle = 'Group List';
         session()->put('pageTitle', $pageTitle);
 
         $groups = $this->groupService->getAll();
