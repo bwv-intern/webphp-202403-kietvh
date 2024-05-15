@@ -63,11 +63,7 @@
                         <div class="input-group" style="">
                             <label class="input-required col-6">
                                 Group
-                            </label>
-                           @if ($isDisable)
-                           
-                           @else
-                           
+                            </label>   
                         <div class="col-sm-6">
                             {{-- select2 --}}
                             <select class="form-select text-truncate border rounded-1 " name="group_id" {{ $isDisable ? 'disabled' : '' }}>
@@ -81,7 +77,6 @@
                             </select>
                             <x-error-message field="group_id" />
                         </div>
-                           @endif
 
                         </div>
                     </div>
@@ -170,12 +165,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="/admin/user/delete/{{$user->id}}" method="get" 
-                name="" id="">
+                name="" id="deleteUserForm">
                 <div class="row">
                     <div class="d-flex align-items-center justify-content-center"> このユーザーを削除してもいいですか？</div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">OK</button>
+                    <button type="submit" class="btn btn-primary"  id="okButton">OK</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </form>

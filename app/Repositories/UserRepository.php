@@ -72,7 +72,8 @@ class UserRepository extends BaseRepository
                 ->where('id', '!=', $id)
                 ->get();
         } else {
-            $result = $this->model->where('email', $email)
+            // OrderSpecChange #128501
+            $result = $this->model->where('email', $email)->whereNull('deleted_date')
                 ->get();
         }
 
