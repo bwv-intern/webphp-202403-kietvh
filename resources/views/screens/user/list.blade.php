@@ -1,4 +1,4 @@
-<x-app-layout title="User List">
+<x-app-layout :title="$pageTitle">
     <div class="mb-sm-5 mx-sm-5 pt-5 col-sm-8">
         @if (session('error'))
             <div class="alert alert-danger text-white p-1">

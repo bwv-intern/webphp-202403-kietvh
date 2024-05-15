@@ -24,7 +24,7 @@
 </head>
 
 <body class="hold-transition sidebar-mini m-0 p-0">
-    <x-partials.header />
+    <x-partials.header :title="$title"/>
     <div class="wrapper">
         <x-partials.menu />
         <div class="content-wrapper bg-white">

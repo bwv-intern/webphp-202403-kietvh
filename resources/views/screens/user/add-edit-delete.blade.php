@@ -1,4 +1,4 @@
-<x-app-layout title="User Add">
+<x-app-layout :title="$pageTitle">
     @php
         $isDisable = false;
         if (in_array(Auth::user()->position_id, [1, 2, 3])) {
