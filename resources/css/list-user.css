@@ -1,15 +1,16 @@
+.table-container {
+    width: 100%;
+}
+
 .list-user-table {
     table-layout: fixed;
-    width: auto !important;
+    width: 100%;
 }
 
 .list-user-table td,
 .list-user-table th {
-    width: 260px !important;
     height: 50px !important;
-    max-width: 260px !important;
     max-height: 50px !important;
-    min-width: 260px !important;
     min-height: 50px !important;
     white-space: nowrap;
     overflow: hidden;

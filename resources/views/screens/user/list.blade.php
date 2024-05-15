@@ -45,11 +45,11 @@
             @if (count($users) > 0)
                 
                 <div class="row mt-5">
-                    <div class="col-sm-12">
-                        <div class="d-flex justify-content-end my-4 ">
+                    <div class="col-sm-12 table-container m-0 p-0">
+                        <div class="d-flex justify-content-end my-4">
                             {{ $users->links('common.pagination') }}
                         </div>
-                        <table class="table table-bordered table-responsive-lg list-user-table">
+                        <table class="table table-bordered table-responsive-sm list-user-table">
 
                             <thead>
                                 <tr>

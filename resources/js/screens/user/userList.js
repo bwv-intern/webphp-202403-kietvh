@@ -44,25 +44,25 @@ $(function () {
     });
 
     $("#btnClear").click(function () {
-       
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            url: '/admin/user/clear',
-            type: 'post',
-            dataType: 'json',
-            success: function (response) {
-                console.log(response);
-                if (response.hasError == false) {
-                    $("#formSearch").trigger('reset');
-                    $("#formSearch").find('input:text, input:password, input:file, textarea').val('').removeClass("error-message");
-                    $(".error-message").remove();
-                    const newUrl = '/admin/user';
-                    window.history.pushState(null, '', newUrl);
-                }
-            }
-        });
+            $("#formSearch").trigger('reset');
+            $("#formSearch").find('input:text, input:password, input:file, textarea').val('').removeClass("error-message");
+            $(".error-message").remove();
+            const newUrl = '/admin/user';
+            window.history.pushState(null, '', newUrl);
+        // $.ajax({
+        //     headers: {
+        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //     },
+        //     url: '/admin/user/clear',
+        //     type: 'post',
+        //     dataType: 'json',
+        //     success: function (response) {
+        //         console.log(response);
+        //         if (response.hasError == false) {
+                    
+        //         }
+        //     }
+        // });
     });
 
     $("#btnNew").click(function (e) {
@@ -88,4 +88,7 @@ $(function () {
             $(this).text(text);
         }
     }); 
+   
 });
+
+
