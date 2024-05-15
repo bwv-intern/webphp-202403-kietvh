@@ -3,15 +3,18 @@
 namespace App\Services;
 
 use App\Libs\{CSVUtil, ConfigUtil};
-use App\Repositories\GroupRepository;
+use App\Repositories\{GroupRepository, UserRepository};
 use Illuminate\Support\Facades\Validator;
 
 class GroupService
 {
     protected GroupRepository $groupRepository;
 
-    public function __construct(GroupRepository $groupRepository) {
+    protected UserRepository $userRepository;
+
+    public function __construct(GroupRepository $groupRepository, UserRepository $userRepository) {
         $this->groupRepository = $groupRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function getAll() {
@@ -50,6 +53,13 @@ class GroupService
             if ($row['deleted_date'] != '' && $row['deleted_date'] != 'Y') {
                 $validator->errors()->add('deleted_date', "Dòng {$rowIndex}:" . ConfigUtil::getMessage('EBT010', ['Delete']));
             }
+
+            $groupLeaderId = $row['group_leader_id'];
+            $groupLeader = $this->userRepository->findById($groupLeaderId, true);
+
+            if ($groupLeader && $groupLeader->deleted_date != null) {
+                $validator->errors()->add('group_leader_id', "Dòng {$rowIndex}:" . ConfigUtil::getMessage('EBT094', ['Group Leader']));
+            }
         });
 
         if ($validator->fails()) {
@@ -77,8 +87,9 @@ class GroupService
         $headersYaml = $csvUtil->getHeaderFromConfigsYAML($fileYAMLPath);
         $headersCSV = $csvUtil->getHeaderCSVFile($file);
         // Case header is empty
-        if(empty($headersCSV)){
+        if (empty($headersCSV)) {
             $errorList[] = 'Dòng 1:' . ConfigUtil::getMessage('EBT095');
+
             return [
                 'message' => 'ERROR',
                 'data' => $errorList,
@@ -88,7 +99,8 @@ class GroupService
         $checkHeader = $csvUtil->checkHeader($headersYaml, $headersCSV);
         if (! $checkHeader) {
             $errorList[] = 'Dòng 1:' . ConfigUtil::getMessage('EBT095');
-             return [
+
+            return [
                 'message' => 'ERROR',
                 'data' => $errorList,
             ];

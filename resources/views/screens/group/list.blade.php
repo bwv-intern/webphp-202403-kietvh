@@ -49,7 +49,7 @@
                                     <td>{{ $group->id }}</td>
                                     <td>{{ $group->name }}</td>
                                     <td>{{ $group->note }}</td>
-                                    <td>{{ $group->leader->name ?? '' }}</td>
+                                    <td>{{ ($group->leader->deleted_date == NULL) ? $group->leader->name : '' }}</td>
                                     <td>{{ $group->group_floor_number }}</td>
                                     <td class="text-center">{{ $group->created_date->format('d/m/Y') ?? '' }}</td>
                                     <td class="text-center">{{ $group->updated_date->format('d/m/Y') ?? '' }}</td>
