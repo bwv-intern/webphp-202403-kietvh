@@ -16,7 +16,8 @@ $(document).ready(function () {
                 required: "File は必須です。",
                 extension: function (extension) {
                     return jQuery.validator.messages.extension('CSV');
-                }
+                },
+                fileSize: 2 * 1024 * 1024,
             }
         },
     });
