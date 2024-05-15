@@ -222,14 +222,10 @@ class UserController extends Controller
         }
 
         if ($user->count()) {
-            return response()->json([
-                'duplicate' => true,
-            ]);
+            return response()->json(true);
         }
 
-        return response()->json([
-            'duplicate' => false,
-        ]);
+        return response()->json(false);
     }
 
     public function cancle() {

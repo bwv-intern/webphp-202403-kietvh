@@ -55,8 +55,8 @@ $(document).ready(function () {
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     dataFilter: function (response) {
-                        console.log(response)
-                        if (response.duplicate === true) {
+                        console.log(response);
+                        if (response === 'true') {
                             console.log("OK");
                             return false;
                         }
@@ -130,7 +130,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#deleteUserForm').on('submit', function() {
+    $('#deleteUserForm').on('submit', function () {
         $('#okButton').prop('disabled', true);
     });
 });

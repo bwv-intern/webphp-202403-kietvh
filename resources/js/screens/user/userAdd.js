@@ -42,9 +42,10 @@ $(function () {
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     dataFilter: function (response) {
-                        if (response.duplicate === true) {
+                        console.log(response);
+                        if (response === 'true') {
                             console.log("OK");
-                           return false;
+                            return false;
                         }
                         return true;
                     }
