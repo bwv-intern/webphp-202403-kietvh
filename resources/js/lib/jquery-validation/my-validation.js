@@ -46,3 +46,10 @@ jQuery.validator.addMethod("greaterStart", function (value, element, param) {
 
     return true;
 });
+
+$.validator.addMethod('fileSize', function (value, element, param) {
+    return this.optional(element) || (element.files[0].size <= param);
+}, function (param, element) {
+    var sizeLimit = param / 1024 / 1024; // Convert byte to megabyte
+    return 'ファイルのサイズ制限'+sizeLimit+'を超えています。';
+});

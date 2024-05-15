@@ -3,15 +3,18 @@
 namespace App\Services;
 
 use App\Libs\{CSVUtil, ConfigUtil};
-use App\Repositories\GroupRepository;
+use App\Repositories\{GroupRepository, UserRepository};
 use Illuminate\Support\Facades\Validator;
 
 class GroupService
 {
     protected GroupRepository $groupRepository;
 
-    public function __construct(GroupRepository $groupRepository) {
+    protected UserRepository $userRepository;
+
+    public function __construct(GroupRepository $groupRepository, UserRepository $userRepository) {
         $this->groupRepository = $groupRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function getAll() {
@@ -44,11 +47,28 @@ class GroupService
     }
 
     public function validateRow($row, $rules, $rowIndex) {
+        
+        // OrderSpecChange #128461
+        if($row['id'] != '' && $row['deleted_date'] == 'Y'){
+            $rules = array_map(function ($item) {
+                return array_values(array_filter($item, function ($value) {
+                    return $value !== "required";
+                }));
+            }, $rules);
+        }
+        
         $validator = Validator::make($row, $rules);
         $validator->setCustomMessages($this->messages($row, $rowIndex));
         $validator->after(function ($validator) use ($row, $rowIndex) {
             if ($row['deleted_date'] != '' && $row['deleted_date'] != 'Y') {
                 $validator->errors()->add('deleted_date', "Dòng {$rowIndex}:" . ConfigUtil::getMessage('EBT010', ['Delete']));
+            }
+
+            $groupLeaderId = $row['group_leader_id'];
+            $groupLeader = $this->userRepository->findById($groupLeaderId, true);
+
+            if ($groupLeader && $groupLeader->deleted_date != null) {
+                $validator->errors()->add('group_leader_id', "Dòng {$rowIndex}:" . ConfigUtil::getMessage('EBT094', ['Group Leader']));
             }
         });
 
@@ -77,8 +97,9 @@ class GroupService
         $headersYaml = $csvUtil->getHeaderFromConfigsYAML($fileYAMLPath);
         $headersCSV = $csvUtil->getHeaderCSVFile($file);
         // Case header is empty
-        if(empty($headersCSV)){
+        if (empty($headersCSV)) {
             $errorList[] = 'Dòng 1:' . ConfigUtil::getMessage('EBT095');
+
             return [
                 'message' => 'ERROR',
                 'data' => $errorList,
@@ -88,7 +109,8 @@ class GroupService
         $checkHeader = $csvUtil->checkHeader($headersYaml, $headersCSV);
         if (! $checkHeader) {
             $errorList[] = 'Dòng 1:' . ConfigUtil::getMessage('EBT095');
-             return [
+
+            return [
                 'message' => 'ERROR',
                 'data' => $errorList,
             ];
@@ -119,7 +141,10 @@ class GroupService
                     unset($row['id']);
                     $savedGroups[] = $row;
                 } else {
+                    // OrderSpecChange #128461
+                    // Only proceed with deletion processing (updating the deleted_date field), not updating items that send values
                     $editedGroups[] = $row;
+                    
                     $savedIDEdit[] = $row['id'];
                 }
             }

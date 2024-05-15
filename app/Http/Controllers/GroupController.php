@@ -15,8 +15,7 @@ class GroupController extends Controller
     }
 
     public function groupList() {
-        $pageTitle = '';
-        session()->put('pageTitle', $pageTitle);
+        $pageTitle = 'Group List';
 
         $groups = $this->groupService->getAll();
         $groups = $this->pagination($groups);
@@ -26,7 +25,7 @@ class GroupController extends Controller
             $messageNotFound = 'No Group Found';
         }
 
-        return view('screens.group.list', compact('groups', 'messageNotFound'));
+        return view('screens.group.list', compact('groups', 'messageNotFound','pageTitle'));
     }
 
     public function import(ImportCsvRequest $request) {
@@ -41,7 +40,7 @@ class GroupController extends Controller
                 case 'ERROR':
                     return redirect()->back()->withErrors($result['data'])->withInput();
                 case 'SUCCESS':
-                    return redirect()->back();
+                    return redirect()->back()->with(['success'=>ConfigUtil::getMessage('EBT092')]);
                 default:
                     return redirect()->back();
             }

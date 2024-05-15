@@ -22,7 +22,16 @@ class ImportCsvRequest extends FormRequest
      */
     public function rules(): array {
         return [
-            'file' => new CheckExtensionFileCSV()
+            'file' => [new CheckExtensionFileCSV(),
+                        'max:2048',
+                    ],
+        ];
+    }
+
+
+    public function messages() {
+        return [
+            'file.max' => ConfigUtil::getMessage('EBT034', ['2']),
         ];
     }
 
