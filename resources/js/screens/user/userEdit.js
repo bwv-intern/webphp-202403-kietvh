@@ -44,6 +44,7 @@ $(document).ready(function () {
                     },
                     url: $("#check_mail_url").data('add-route'),
                     type: "GET",
+                    contentType: "application/json",
                     data: {
                         id: function () {
                             return $('#id').val();
@@ -54,9 +55,8 @@ $(document).ready(function () {
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     dataFilter: function (response) {
-                        var data = JSON.parse(response);
                         console.log(response)
-                        if (data.duplicate === true) {
+                        if (response.duplicate === true) {
                             console.log("OK");
                             return false;
                         }
