@@ -1,4 +1,4 @@
-<x-app-layout title="User List">
+<x-app-layout :title="$pageTitle">
     <div class="mb-sm-5 mx-sm-5 pt-5 col-sm-8">
         @if (session('error'))
             <div class="alert alert-danger text-white p-1">
@@ -46,10 +46,8 @@
                 
                 <div class="row mt-5">
                     <div class="col-sm-12">
-                        <div class="row mb-3 mt-2">
-                            <div class=" d-flex justify-content-end">
-                                {{ $users->links('common.pagination') }}
-                            </div>
+                        <div class="d-flex justify-content-end my-4 ">
+                            {{ $users->links('common.pagination') }}
                         </div>
                         <table class="table table-bordered table-responsive-lg list-user-table">
 

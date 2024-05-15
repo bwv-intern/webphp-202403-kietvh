@@ -18,7 +18,7 @@
     <ul class="navbar-nav mx-auto">
         <li>
             <div class="info d-flex">
-                <h4>{{Session('pageTitle')}}</h4>
+                <h4>{{$title}}</h4>
             </div>
         </li>
     </ul>

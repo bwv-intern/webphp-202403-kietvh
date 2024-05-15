@@ -1,4 +1,4 @@
-<x-app-layout title="UserAddEditDelete">
+<x-app-layout :title="$pageTitle">
     @php
         $isDisable = false;
         if (in_array(Auth::user()->position_id, [1, 2, 3])) {
@@ -61,12 +61,13 @@
                     </div>
                     <div class="col-sm-5">
                         <div class="input-group" style="">
+                            <label class="input-required col-6">
+                                Group
+                            </label>
                            @if ($isDisable)
                            
                            @else
-                           <label class="input-required col-6">
-                            Group
-                        </label>
+                           
                         <div class="col-sm-6">
                             {{-- select2 --}}
                             <select class="form-select text-truncate border rounded-1 " name="group_id" {{ $isDisable ? 'disabled' : '' }}>

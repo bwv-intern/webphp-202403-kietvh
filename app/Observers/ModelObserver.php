@@ -22,7 +22,7 @@ class ModelObserver
      */
     public function updating(Model $model): void
     {
-        if ($model->isDirty('deleted_date') && $model->deleted_date == NULL){
+        if ($model->isDirty('deleted_date') && $model->deleted_date != NULL){
             $model->deleted_date = Carbon::now()->toDateString();
         } else {
             $model->updated_date = Carbon::now()->toDateString();

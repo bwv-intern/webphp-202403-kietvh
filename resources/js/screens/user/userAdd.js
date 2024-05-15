@@ -86,7 +86,7 @@ $(function () {
                 remote: 'すでにメールアドレスは登録されています。', // EBT019
             },
             'started_date': {
-                dateDMY: "Started Date Toは日付を正しく入力してください。" 
+                dateDMY: "Started Dateは日付を正しく入力してください。" 
             },
             'password': {
             },

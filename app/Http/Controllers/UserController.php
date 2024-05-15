@@ -53,7 +53,6 @@ class UserController extends Controller
 
     public function handlesearch(SearchUsersRequest $request) {
         $pageTitle = 'User List';
-        $request->session()->put('pageTitle', $pageTitle);
         $searchParams = session()->get('user.search');
         $isSearch = session()->get('user.isSearch');
         $messageNotFound = '';
@@ -67,7 +66,7 @@ class UserController extends Controller
             $users = [];
             $searchParams = [];
 
-            return view('screens.user.list', compact('users', 'searchParams', 'messageNotFound'));
+            return view('screens.user.list', compact('users', 'searchParams', 'messageNotFound','pageTitle'));
         }
 
         // search data with search params
@@ -79,19 +78,19 @@ class UserController extends Controller
             $messageNotFound = 'No User Found';
         }
 
-        return view('screens.user.list', compact('users', 'searchParams', 'messageNotFound'));
+        return view('screens.user.list', compact('users', 'searchParams', 'messageNotFound','pageTitle'));
     }
 
     public function exportCSV() {
         $exportParams = session()->get('user.search');
         if ($exportParams == null || count($exportParams) == 0) {
-            return back();
+            return response()->json([], 204); // empty response 
         }
 
         $users = $this->userService->exportCSV($exportParams);
 
         if ($users == null || count($users) == 0) {
-            return back();
+            return response()->json([], 204); // empty response 
         }
 
         $fileName = 'list_user_' . Carbon::now('Asia/Ho_Chi_Minh')->format('YmdHis') . '.csv';
@@ -137,14 +136,14 @@ class UserController extends Controller
         }
 
         $pageTitle = 'User Add';
-        session()->put('pageTitle', $pageTitle);
+        
         if (! Auth::check() || Auth::user()->deleted_date != null) {
             return redirect()->route('login');
         }
 
         $groups = $this->groupRepository->getListGroupForNewScreen();
 
-        return view('screens.user.add-edit-delete', compact('groups'));
+        return view('screens.user.add-edit-delete', compact('groups','pageTitle'));
     }
 
     public function handleAdd(AddUserRequest $request) {
@@ -157,7 +156,7 @@ class UserController extends Controller
             return redirect($url)->with('success', ConfigUtil::getMessage('EBT096'));
         }
 
-        return redirect()->back()->withInput()->with('error', ConfigUtil::getMessage('EBT093'));
+        return redirect()->back()->withInput()->with('error', ConfigUtil::getMessage('EBT093','pageTitle'));
     }
 
     public function edit($id) {
@@ -167,7 +166,7 @@ class UserController extends Controller
         }
 
         $pageTitle = 'User Edit';
-        session()->put('pageTitle', $pageTitle);
+        
         $user = $this->userRepository->findById($id);
         if ($user == null) {
             return redirect()->route('error');
@@ -175,7 +174,7 @@ class UserController extends Controller
 
         $groups = $this->groupRepository->getListGroupForNewScreen();
 
-        return view('screens.user.edit-delele', compact('groups', 'user'));
+        return view('screens.user.edit-delele', compact('groups', 'user','pageTitle'));
     }
 
     public function handleEdit(EditUserRequest $request) 
