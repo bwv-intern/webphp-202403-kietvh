@@ -41,7 +41,7 @@ class GroupController extends Controller
                 case 'ERROR':
                     return redirect()->back()->withErrors($result['data'])->withInput();
                 case 'SUCCESS':
-                    return redirect()->back();
+                    return redirect()->back()->with(['success'=>ConfigUtil::getMessage('EBT092')]);
                 default:
                     return redirect()->back();
             }

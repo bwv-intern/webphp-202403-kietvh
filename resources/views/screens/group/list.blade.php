@@ -4,12 +4,12 @@
             <div class="alert alert-danger text-white p-1">
                 <span>{{ session('error') }}</span>
             </div>
-        @endif
+        @endif --}}
         @if (session('success'))
             <div class="alert alert-success text-white p-1">
                 <span>{{ session('success') }}</span>
             </div>
-        @endif --}}
+        @endif
         {{-- @if ($errors && $errors->any())
             <div class="alert alert-danger">
                 @foreach ($errors->all() as $error)
