@@ -63,11 +63,7 @@
                         <div class="input-group" style="">
                             <label class="input-required col-6">
                                 Group
-                            </label>
-                           @if ($isDisable)
-                           
-                           @else
-                           
+                            </label>   
                         <div class="col-sm-6">
                             {{-- select2 --}}
                             <select class="form-select text-truncate border rounded-1 " name="group_id" {{ $isDisable ? 'disabled' : '' }}>
@@ -81,7 +77,6 @@
                             </select>
                             <x-error-message field="group_id" />
                         </div>
-                           @endif
 
                         </div>
                     </div>
