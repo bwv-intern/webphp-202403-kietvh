@@ -20,16 +20,15 @@
     </div>
     <div class="col-sm-12">
 
-        @if (count($groups) > 0)
-            <div class="row d-flex my-2">
-                <div class=" d-flex justify-content-end">
-                    {{ $groups->links('common.pagination') }}
-                </div>
-            </div>
-        @endif
+
         <div class="row mt-5">
-            <div class="col">
-                <table class="table table-bordered table-responsive-md group-list-table">
+            <div class="col table-container m-0 p-0">
+                <table class="table table-bordered table-responsive-sm group-list-table">
+                    @if (count($groups) > 0)
+                        <div class=" d-flex justify-content-end my-4">
+                            {{ $groups->links('common.pagination') }}
+                        </div>
+                    @endif
                     <thead>
                         <tr>
                             <th class="fw-normal">ID</th>
@@ -49,7 +48,7 @@
                                     <td>{{ $group->id }}</td>
                                     <td>{{ $group->name }}</td>
                                     <td>{{ $group->note }}</td>
-                                    <td>{{ ($group->leader->deleted_date == NULL) ? $group->leader->name : '' }}</td>
+                                    <td>{{ $group->leader->deleted_date == null ? $group->leader->name : '' }}</td>
                                     <td>{{ $group->group_floor_number }}</td>
                                     <td class="text-center">{{ $group->created_date->format('d/m/Y') ?? '' }}</td>
                                     <td class="text-center">{{ $group->updated_date->format('d/m/Y') ?? '' }}</td>
@@ -83,8 +82,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="importCSVModal" tabindex="-1" aria-labelledby="importCSVModalLabel" aria-hidden="true"
-    >
+    <div class="modal fade" id="importCSVModal" tabindex="-1" aria-labelledby="importCSVModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -136,7 +134,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Modal -->
     @push('scripts')

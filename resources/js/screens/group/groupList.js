@@ -28,4 +28,19 @@ $(document).ready(function () {
     if (errorsExist) {
         $('#errorModal').modal('show');
     }
+
+    // fix colum table
+    const container = $('.table-container');
+    const containerWidth = container.outerWidth();
+    const columnWidth = containerWidth / 8;
+
+    const table = container.find('.group-list-table');
+    const cells = table.find('td, th');
+    cells.css({
+        width: columnWidth + 'px',
+        maxWidth: columnWidth + 'px',
+        minWidth: columnWidth + 'px'
+    });
+
+   
 });

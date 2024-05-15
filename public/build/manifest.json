@@ -5,7 +5,7 @@
     "src": "resources/css/common.css"
   },
   "resources/css/list-group.css": {
-    "file": "assets/list-group-UI7B0G8p.css",
+    "file": "assets/list-group-NrBA8Dqr.css",
     "isEntry": true,
     "src": "resources/css/list-group.css"
   },
@@ -30,7 +30,7 @@
     "src": "resources/js/lib/jquery-validation/my-validate-message.js"
   },
   "resources/js/lib/jquery-validation/my-validation.js": {
-    "file": "assets/my-validation-paEFacpO.js",
+    "file": "assets/my-validation-8SISM6O7.js",
     "isEntry": true,
     "src": "resources/js/lib/jquery-validation/my-validation.js"
   },
@@ -45,7 +45,7 @@
     "src": "resources/js/screens/auth/login.js"
   },
   "resources/js/screens/group/groupList.js": {
-    "file": "assets/groupList-j6ni38fO.js",
+    "file": "assets/groupList-EHh4F7iG.js",
     "isEntry": true,
     "src": "resources/js/screens/group/groupList.js"
   },

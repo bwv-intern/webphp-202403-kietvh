@@ -16,7 +16,6 @@ class GroupController extends Controller
 
     public function groupList() {
         $pageTitle = 'Group List';
-        session()->put('pageTitle', $pageTitle);
 
         $groups = $this->groupService->getAll();
         $groups = $this->pagination($groups);
@@ -26,7 +25,7 @@ class GroupController extends Controller
             $messageNotFound = 'No Group Found';
         }
 
-        return view('screens.group.list', compact('groups', 'messageNotFound'));
+        return view('screens.group.list', compact('groups', 'messageNotFound','pageTitle'));
     }
 
     public function import(ImportCsvRequest $request) {
