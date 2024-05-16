@@ -31,7 +31,7 @@ class ImportCsvRequest extends FormRequest
 
     public function messages() {
         return [
-            'file.max' => ConfigUtil::getMessage('EBT034', ['2']),
+            'file.max' => ConfigUtil::getMessage('EBT034', ['2MB']),
         ];
     }
 
