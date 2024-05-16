@@ -7,7 +7,11 @@ $(document).ready(function () {
     $('#formImportCSV').validate({
         rules: {
             'csvFile': {
-                required: true,
+                required: {
+                    depends: function(element) {
+                        return $(element).val() === "";
+                    }
+                },
                 extension: 'csv',
                 fileSize: 2 * 1024 * 1024,
             }
@@ -34,5 +38,9 @@ $(document).ready(function () {
         $('#errorModal').modal('show');
     }
 
-   
+    $('#importCSVModal').on('hidden.bs.modal', function () {
+        $('#csvFile').removeClass('error-message');
+        $('#csvFile-error').remove();
+    });
+    
 });

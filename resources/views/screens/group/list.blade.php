@@ -107,7 +107,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCloseModalImport" name="btnCloseModalImport" >Close</button>
                         <button type="submit" class="btn btn-primary">Import</button>
                     </div>
                 </form>
