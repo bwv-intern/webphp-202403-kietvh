@@ -49,15 +49,14 @@
                         <div class="d-flex justify-content-end my-4">
                             {{ $users->links('common.pagination') }}
                         </div>
-                        <table class="table table-bordered table-responsive-sm list-user-table">
-
+                        <table class="table table-bordered table-responsive-md list-user-table" style="table-layout: fixed; width: 100%;">
                             <thead>
                                 <tr>
-                                    <th class="fw-normal text-center">User Name</th>
-                                    <th class="fw-normal text-center">Email</th>
-                                    <th class="fw-normal text-center">Group Name</th>
-                                    <th class="fw-normal text-center" style=" max-width: 175px !important; width: 175px !important; min-width: 175px !important;">Started Date</th>
-                                    <th class="fw-normal text-center">Position</th>
+                                    <th class="fw-normal text-center" style="width: 25%;">User Name</th>
+                                    <th class="fw-normal text-center" style="width: 25%;">Email</th>
+                                    <th class="fw-normal text-center" style="width: 20%;">Group Name</th>
+                                    <th class="fw-normal text-center" style="width: 15%;">Started Date</th>
+                                    <th class="fw-normal text-center" style="width: 15%;">Position</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -73,15 +72,17 @@
                                             @endif
                                         </td>
                                         <td>
-                                        
-                                                {{ nl2br($user->email) }}
-                                       
+                                            {{ nl2br($user->email) }}
                                         </td>
-                                        <td class="">{{ nl2br($user->group->name ?? '') }}</td>
-                                        <td class="" style=" max-width: 175px !important; width: 175px !important; min-width: 175px !important;">
+                                        <td>
+                                            {{ nl2br($user->group->name ?? '') }}
+                                        </td>
+                                        <td>
                                             {{ nl2br($user->started_date != null ? $user->started_date->format('d/m/Y') : '') }}
                                         </td>
-                                        <td class="">{{ nl2br($user->getPosition()) }}</td>
+                                        <td>
+                                            {{ nl2br($user->getPosition()) }}
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
