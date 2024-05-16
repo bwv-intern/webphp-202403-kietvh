@@ -23,22 +23,22 @@
 
         <div class="row mt-5">
             <div class="col table-container m-0 p-0">
-                <table class="table table-bordered table-responsive-sm group-list-table">
-                    @if (count($groups) > 0)
-                        <div class=" d-flex justify-content-end my-4">
-                            {{ $groups->links('common.pagination') }}
-                        </div>
-                    @endif
+                @if (count($groups) > 0)
+                    <div class="d-flex justify-content-end my-4">
+                        {{ $groups->links('common.pagination') }}
+                    </div>
+                @endif
+                <table class="table table-bordered table-responsive-sm group-list-table" style="table-layout: fixed; width: 100%;">
                     <thead>
                         <tr>
-                            <th class="fw-normal">ID</th>
-                            <th class="fw-normal">Group Name</th>
-                            <th class="fw-normal">Group Note</th>
-                            <th class="fw-normal">Group Leader</th>
-                            <th class="fw-normal">Floor Number</th>
-                            <th class="fw-normal">Created Date</th>
-                            <th class="fw-normal">Updated Date</th>
-                            <th class="fw-normal ">Deleted Date</th>
+                            <th class="fw-normal" style="width: 12.5%;">ID</th>
+                            <th class="fw-normal" style="width: 12.5%;">Group Name</th>
+                            <th class="fw-normal" style="width: 12.5%;">Group Note</th>
+                            <th class="fw-normal" style="width: 12.5%;">Group Leader</th>
+                            <th class="fw-normal" style="width: 12.5%;">Floor Number</th>
+                            <th class="fw-normal" style="width: 12.5%;">Created Date</th>
+                            <th class="fw-normal" style="width: 12.5%;">Updated Date</th>
+                            <th class="fw-normal" style="width: 12.5%;">Deleted Date</th>
                         </tr>
                     </thead>
                     @if (count($groups) > 0)
@@ -48,10 +48,16 @@
                                     <td>{{ $group->id }}</td>
                                     <td>{{ $group->name }}</td>
                                     <td>{{ $group->note }}</td>
-                                    <td>{{ $group->leader->deleted_date == null ? $group->leader->name : '' }}</td>
+                                    <td>
+                                        {{ $group->leader->deleted_date == null ? $group->leader->name : '' }}
+                                    </td>
                                     <td>{{ $group->group_floor_number }}</td>
-                                    <td class="text-center">{{ $group->created_date->format('d/m/Y') ?? '' }}</td>
-                                    <td class="text-center">{{ $group->updated_date->format('d/m/Y') ?? '' }}</td>
+                                    <td class="text-center">
+                                        {{ $group->created_date->format('d/m/Y') ?? '' }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ $group->updated_date->format('d/m/Y') ?? '' }}
+                                    </td>
                                     <td class="text-center">
                                         {{ $group->deleted_date ? $group->deleted_date->format('d/m/Y') : '' }}
                                     </td>
@@ -64,7 +70,7 @@
                     <div class="row mt-5 mx-1">
                         <div class="col-sm-12 h-25 w-100 py-3 d-flex justify-content-center align-items-center">
                             <span class="mx-1 text-gray">
-                                <h4> {{ $messageNotFound }}</h4>
+                                <h4>{{ $messageNotFound }}</h4>
                             </span>
                         </div>
                     </div>
