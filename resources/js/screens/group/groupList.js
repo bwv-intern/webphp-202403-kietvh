@@ -20,7 +20,7 @@ $(document).ready(function () {
                 },
                 fileSize: function (param, element) {
                     var sizeLimit = param / 1024 / 1024;
-                    return 'ファイルのサイズ制限'+sizeLimit+'を超えています。';
+                    return 'ファイルのサイズ制限'+sizeLimit+'MBを超えています。';
                 },
 
             }
