@@ -68,7 +68,7 @@ class UserRepository extends BaseRepository
     public function getByEmail(string $email, $id = null)
     {
         if (isset($id)) {
-            $result = $this->model->where('email', $email)
+            $result = $this->model->where('email', $email)->whereNull('deleted_date')
                 ->where('id', '!=', $id)
                 ->get();
         } else {
