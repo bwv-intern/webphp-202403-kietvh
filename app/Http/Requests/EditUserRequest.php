@@ -3,11 +3,17 @@
 namespace App\Http\Requests;
 
 use App\Libs\ConfigUtil;
+use App\Repositories\UserRepository;
 use App\Rules\{CheckMailRFC, CheckMaxLength, CheckNotNull, CheckOnlyNumberAndAlphabetOneByte};
 use Illuminate\Foundation\Http\FormRequest;
 
 class EditUserRequest extends FormRequest
 {
+    public UserRepository $userRepo;
+
+    public function __construct(UserRepository $userRepo ) {
+        $this->userRepo = $userRepo;
+    }
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -30,7 +36,7 @@ class EditUserRequest extends FormRequest
             'email' => [
                 'required',
                 new CheckMailRFC(),
-                'unique:user,email,' . $id,
+                $this->isEmailAllowedToRegister() ? '' :  'unique:user,email,'.$id, 
                 new CheckMaxLength('Email', 255),
             ],
             'group_id' => [
@@ -98,5 +104,26 @@ class EditUserRequest extends FormRequest
 
     private function isPasswordUpdateRequested(): bool {
         return $this->filled('password');
+    }
+
+
+    /**
+     * Check if the email was used and user have deleted_date .
+     *
+     * @param string $email
+     * @return bool
+     */
+    protected function isEmailAllowedToRegister()
+    {
+        
+        $email = $this->input('email');
+        $id = $this -> input('id');
+
+        $user = $this->userRepo-> getByEmail($email,$id);
+
+        if ($user->count()) {
+            return false;
+        }
+        return true;
     }
 }
